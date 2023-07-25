@@ -22,12 +22,12 @@
         },
         {
           "keyword": "@",
-          "name": "xray.components",
+          "name": "jira.components",
           "value": "dummy-component-1; dummy-component-2"
         },
         {
           "keyword": "@",
-          "name": "xray.labels",
+          "name": "jira.labels",
           "value": "dummy-label-1; dummy-label-2"
         }
       ],
@@ -43,7 +43,7 @@
         "examples": [
           {
             "keyword": "Example:",
-            "value": "{xray.labels=dummy-label-1; dummy-label-2, xray.components=dummy-label-1; dummy-label-2, key=stub, testCaseId=STUB-1}",
+            "value": "{jira.labels=dummy-label-1; dummy-label-2, jira.components=dummy-label-1; dummy-label-2, key=stub, testCaseId=STUB-1}",
             "steps": [
               {
                 "outcome": "comment",

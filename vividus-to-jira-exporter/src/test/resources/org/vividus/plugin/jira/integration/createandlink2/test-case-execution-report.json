@@ -1,0 +1,41 @@
+{
+  "path": "storyPath",
+  "title": "",
+  "lifecycle": {
+    "keyword": "Lifecycle:"
+  },
+  "beforeStorySteps": [],
+  "scenarios": [
+    {
+      "keyword": "Scenario:",
+      "title": "Dummy scenario",
+      "meta": [
+        {
+          "keyword": "@",
+          "name": "requirementId",
+          "value": "VIVIT-1"
+        },
+        {
+          "keyword": "@",
+          "name": "testCaseId",
+          "value": "VIVIT-51;VIVIT-52"
+        }
+      ],
+      "steps": [
+        {
+          "outcome": "comment",
+          "value": "!-- Step: Step"
+        },
+        {
+          "outcome": "comment",
+          "value": "!-- Data: Data"
+        },
+        {
+          "outcome": "comment",
+          "value": "!-- Result: Result"
+        }
+      ]
+    }
+  ],
+  "afterStorySteps": []
+}

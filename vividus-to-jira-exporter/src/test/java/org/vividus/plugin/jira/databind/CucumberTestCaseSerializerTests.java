@@ -34,6 +34,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.vividus.jira.JiraConfigurationException;
 import org.vividus.jira.JiraConfigurationProvider;
+import org.vividus.plugin.jira.exporter.Constants;
 import org.vividus.plugin.jira.model.CucumberTestCase;
 import org.vividus.plugin.jira.model.TestCaseType;
 
@@ -51,9 +52,9 @@ class CucumberTestCaseSerializerTests
     void shouldSerializeCucumberTest() throws IOException, JiraConfigurationException
     {
         when(jiraConfigurationProvider.getFieldsMappingByProjectKey(PROJECT_KEY)).thenReturn(Map.of(
-            "cucumber-scenario-type", "cucumber-scenario-type-field",
-            "cucumber-scenario", "cucumber-scenario-field",
-            "test-case-type", "test-case-type-field"
+            Constants.JiraMappingProperties.CUCUMBER_SCENARIO_TYPE, "cucumber-scenario-type-field",
+            Constants.JiraMappingProperties.CUCUMBER_SCENARIO, "cucumber-scenario-field",
+            Constants.JiraMappingProperties.TEST_CASE_TYPE, "test-case-type-field"
         ));
 
         verifySerializedForm();
@@ -86,10 +87,10 @@ class CucumberTestCaseSerializerTests
     private static CucumberTestCase createTestCase()
     {
         CucumberTestCase testCase = new CucumberTestCase();
-        testCase.setType(TestCaseType.CUCUMBER.getValue());
+        testCase.setType(TestCaseType.AUTOMATED.getValue());
         testCase.setProjectKey(PROJECT_KEY);
         testCase.setSummary("summary");
-        testCase.setAssignee("test-assignee");
+        testCase.setAssigneeId("test-assignee");
         testCase.setLabels(new LinkedHashSet<>(List.of("label-1", "label-2")));
         testCase.setComponents(new LinkedHashSet<>(List.of("component-1", "component-2")));
         testCase.setScenarioType("scenario-type");

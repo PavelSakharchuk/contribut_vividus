@@ -84,7 +84,7 @@ public class XrayFacade
         String issueKey = JsonPathUtils.getData(response, "$.key");
         LOGGER.atInfo().addArgument(testCase::getType)
                        .addArgument(issueKey)
-                       .log("{} Test with key {} has been created");
+                       .log("{} Test Case with key {} has been created");
         return issueKey;
     }
 
@@ -100,7 +100,7 @@ public class XrayFacade
         jiraFacade.updateIssue(testCaseKey, updateTestRequest);
         LOGGER.atInfo().addArgument(testCase::getType)
                        .addArgument(testCaseKey)
-                       .log("{} Test with key {} has been updated");
+                       .log("{} Test Case with key {} has been updated");
     }
 
     public void importTestExecution(TestExecution testExecution, List<Path> attachments)

@@ -60,7 +60,7 @@ public class StatusCodeValidatingHandler implements HttpResponseHandler
         }
         LOGGER.atError().addArgument(serviceName).addArgument(httpResponse).log("{} response: {}");
         throw new IOException(
-                String.format("The status code is expected to be between %d and %d inclusively, but got: %d",
-                        minInclusiveStatusCode, maxInclusiveStatusCode, status));
+                String.format("The status code is expected to be between %d and %d inclusively, but got: %s",
+                        minInclusiveStatusCode, maxInclusiveStatusCode, httpResponse));
     }
 }

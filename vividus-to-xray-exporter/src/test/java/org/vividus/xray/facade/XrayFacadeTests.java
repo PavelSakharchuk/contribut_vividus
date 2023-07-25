@@ -182,7 +182,7 @@ class XrayFacadeTests
     {
         assertThat(logger.getLoggingEvents(), is(List.of(
             info("Updating {} Test Case with ID {}: {}", type, ISSUE_ID, BODY),
-            info("{} Test with key {} has been updated", type, ISSUE_ID))));
+            info("{} Test Case with key {} has been updated", type, ISSUE_ID))));
     }
 
     @Test
@@ -380,7 +380,7 @@ class XrayFacadeTests
     {
         assertThat(logger.getLoggingEvents(), is(List.of(
             info("Creating {} Test Case: {}", type, BODY),
-            info("{} Test with key {} has been created", type, ISSUE_ID))));
+            info("{} Test Case with key {} has been created", type, ISSUE_ID))));
     }
 
     private ManualTestCase createManualTestCase()

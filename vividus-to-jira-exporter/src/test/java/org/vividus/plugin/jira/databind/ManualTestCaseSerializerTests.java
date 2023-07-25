@@ -32,6 +32,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.vividus.jira.JiraConfigurationException;
 import org.vividus.jira.JiraConfigurationProvider;
 import org.vividus.output.ManualTestStep;
+import org.vividus.plugin.jira.exporter.Constants;
 import org.vividus.plugin.jira.model.ManualTestCase;
 import org.vividus.plugin.jira.model.TestCaseType;
 
@@ -49,8 +50,8 @@ class ManualTestCaseSerializerTests
     void init() throws JiraConfigurationException
     {
         when(jiraConfigurationProvider.getFieldsMappingByProjectKey(PROJECT_KEY)).thenReturn(Map.of(
-            "manual-steps", "manual-steps-field",
-            "test-case-type", "test-case-type-field"
+            Constants.JiraMappingProperties.MANUAL_STEPS, "manual-steps-field",
+            Constants.JiraMappingProperties.TEST_CASE_TYPE, "test-case-type-field"
         ));
     }
 
@@ -58,7 +59,7 @@ class ManualTestCaseSerializerTests
     void shouldSerializeManualTest() throws IOException
     {
         ManualTestCase test = createBaseTest();
-        test.setAssignee("test-assignee");
+        test.setAssigneeId("test-assignee");
         test.setLabels(new LinkedHashSet<>(List.of("label 1", "label 2")));
         test.setComponents(new LinkedHashSet<>(List.of("component 1", "component 2")));
         JsonVerificationUtils.verifySerializedForm(serializer, test, getClass(), "manual.json");

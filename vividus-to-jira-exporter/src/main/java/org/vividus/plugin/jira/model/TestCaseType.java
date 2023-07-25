@@ -21,7 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 public enum TestCaseType
 {
     MANUAL,
-    CUCUMBER;
+    AUTOMATED;
 
     public String getValue()
     {

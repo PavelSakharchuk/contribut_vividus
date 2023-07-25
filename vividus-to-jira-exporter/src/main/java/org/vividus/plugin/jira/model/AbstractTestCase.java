@@ -22,7 +22,7 @@ public abstract class AbstractTestCase
 {
     private String type;
     private String projectKey;
-    private String assignee;
+    private String assigneeId;
     private String summary;
     private Set<String> labels;
     private Set<String> components;
@@ -47,14 +47,14 @@ public abstract class AbstractTestCase
         this.projectKey = projectKey;
     }
 
-    public String getAssignee()
+    public String getAssigneeId()
     {
-        return assignee;
+        return assigneeId;
     }
 
-    public void setAssignee(String assignee)
+    public void setAssigneeId(String assigneeId)
     {
-        this.assignee = assignee;
+        this.assigneeId = assigneeId;
     }
 
     public String getSummary()

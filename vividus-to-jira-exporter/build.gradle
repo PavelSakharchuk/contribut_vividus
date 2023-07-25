@@ -1,4 +1,4 @@
-project.description = 'VIVIDUS to Xray exporter'
+project.description = 'VIVIDUS to Jira exporter'
 
 buildscript {
     ext {

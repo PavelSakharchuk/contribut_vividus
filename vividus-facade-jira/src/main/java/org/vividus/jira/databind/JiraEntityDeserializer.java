@@ -17,6 +17,7 @@
 package org.vividus.jira.databind;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -25,6 +26,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.Optional;
+import org.vividus.jira.JiraConfigurationException;
 import org.vividus.jira.model.IssueLink;
 import org.vividus.jira.model.JiraEntity;
 
@@ -37,12 +40,24 @@ public class JiraEntityDeserializer extends JsonDeserializer<JiraEntity>
 
         JiraEntity entity = new JiraEntity();
         entity.setId(jsonNode.path("id").asText());
+        entity.setKey(jsonNode.path("key").asText());
 
-        List<IssueLink> issueLinks = jsonNode.path("fields")
-                                             .path("issuelinks")
-                                             .traverse(parser.getCodec())
-                                             .readValueAs(new TypeReference<List<IssueLink>>() { });
-        entity.setIssueLinks(issueLinks);
+        JsonNode issueLinksNode = jsonNode.path("fields").path("issuelinks");
+        if(issueLinksNode.isContainerNode()){
+            List<IssueLink> issueLinks = issueLinksNode
+                .traverse(parser.getCodec())
+                .readValueAs(new TypeReference<List<IssueLink>>() { });
+            entity.setIssueLinks(issueLinks);
+        }
+
+        JsonNode subTasksNode = jsonNode.path("fields").path("subtasks");
+        if(issueLinksNode.isContainerNode()){
+            List<JiraEntity> subtasks = subTasksNode
+                .traverse(parser.getCodec())
+                .readValueAs(new TypeReference<List<JiraEntity>>() { });
+            entity.setSubtasks(subtasks);
+        }
+
         return entity;
     }
 }

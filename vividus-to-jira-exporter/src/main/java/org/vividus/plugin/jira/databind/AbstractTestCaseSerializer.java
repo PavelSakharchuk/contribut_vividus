@@ -26,18 +26,23 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vividus.jira.JiraConfigurationException;
 import org.vividus.jira.JiraConfigurationProvider;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
+import org.vividus.plugin.jira.exporter.Constants;
+import org.vividus.plugin.jira.exporter.Constants.JiraMappingProperties;
 import org.vividus.plugin.jira.model.AbstractTestCase;
 
 public abstract class AbstractTestCaseSerializer<T extends AbstractTestCase> extends JsonSerializer<T>
 {
     private static final String NAME = "name";
 
-    private static final String TEST_CASE_TYPE_FIELD_KEY = "test-case-type";
+    private static final String TEST_CASE_TYPE_FIELD_KEY = Constants.JiraMappingProperties.TEST_CASE_TYPE;
 
-    @Autowired private JiraConfigurationProvider jiraConfigurationProvider;
+    @Autowired protected JiraConfigurationProvider jiraConfigurationProvider;
+    @Autowired private JiraExporterOptions jiraExporterOptions;
 
     @Override
     public void serialize(T testCase, JsonGenerator generator, SerializerProvider serializers) throws IOException
@@ -48,21 +53,28 @@ public abstract class AbstractTestCaseSerializer<T extends AbstractTestCase> ext
         String projectKey = testCase.getProjectKey();
         writeObjectWithField(generator, "project", "key", projectKey);
 
-        String assignee = testCase.getAssignee();
-        if (assignee != null)
+        String assigneeId = testCase.getAssigneeId();
+        if (StringUtils.isNotBlank(assigneeId))
         {
-            writeObjectWithField(generator, "assignee", NAME, assignee);
+            writeObjectWithField(generator, "assignee", "id", assigneeId);
         }
 
-        writeObjectWithField(generator, "issuetype", NAME, "Test");
+        String summary = testCase.getSummary();
+        if (summary != null)
+        {
+            generator.writeStringField("summary", summary);
+        }
+
+        writeObjectWithField(generator, "issuetype", NAME, jiraExporterOptions.getTestIssueType());
 
         try
         {
             Map<String, String> mapping = jiraConfigurationProvider.getFieldsMappingByProjectKey(projectKey);
 
-            writeObjectWithValueField(generator, getSafely(TEST_CASE_TYPE_FIELD_KEY, mapping), testCase.getType());
-
-            generator.writeStringField("summary", testCase.getSummary());
+            writeObjectWithValueField(
+                generator,
+                jiraConfigurationProvider.getMappedFieldSafely(TEST_CASE_TYPE_FIELD_KEY, mapping),
+                testCase.getType());
 
             writeJsonArray(generator, "labels", testCase.getLabels(), false);
 
@@ -117,12 +129,5 @@ public abstract class AbstractTestCaseSerializer<T extends AbstractTestCase> ext
         generator.writeObjectFieldStart(objectKey);
         generator.writeStringField(fieldName, fieldValue);
         generator.writeEndObject();
-    }
-
-    protected String getSafely(String key, Map<String, String> mapping)
-    {
-        String value = mapping.get(key);
-        isTrue(value != null, "The mapping for the '%s' field must be configured", key);
-        return value;
     }
 }

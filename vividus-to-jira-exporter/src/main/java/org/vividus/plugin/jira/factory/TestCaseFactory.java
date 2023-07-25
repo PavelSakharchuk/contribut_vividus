@@ -16,6 +16,9 @@
 
 package org.vividus.plugin.jira.factory;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.model.AbstractTestCase;
 import org.vividus.plugin.jira.model.CucumberTestCase;
 import org.vividus.plugin.jira.model.ManualTestCase;
@@ -23,16 +26,11 @@ import org.vividus.plugin.jira.facade.AbstractTestCaseParameters;
 import org.vividus.plugin.jira.facade.CucumberTestCaseParameters;
 import org.vividus.plugin.jira.facade.ManualTestCaseParameters;
 
+@Component
 public class TestCaseFactory
 {
-    private final String projectKey;
-    private final String assignee;
-
-    public TestCaseFactory(String projectKey, String assignee)
-    {
-        this.projectKey = projectKey;
-        this.assignee = assignee;
-    }
+    @Autowired
+    private JiraExporterOptions jiraExporterOptions;
 
     public ManualTestCase createManualTestCase(ManualTestCaseParameters parameters)
     {
@@ -54,8 +52,8 @@ public class TestCaseFactory
     private void fillTestCase(AbstractTestCaseParameters parameters, AbstractTestCase testCase)
     {
         testCase.setType(parameters.getType().getValue());
-        testCase.setProjectKey(projectKey);
-        testCase.setAssignee(assignee);
+        testCase.setProjectKey(jiraExporterOptions.getProjectKey());
+        testCase.setAssigneeId(jiraExporterOptions.getAssigneeId());
         testCase.setSummary(parameters.getSummary());
         testCase.setLabels(parameters.getLabels());
         testCase.setComponents(parameters.getComponents());

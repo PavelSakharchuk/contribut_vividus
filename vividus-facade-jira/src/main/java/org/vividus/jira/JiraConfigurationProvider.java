@@ -73,6 +73,13 @@ public final class JiraConfigurationProvider
         return Optional.ofNullable(configuration.getFieldsMapping()).orElseGet(Map::of);
     }
 
+    public String getMappedFieldSafely(String key, Map<String, String> mapping)
+    {
+        String value = mapping.get(key);
+        isTrue(value != null, "The mapping for the '%s' field must be configured", key);
+        return value;
+    }
+
     private JiraConfiguration getConfigurationByProjectKey(String projectKey) throws JiraConfigurationException
     {
         Set<Entry<String, JiraConfiguration>> configurations = jiraConfigurations.getData().entrySet().stream()

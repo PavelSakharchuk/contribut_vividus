@@ -23,8 +23,10 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.vividus.output.ManualTestStep;
+import org.vividus.plugin.jira.exporter.Constants;
 import org.vividus.plugin.jira.facade.AbstractTestCaseParameters;
 import org.vividus.plugin.jira.facade.CucumberTestCaseParameters;
 import org.vividus.plugin.jira.facade.ManualTestCaseParameters;
@@ -35,10 +37,10 @@ import org.vividus.plugin.jira.model.TestCaseType;
 
 class TestCaseFactoryTests
 {
-    private static final String PROJECT_KEY = "project-key";
-    private static final String ASSIGNEE = "assignee";
+    private static final String PROJECT_KEY = Constants.JiraExporterProperties.PROJECT_KEY;
+    private static final String ASSIGNEE_ID = Constants.JiraExporterProperties.ASSIGNEE_ID;
 
-    private final TestCaseFactory factory = new TestCaseFactory(PROJECT_KEY, ASSIGNEE);
+    @Mock private TestCaseFactory factory;
 
     @Test
     void shouldCreateManualTestCase()
@@ -57,7 +59,7 @@ class TestCaseFactoryTests
     @Test
     void shouldCreateCucumberTestCase()
     {
-        CucumberTestCaseParameters parameters = createTestCaseParameters(TestCaseType.CUCUMBER,
+        CucumberTestCaseParameters parameters = createTestCaseParameters(TestCaseType.AUTOMATED,
                 CucumberTestCaseParameters::new);
         parameters.setScenarioType("scenario-type");
         parameters.setScenario("scenario");
@@ -72,7 +74,7 @@ class TestCaseFactoryTests
     private void verifyTestCase(AbstractTestCaseParameters parameters, AbstractTestCase testCase)
     {
         assertEquals(PROJECT_KEY, testCase.getProjectKey());
-        assertEquals(ASSIGNEE, testCase.getAssignee());
+        assertEquals(ASSIGNEE_ID, testCase.getAssigneeId());
         assertEquals(parameters.getLabels(), testCase.getLabels());
         assertEquals(parameters.getComponents(), testCase.getComponents());
         assertEquals(parameters.getSummary(), testCase.getSummary());

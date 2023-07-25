@@ -33,6 +33,7 @@ import org.vividus.jira.databind.IssueLinkSerializer;
 import org.vividus.jira.databind.JiraEntityDeserializer;
 import org.vividus.jira.model.Attachment;
 import org.vividus.jira.model.IssueLink;
+import org.vividus.jira.model.IssueTransitionStatus;
 import org.vividus.jira.model.JiraEntity;
 import org.vividus.jira.model.Project;
 import org.vividus.util.json.JsonPathUtils;
@@ -49,6 +50,7 @@ public class JiraFacade
     private static final String REST_API_ENDPOINT = "/rest/api/latest/";
     private static final String ISSUE = "issue/";
     private static final String ISSUE_ENDPOINT = REST_API_ENDPOINT + ISSUE;
+    private static final String TRANSITIONS = "transitions";
 
     private final JiraClientProvider jiraClientProvider;
 
@@ -76,10 +78,30 @@ public class JiraFacade
         jiraClientProvider.getByIssueKey(inwardIssueKey).executePost("/rest/api/latest/issueLink", createLinkRequest);
     }
 
+    public List<IssueTransitionStatus> getIssueTransitionStatuses(String issueKey) throws IOException, JiraConfigurationException
+    {
+        String transitionBody = jiraClientProvider.getByIssueKey(issueKey)
+            .executeGet(ISSUE_ENDPOINT + issueKey + "/" + TRANSITIONS);
+        String transitions = OBJECT_MAPPER.readTree(transitionBody).get("transitions").toString();
+        return List.of(OBJECT_MAPPER.readValue(transitions, IssueTransitionStatus[].class));
+    }
+
     public String getIssueStatus(String issueKey) throws IOException, JiraConfigurationException
     {
         String issue = jiraClientProvider.getByIssueKey(issueKey).executeGet(ISSUE_ENDPOINT + issueKey);
         return JsonPathUtils.getData(issue, "$.fields.status.name");
+    }
+
+    public void updateIssueStatus(String issueKey, String requestBody) throws IOException, JiraConfigurationException
+    {
+        jiraClientProvider.getByIssueKey(issueKey)
+            .executePost(ISSUE_ENDPOINT + issueKey + "/" + TRANSITIONS, requestBody);
+    }
+
+    public String getIssueField(String issueKey, String field) throws IOException, JiraConfigurationException
+    {
+        String issue = jiraClientProvider.getByIssueKey(issueKey).executeGet(ISSUE_ENDPOINT + issueKey);
+        return JsonPathUtils.getData(issue, "$.fields." + field);
     }
 
     public Project getProject(String projectKey) throws IOException, JiraConfigurationException

@@ -22,20 +22,26 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonGenerator;
 
 import org.springframework.stereotype.Component;
+import org.vividus.plugin.jira.exporter.Constants;
 import org.vividus.plugin.jira.model.CucumberTestCase;
 
 @Component
 public class CucumberTestCaseSerializer extends AbstractTestCaseSerializer<CucumberTestCase>
 {
-    private static final String CUCUMBER_SCENARIO_TYPE_FIELD_KEY = "cucumber-scenario-type";
-    private static final String CUCUMBER_SCENARIO_FIELD_KEY = "cucumber-scenario";
+    private static final String CUCUMBER_SCENARIO_TYPE_FIELD_KEY =
+        Constants.JiraMappingProperties.CUCUMBER_SCENARIO_TYPE;
+    private static final String CUCUMBER_SCENARIO_FIELD_KEY = Constants.JiraMappingProperties.CUCUMBER_SCENARIO;
 
     @Override
     protected void serializeCustomFields(CucumberTestCase testCase, Map<String, String> mapping,
             JsonGenerator generator) throws IOException
     {
-        writeObjectWithValueField(generator, getSafely(CUCUMBER_SCENARIO_TYPE_FIELD_KEY, mapping),
-                testCase.getScenarioType());
-        generator.writeStringField(getSafely(CUCUMBER_SCENARIO_FIELD_KEY, mapping), testCase.getScenario());
+        writeObjectWithValueField(
+            generator,
+            jiraConfigurationProvider.getMappedFieldSafely(CUCUMBER_SCENARIO_TYPE_FIELD_KEY, mapping),
+            testCase.getScenarioType());
+        generator.writeStringField(
+            jiraConfigurationProvider.getMappedFieldSafely(CUCUMBER_SCENARIO_FIELD_KEY, mapping),
+            testCase.getScenario());
     }
 }

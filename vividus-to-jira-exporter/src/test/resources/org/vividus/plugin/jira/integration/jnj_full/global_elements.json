@@ -1,0 +1,432 @@
+{
+  "id": "8244b6ff-2324-4321-92ad-437f8393c17b",
+  "path": "file:\/C:\/01.Projects\/05.JAJ-MTDF\/jnj-auto-tests\/output\/resources\/main\/story\/nucleus\/web\/global_elements.story",
+  "title": "",
+  "meta": [
+    {
+      "keyword": "@",
+      "name": "critical_path",
+      "value": ""
+    },
+    {
+      "keyword": "@",
+      "name": "layout",
+      "value": "desktop"
+    }
+  ],
+  "beforeSystemStorySteps": [
+    {
+      "outcome": "successful",
+      "value": "org.vividus.steps.WebDriverSetupSteps.beforeStory()"
+    }
+  ],
+  "beforeUserStorySteps": [],
+  "givenStories": {
+    "keyword": "GivenStories:",
+    "givenStories": [
+      {
+        "parameters": "",
+        "path": "story\/nucleus\/web\/open_app.story"
+      }
+    ],
+    "stories": [
+      {
+        "id": "52a0a302-195a-424d-924d-18a830bd8e1f",
+        "path": "story\/nucleus\/web\/open_app.story",
+        "title": "",
+        "meta": [
+          {
+            "keyword": "@",
+            "name": "critical_path",
+            "value": ""
+          },
+          {
+            "keyword": "@",
+            "name": "layout",
+            "value": "desktop"
+          },
+          {
+            "keyword": "@",
+            "name": "smoke",
+            "value": ""
+          }
+        ],
+        "beforeSystemStorySteps": [],
+        "beforeUserStorySteps": [],
+        "scenarios": [
+          {
+            "keyword": "Scenario:",
+            "id": "525840a1-4724-4008-91ec-868bbbc0daa7",
+            "title": "open main application page",
+            "beforeSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+              }
+            ],
+            "beforeUserScenarioSteps": [],
+            "steps": [
+              {
+                "outcome": "successful",
+                "value": "Given I am on main application page"
+              },
+              {
+                "outcome": "successful",
+                "value": "When I change window size to `${resolution}`"
+              }
+            ],
+            "afterUserScenarioSteps": [],
+            "afterSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+              }
+            ],
+            "start": 1692015737084,
+            "end": 1692015756933
+          }
+        ],
+        "afterUserStorySteps": [],
+        "afterSystemStorySteps": []
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "keyword": "Scenario:",
+      "id": "d78f4034-1135-4756-ace8-1b7f78c7aa1f",
+      "title": "check top bar (logo, initials icon, navigation waffle)",
+      "meta": [
+        {
+          "keyword": "@",
+          "name": "testCaseId",
+          "value": "NUC-4"
+        }
+      ],
+      "beforeSystemScenarioSteps": [
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+        }
+      ],
+      "beforeUserScenarioSteps": [],
+      "steps": [
+        {
+          "outcome": "successful",
+          "value": "When I change context to element located by `xpath(\/\/header)`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I ((${visual-action})) baseline with name `${profile}-${resolution}-top-bar`"
+        }
+      ],
+      "afterUserScenarioSteps": [],
+      "afterSystemScenarioSteps": [
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+        }
+      ],
+      "start": 1692015756971,
+      "end": 1692015759978
+    },
+    {
+      "keyword": "Scenario:",
+      "id": "23d1ab08-9e6b-4cc7-9f89-30d74354d3f6",
+      "title": "check that the user is redirected to the Landing page after clicking on logo",
+      "meta": [
+        {
+          "keyword": "@",
+          "name": "testCaseId",
+          "value": "VIVIT-11"
+        }
+      ],
+      "examples": {
+        "keyword": "Examples:",
+        "steps": [
+          "When I go to relative URL `<page>`",
+          "When I click on element located by `testId(jnj-logo)`",
+          "Then `#{extractPathFromUrl(${current-page-url})}` is equal to `\/`"
+        ],
+        "parameters": {
+          "names": [
+            "page"
+          ],
+          "values": [
+            [
+              "\/my-cases"
+            ],
+            [
+              "\/live-session"
+            ],
+            [
+              "\/library"
+            ],
+            [
+              "\/insights"
+            ]
+          ]
+        },
+        "examples": [
+          {
+            "keyword": "Example:",
+            "parameters": {
+              "page": "\/my-cases",
+              "critical_path": "",
+              "layout": "desktop",
+              "testCaseId": "VIVIT-11"
+            },
+            "beforeSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+              }
+            ],
+            "beforeUserScenarioSteps": [],
+            "steps": [
+              {
+                "outcome": "successful",
+                "value": "When I go to relative URL `((\/my-cases))`"
+              },
+              {
+                "outcome": "successful",
+                "value": "When I click on element located by `testId(jnj-logo)`"
+              },
+              {
+                "outcome": "successful",
+                "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/`"
+              }
+            ],
+            "afterUserScenarioSteps": [],
+            "afterSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+              }
+            ]
+          },
+          {
+            "keyword": "Example:",
+            "parameters": {
+              "page": "\/live-session",
+              "critical_path": "",
+              "layout": "desktop",
+              "testCaseId": "VIVIT-11"
+            },
+            "beforeSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+              }
+            ],
+            "beforeUserScenarioSteps": [],
+            "steps": [
+              {
+                "outcome": "successful",
+                "value": "When I go to relative URL `((\/live-session))`"
+              },
+              {
+                "outcome": "successful",
+                "value": "When I click on element located by `testId(jnj-logo)`"
+              },
+              {
+                "outcome": "successful",
+                "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/`"
+              }
+            ],
+            "afterUserScenarioSteps": [],
+            "afterSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+              }
+            ]
+          },
+          {
+            "keyword": "Example:",
+            "parameters": {
+              "page": "\/library",
+              "critical_path": "",
+              "layout": "desktop",
+              "testCaseId": "VIVIT-11"
+            },
+            "beforeSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+              }
+            ],
+            "beforeUserScenarioSteps": [],
+            "steps": [
+              {
+                "outcome": "successful",
+                "value": "When I go to relative URL `((\/library))`"
+              },
+              {
+                "outcome": "successful",
+                "value": "When I click on element located by `testId(jnj-logo)`"
+              },
+              {
+                "outcome": "successful",
+                "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/`"
+              }
+            ],
+            "afterUserScenarioSteps": [],
+            "afterSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+              }
+            ]
+          },
+          {
+            "keyword": "Example:",
+            "parameters": {
+              "page": "\/insights",
+              "critical_path": "",
+              "layout": "desktop",
+              "testCaseId": "VIVIT-11"
+            },
+            "beforeSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+              }
+            ],
+            "beforeUserScenarioSteps": [],
+            "steps": [
+              {
+                "outcome": "successful",
+                "value": "When I go to relative URL `((\/insights))`"
+              },
+              {
+                "outcome": "successful",
+                "value": "When I click on element located by `testId(jnj-logo)`"
+              },
+              {
+                "outcome": "successful",
+                "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/`"
+              }
+            ],
+            "afterUserScenarioSteps": [],
+            "afterSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+              }
+            ]
+          }
+        ]
+      },
+      "start": 1692015759982,
+      "end": 1692015797864
+    }
+  ],
+  "afterUserStorySteps": [],
+  "afterSystemStorySteps": [
+    {
+      "outcome": "successful",
+      "value": "org.vividus.steps.WebDriverSetupSteps.afterStory()"
+    },
+    {
+      "outcome": "successful",
+      "value": "org.vividus.http.CookieStoreProvider.resetStoryCookies()"
+    }
+  ]
+}

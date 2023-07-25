@@ -1,0 +1,57 @@
+{
+  "path": "storyPath",
+  "title": "",
+  "lifecycle": {
+    "keyword": "Lifecycle:"
+  },
+  "beforeStorySteps": [],
+  "scenarios": [
+    {
+      "keyword": "Scenario:",
+      "title": "Dummy scenario",
+      "meta": [
+        {
+          "keyword": "@",
+          "name": "jira.skip-export",
+          "value": ""
+        },
+        {
+          "keyword": "@",
+          "name": "testCaseId",
+          "value": "VIVIT-51"
+        }
+      ],
+      "examples": {
+        "keyword": "Examples:",
+        "steps": [
+          "!-- Comment"
+        ],
+        "parameters": {
+          "names": [],
+          "values": []
+        },
+        "examples": [
+          {
+            "keyword": "Example:",
+            "value": "{key=stub, testCaseId=skip}",
+            "steps": [
+              {
+                "outcome": "comment",
+                "value": "!-- Step: Step"
+              },
+              {
+                "outcome": "comment",
+                "value": "!-- Data: Data"
+              },
+              {
+                "outcome": "comment",
+                "value": "!-- Result: Result"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "afterStorySteps": []
+}

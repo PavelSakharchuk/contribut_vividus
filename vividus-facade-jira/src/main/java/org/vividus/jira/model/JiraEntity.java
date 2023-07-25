@@ -21,7 +21,9 @@ import java.util.List;
 public class JiraEntity
 {
     private String id;
+    private String key;
     private List<IssueLink> issueLinks;
+    private List<JiraEntity> subtasks;
 
     public String getId()
     {
@@ -33,6 +35,14 @@ public class JiraEntity
         this.id = id;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     public List<IssueLink> getIssueLinks()
     {
         return issueLinks;
@@ -41,5 +51,15 @@ public class JiraEntity
     public void setIssueLinks(List<IssueLink> issueLinks)
     {
         this.issueLinks = issueLinks;
+    }
+
+    public List<JiraEntity> getSubtasks()
+    {
+        return subtasks;
+    }
+
+    public void setSubtasks(List<JiraEntity> subtasks)
+    {
+        this.subtasks = subtasks;
     }
 }

@@ -1,0 +1,89 @@
+{
+  "id": "a23232dc-8d42-4302-87a7-d9c89364e9ac",
+  "path": "file:\/C:\/01.Projects\/05.JAJ-MTDF\/jnj-auto-tests\/output\/resources\/main\/story\/nucleus\/web\/open_app.story",
+  "title": "",
+  "meta": [
+    {
+      "keyword": "@",
+      "name": "critical_path",
+      "value": ""
+    },
+    {
+      "keyword": "@",
+      "name": "layout",
+      "value": "desktop"
+    },
+    {
+      "keyword": "@",
+      "name": "smoke",
+      "value": ""
+    }
+  ],
+  "beforeSystemStorySteps": [
+    {
+      "outcome": "successful",
+      "value": "org.vividus.steps.WebDriverSetupSteps.beforeStory()"
+    }
+  ],
+  "beforeUserStorySteps": [],
+  "scenarios": [
+    {
+      "keyword": "Scenario:",
+      "id": "581691d5-13b9-4db0-acff-97eeed035fa1",
+      "title": "open main application page",
+      "beforeSystemScenarioSteps": [
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+        }
+      ],
+      "beforeUserScenarioSteps": [],
+      "steps": [
+        {
+          "outcome": "successful",
+          "value": "Given I am on main application page"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I change window size to `${resolution}`"
+        }
+      ],
+      "afterUserScenarioSteps": [],
+      "afterSystemScenarioSteps": [
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+        }
+      ],
+      "start": 1692015915606,
+      "end": 1692015920661
+    }
+  ],
+  "afterUserStorySteps": [],
+  "afterSystemStorySteps": [
+    {
+      "outcome": "successful",
+      "value": "org.vividus.steps.WebDriverSetupSteps.afterStory()"
+    },
+    {
+      "outcome": "successful",
+      "value": "org.vividus.http.CookieStoreProvider.resetStoryCookies()"
+    }
+  ]
+}
