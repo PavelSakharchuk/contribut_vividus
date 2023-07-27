@@ -75,6 +75,7 @@ public class JiraClient
                 .withContent(content)
                 .build();
 
-        return httpClient.execute(httpRequest).getResponseBodyAsString();
+        return httpClient.execute(httpRequest)
+            .getResponseBodyAsString();
     }
 }

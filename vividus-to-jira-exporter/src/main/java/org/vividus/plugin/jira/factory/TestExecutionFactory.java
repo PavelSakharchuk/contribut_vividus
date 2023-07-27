@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.vividus.model.jbehave.AbstractStepsContainer;
 import org.vividus.model.jbehave.Scenario;
-import org.vividus.plugin.jira.configuration.XrayExporterOptions;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.model.TestExecution;
 import org.vividus.plugin.jira.model.TestExecutionInfo;
 import org.vividus.plugin.jira.model.TestExecutionItem;
@@ -38,7 +38,7 @@ import org.vividus.plugin.jira.model.TestExecutionItemStatus;
 @Component
 public class TestExecutionFactory
 {
-    @Autowired private XrayExporterOptions xrayExporterOptions;
+    @Autowired private JiraExporterOptions xrayExporterOptions;
 
     public TestExecution create(List<Entry<String, Scenario>> scenarios)
     {

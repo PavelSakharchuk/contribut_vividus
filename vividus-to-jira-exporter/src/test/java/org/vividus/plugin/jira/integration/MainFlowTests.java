@@ -18,7 +18,6 @@ package org.vividus.plugin.jira.integration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -33,31 +32,48 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.vividus.plugin.jira.VividusToXrayExporterApplication;
-import org.vividus.plugin.jira.configuration.XrayExporterOptions;
-import org.vividus.plugin.jira.exporter.XrayExporter;
-import org.vividus.plugin.jira.facade.XrayFacade;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
+import org.vividus.plugin.jira.exporter.JiraExporter;
+import org.vividus.plugin.jira.facade.JiraExporterFacade;
 import org.vividus.plugin.jira.factory.TestCaseFactory;
 import org.vividus.util.ResourceUtils;
 
 @SpringBootTest(classes = VividusToXrayExporterApplication.class, properties = {
-    "jira.endpoint=https://jira.vividus.com/",
-    "xray-exporter.project-key=VIVIDUS"
+    // Jira
+    // Project=vivdus-test
+    "jira.vivi.project-key-regex=(VIVIT)",
+    "jira.vivi.endpoint=https://vivi-test.atlassian.net/",
+    "jira.vivi.http.auth.username=sakharchuk.pavel@gmail.com",
+    "jira.vivi.http.auth.password=ATATT3xFfGF099I2wPWDTFPb5lEJyvcwBiI1Wif531Ikos1bH7jqPjFCC4ABtH7yolnRlSLNYxshUXoak1eYfhl0wuTLJ7EshJozObSjPXcpNhid4o7U1V7iv368Z3BfExBlEbTM5H9Mxs5_cSe7v9woxyEnFBB2umxoSM033QwsI2Ye7BoVDfc=D442DAE2",
+    "jira.vivi.http.auth.preemptive-auth-enabled=true",
+//    "jira.vivi.http.socket-timeout=10000",
+    "jira.vivi.fields-mapping.test-case-type=customfield_10001",
+
+    // Xray - Jira
+    "jira-exporter.jira-instance-key=vivi",
+    "jira-exporter.editable-statuses=true",
+//    "xray-exporter.project-key=VIVITEST",
+    "jira-exporter.project-key=VIVIT",
+
+    // Example
+//    "jira.endpoint=https://jira.vividus.com/",
+//    "xray-exporter.project-key=VIVIDUS"
 })
 class MainFlowTests
 {
-    @MockBean private XrayExporterOptions xrayExporterOptions;
-    @SpyBean private XrayFacade xrayFacade;
+    @MockBean private JiraExporterOptions jiraExporterOptions;
+    @SpyBean private JiraExporterFacade jiraExporterFacade;
     @SpyBean private TestCaseFactory testCaseFactory;
-    @Autowired private XrayExporter xrayExporter;
+    @Autowired private JiraExporter jiraExporter;
 
     @Test
     void mainFlowTest(@TempDir Path tempDirectory) throws IOException, URISyntaxException {
 
         URI jsonResultsUri = getJsonResultsUri("createandlink");
 
-        when(xrayExporterOptions.getJsonResultsDirectory()).thenReturn(Paths.get(jsonResultsUri));
+        when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(Paths.get(jsonResultsUri));
 
-        xrayExporter.exportResults();
+        jiraExporter.exportResults();
     }
 
     private URI getJsonResultsUri(String resource) throws URISyntaxException

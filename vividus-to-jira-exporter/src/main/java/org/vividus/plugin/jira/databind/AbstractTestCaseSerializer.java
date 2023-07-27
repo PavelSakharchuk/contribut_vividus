@@ -56,27 +56,27 @@ public abstract class AbstractTestCaseSerializer<T extends AbstractTestCase> ext
 
         writeObjectWithField(generator, "issuetype", NAME, "Test");
 
-        try
-        {
-            Map<String, String> mapping = jiraConfigurationProvider.getFieldsMappingByProjectKey(projectKey);
+//        try
+//        {
+//            Map<String, String> mapping = jiraConfigurationProvider.getFieldsMappingByProjectKey(projectKey);
 
-            writeObjectWithValueField(generator, getSafely(TEST_CASE_TYPE_FIELD_KEY, mapping), testCase.getType());
+//            writeObjectWithValueField(generator, getSafely(TEST_CASE_TYPE_FIELD_KEY, mapping), testCase.getType());
 
             generator.writeStringField("summary", testCase.getSummary());
 
             writeJsonArray(generator, "labels", testCase.getLabels(), false);
 
-            writeJsonArray(generator, "components", testCase.getComponents(), true);
+//            writeJsonArray(generator, "components", testCase.getComponents(), true);
 
-            serializeCustomFields(testCase, mapping, generator);
+//            serializeCustomFields(testCase, mapping, generator);
 
             generator.writeEndObject();
             generator.writeEndObject();
-        }
-        catch (JiraConfigurationException e)
-        {
-            throw new IllegalStateException(e);
-        }
+//        }
+//        catch (JiraConfigurationException e)
+//        {
+//            throw new IllegalStateException(e);
+//        }
     }
 
     protected void writeObjectWithValueField(JsonGenerator generator, String objectKey, String fieldValue)

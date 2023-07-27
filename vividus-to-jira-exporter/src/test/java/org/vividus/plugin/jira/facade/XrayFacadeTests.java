@@ -71,7 +71,7 @@ import org.vividus.util.zip.ZipUtils;
 import org.vividus.plugin.jira.databind.AbstractTestCaseSerializer;
 import org.vividus.plugin.jira.databind.CucumberTestCaseSerializer;
 import org.vividus.plugin.jira.databind.ManualTestCaseSerializer;
-import org.vividus.plugin.jira.facade.XrayFacade.NonEditableIssueStatusException;
+import org.vividus.plugin.jira.facade.JiraExporterFacade.NonEditableIssueStatusException;
 import org.vividus.plugin.jira.model.AbstractTestCase;
 import org.vividus.plugin.jira.model.CucumberTestCase;
 import org.vividus.plugin.jira.model.ManualTestCase;
@@ -105,9 +105,9 @@ class XrayFacadeTests
     @Mock private JiraFacade jiraFacade;
     @Mock private JiraClient jiraClient;
     @Mock private JiraClientProvider jiraClientProvider;
-    private XrayFacade xrayFacade;
+    private JiraExporterFacade xrayFacade;
 
-    private final TestLogger logger = TestLoggerFactory.getTestLogger(XrayFacade.class);
+    private final TestLogger logger = TestLoggerFactory.getTestLogger(JiraExporterFacade.class);
 
     @AfterEach
     void afterEach()
@@ -413,7 +413,7 @@ class XrayFacadeTests
 
     private void initializeFacade(List<String> editableStatuses)
     {
-        xrayFacade = new XrayFacade(Optional.empty(), editableStatuses, jiraFacade, jiraClientProvider,
+        xrayFacade = new JiraExporterFacade(Optional.empty(), editableStatuses, jiraFacade, jiraClientProvider,
                 manualTestSerializer, cucumberTestSerializer);
     }
 

@@ -34,7 +34,7 @@ import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.validation.Errors;
-import org.vividus.plugin.jira.configuration.XrayExporterOptions;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 
 @ExtendWith(MockitoExtension.class)
 class XrayExporterOptionsValidatorTests
@@ -49,13 +49,13 @@ class XrayExporterOptionsValidatorTests
     @Test
     void shouldSupportXrayExporterOptionsClass()
     {
-        assertTrue(validator.supports(XrayExporterOptions.class));
+        assertTrue(validator.supports(JiraExporterOptions.class));
     }
 
     @Test
     void shouldRejectIfAttachmentPathPointsToTheRoot(@TempDir Path directory)
     {
-        XrayExporterOptions options = new XrayExporterOptions();
+        JiraExporterOptions options = new JiraExporterOptions();
         options.setTestExecutionAttachments(List.of(directory.getRoot()));
 
         validator.validate(options, errors);
@@ -68,7 +68,7 @@ class XrayExporterOptionsValidatorTests
     @Test
     void shouldRejectIfAttachmentPathPointsToNonExistentFile()
     {
-        XrayExporterOptions options = new XrayExporterOptions();
+        JiraExporterOptions options = new JiraExporterOptions();
         Path nonExstentPath = Paths.get("path/to/nowhere");
         options.setTestExecutionAttachments(List.of(nonExstentPath));
 
@@ -82,7 +82,7 @@ class XrayExporterOptionsValidatorTests
     @Test
     void shouldRejectIfAttachmentDirectoryIsEmpty(@TempDir Path directory)
     {
-        XrayExporterOptions options = new XrayExporterOptions();
+        JiraExporterOptions options = new JiraExporterOptions();
         options.setTestExecutionAttachments(List.of(directory));
 
         validator.validate(options, errors);
@@ -96,7 +96,7 @@ class XrayExporterOptionsValidatorTests
     void shouldPassValidationIfFolderExists(@TempDir Path directory) throws IOException
     {
         Files.createFile(directory.resolve(DATA_TXT));
-        XrayExporterOptions options = new XrayExporterOptions();
+        JiraExporterOptions options = new JiraExporterOptions();
         options.setTestExecutionAttachments(List.of(directory));
 
         validator.validate(options, errors);
@@ -108,7 +108,7 @@ class XrayExporterOptionsValidatorTests
     void shouldPassValidationIfRegularFileExists(@TempDir Path directory) throws IOException
     {
         Path filePath = Files.createFile(directory.resolve(DATA_TXT));
-        XrayExporterOptions options = new XrayExporterOptions();
+        JiraExporterOptions options = new JiraExporterOptions();
         options.setTestExecutionAttachments(List.of(filePath));
 
         validator.validate(options, errors);

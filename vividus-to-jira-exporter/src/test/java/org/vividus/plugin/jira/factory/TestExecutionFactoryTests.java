@@ -39,7 +39,7 @@ import org.vividus.model.jbehave.Example;
 import org.vividus.model.jbehave.Examples;
 import org.vividus.model.jbehave.Scenario;
 import org.vividus.model.jbehave.Step;
-import org.vividus.plugin.jira.configuration.XrayExporterOptions;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.model.TestExecution;
 import org.vividus.plugin.jira.model.TestExecutionInfo;
 import org.vividus.plugin.jira.model.TestExecutionItem;
@@ -58,7 +58,7 @@ class TestExecutionFactoryTests
     private static final String KEY = "TEST-EXEC-KEY";
     private static final String SUMMARY = "summary";
 
-    @Spy private XrayExporterOptions xrayExporterOptions;
+    @Spy private JiraExporterOptions xrayExporterOptions;
     @InjectMocks private TestExecutionFactory factory;
 
     @Test

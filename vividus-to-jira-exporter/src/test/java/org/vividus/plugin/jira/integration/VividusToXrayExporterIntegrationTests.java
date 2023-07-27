@@ -31,9 +31,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.vividus.plugin.jira.VividusToXrayExporterApplication;
-import org.vividus.plugin.jira.configuration.XrayExporterOptions;
-import org.vividus.plugin.jira.exporter.XrayExporter;
-import org.vividus.plugin.jira.facade.XrayFacade;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
+import org.vividus.plugin.jira.exporter.JiraExporter;
+import org.vividus.plugin.jira.facade.JiraExporterFacade;
 import org.vividus.plugin.jira.factory.TestCaseFactory;
 
 @SpringBootTest(classes = VividusToXrayExporterApplication.class, properties = {
@@ -42,10 +42,10 @@ import org.vividus.plugin.jira.factory.TestCaseFactory;
 })
 class VividusToXrayExporterIntegrationTests
 {
-    @MockBean private XrayExporterOptions xrayExporterOptions;
-    @SpyBean private XrayFacade xrayFacade;
+    @MockBean private JiraExporterOptions xrayExporterOptions;
+    @SpyBean private JiraExporterFacade xrayFacade;
     @SpyBean private TestCaseFactory testCaseFactory;
-    @Autowired private XrayExporter xrayExporter;
+    @Autowired private JiraExporter xrayExporter;
 
     @Test
     void shouldStartContext(@TempDir Path tempDirectory) throws IOException

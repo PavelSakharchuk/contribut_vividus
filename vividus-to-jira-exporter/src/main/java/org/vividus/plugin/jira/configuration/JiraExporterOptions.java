@@ -21,8 +21,8 @@ import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("xray-exporter")
-public class XrayExporterOptions
+@ConfigurationProperties("jira-exporter")
+public class JiraExporterOptions
 {
     private Path jsonResultsDirectory;
     private String testSetKey;

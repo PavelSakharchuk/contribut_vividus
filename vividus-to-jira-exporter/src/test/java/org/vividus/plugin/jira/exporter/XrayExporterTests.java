@@ -71,12 +71,12 @@ import org.vividus.model.jbehave.NotUniqueMetaValueException;
 import org.vividus.model.jbehave.Scenario;
 import org.vividus.output.ManualTestStep;
 import org.vividus.util.ResourceUtils;
-import org.vividus.plugin.jira.configuration.XrayExporterOptions;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.facade.AbstractTestCaseParameters;
 import org.vividus.plugin.jira.facade.CucumberTestCaseParameters;
 import org.vividus.plugin.jira.facade.ManualTestCaseParameters;
-import org.vividus.plugin.jira.facade.XrayFacade;
-import org.vividus.plugin.jira.facade.XrayFacade.NonEditableIssueStatusException;
+import org.vividus.plugin.jira.facade.JiraExporterFacade;
+import org.vividus.plugin.jira.facade.JiraExporterFacade.NonEditableIssueStatusException;
 import org.vividus.plugin.jira.factory.TestCaseFactory;
 import org.vividus.plugin.jira.factory.TestExecutionFactory;
 import org.vividus.plugin.jira.model.CucumberTestCase;
@@ -103,13 +103,13 @@ class XrayExporterTests
     @Captor private ArgumentCaptor<CucumberTestCaseParameters> cucumberTestCaseParametersCaptor;
     @Captor private ArgumentCaptor<List<Entry<String, Scenario>>> scenariosCaptor;
 
-    @Spy private XrayExporterOptions xrayExporterOptions;
+    @Spy private JiraExporterOptions xrayExporterOptions;
     @Mock private TestCaseFactory testCaseFactory;
-    @Mock private XrayFacade xrayFacade;
+    @Mock private JiraExporterFacade xrayFacade;
     @Mock private TestExecutionFactory testExecutionFactory;
-    @InjectMocks private XrayExporter xrayExporter;
+    @InjectMocks private JiraExporter xrayExporter;
 
-    private final TestLogger logger = TestLoggerFactory.getTestLogger(XrayExporter.class);
+    private final TestLogger logger = TestLoggerFactory.getTestLogger(JiraExporter.class);
 
     @BeforeEach
     void beforeEach()

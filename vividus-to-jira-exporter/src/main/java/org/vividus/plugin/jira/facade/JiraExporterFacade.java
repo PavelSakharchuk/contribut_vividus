@@ -51,9 +51,9 @@ import org.vividus.util.json.JsonPathUtils;
 import org.zeroturnaround.zip.ZipException;
 import org.zeroturnaround.zip.ZipUtil;
 
-public class XrayFacade
+public class JiraExporterFacade
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(XrayFacade.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JiraExporterFacade.class);
 
     private final List<String> editableStatuses;
     private final Optional<String> jiraInstanceKey;
@@ -61,7 +61,7 @@ public class XrayFacade
     private final JiraClientProvider jiraClientProvider;
     private final ObjectMapper objectMapper;
 
-    public XrayFacade(Optional<String> jiraInstanceKey, List<String> editableStatuses, JiraFacade jiraFacade,
+    public JiraExporterFacade(Optional<String> jiraInstanceKey, List<String> editableStatuses, JiraFacade jiraFacade,
             JiraClientProvider jiraClientProvider, ManualTestCaseSerializer manualTestSerializer,
             CucumberTestCaseSerializer cucumberTestSerializer)
     {

@@ -41,14 +41,14 @@ import org.vividus.model.jbehave.Story;
 import org.vividus.output.ManualStepConverter;
 import org.vividus.output.OutputReader;
 import org.vividus.output.SyntaxException;
-import org.vividus.plugin.jira.configuration.XrayExporterOptions;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.converter.CucumberScenarioConverter;
 import org.vividus.plugin.jira.converter.CucumberScenarioConverter.CucumberScenario;
 import org.vividus.plugin.jira.facade.AbstractTestCaseParameters;
 import org.vividus.plugin.jira.facade.CucumberTestCaseParameters;
 import org.vividus.plugin.jira.facade.ManualTestCaseParameters;
-import org.vividus.plugin.jira.facade.XrayFacade;
-import org.vividus.plugin.jira.facade.XrayFacade.NonEditableIssueStatusException;
+import org.vividus.plugin.jira.facade.JiraExporterFacade;
+import org.vividus.plugin.jira.facade.JiraExporterFacade.NonEditableIssueStatusException;
 import org.vividus.plugin.jira.factory.TestCaseFactory;
 import org.vividus.plugin.jira.factory.TestExecutionFactory;
 import org.vividus.plugin.jira.model.AbstractTestCase;
@@ -56,12 +56,12 @@ import org.vividus.plugin.jira.model.TestCaseType;
 import org.vividus.plugin.jira.model.TestExecution;
 
 @Component
-public class XrayExporter
+public class JiraExporter
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(XrayExporter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JiraExporter.class);
 
-    @Autowired private XrayExporterOptions xrayExporterOptions;
-    @Autowired private XrayFacade xrayFacade;
+    @Autowired private JiraExporterOptions jiraExporterOptions;
+    @Autowired private JiraExporterFacade jiraExporterFacade;
     @Autowired private TestCaseFactory testCaseFactory;
     @Autowired private TestExecutionFactory testExecutionFactory;
 
@@ -80,7 +80,7 @@ public class XrayExporter
     public void exportResults() throws IOException
     {
         List<Entry<String, Scenario>> testCases = new ArrayList<>();
-        for (Story story : OutputReader.readStoriesFromJsons(xrayExporterOptions.getJsonResultsDirectory()))
+        for (Story story : OutputReader.readStoriesFromJsons(jiraExporterOptions.getJsonResultsDirectory()))
         {
             LOGGER.atInfo().addArgument(story::getPath).log("Exporting scenarios from {} story");
 
@@ -98,26 +98,26 @@ public class XrayExporter
 
     private void addTestCasesToTestSet(List<Entry<String, Scenario>> testCases)
     {
-        String testSetKey = xrayExporterOptions.getTestSetKey();
+        String testSetKey = jiraExporterOptions.getTestSetKey();
         if (testSetKey != null)
         {
             List<String> testCaseIds = testCases.stream()
                                                 .map(Entry::getKey)
                                                 .collect(Collectors.toList());
 
-            executeSafely(() -> xrayFacade.updateTestSet(testSetKey, testCaseIds), "test set", testSetKey);
+            executeSafely(() -> jiraExporterFacade.updateTestSet(testSetKey, testCaseIds), "test set", testSetKey);
         }
     }
 
     private void addTestCasesToTestExecution(List<Entry<String, Scenario>> testCases)
     {
-        String testExecutionKey = xrayExporterOptions.getTestExecutionKey();
+        String testExecutionKey = jiraExporterOptions.getTestExecutionKey();
 
-        if (testExecutionKey != null || xrayExporterOptions.getTestExecutionSummary() != null)
+        if (testExecutionKey != null || jiraExporterOptions.getTestExecutionSummary() != null)
         {
             TestExecution testExecution = testExecutionFactory.create(testCases);
-            executeSafely(() -> xrayFacade.importTestExecution(testExecution,
-                    xrayExporterOptions.getTestExecutionAttachments()), "test execution", testExecutionKey);
+            executeSafely(() -> jiraExporterFacade.importTestExecution(testExecution,
+                    jiraExporterOptions.getTestExecutionAttachments()), "test execution", testExecutionKey);
         }
     }
 
@@ -157,11 +157,11 @@ public class XrayExporter
             AbstractTestCase testCase = testCaseFactories.get(testCaseType).apply(parameters);
             if (testCaseId == null)
             {
-                testCaseId = xrayFacade.createTestCase(testCase);
+                testCaseId = jiraExporterFacade.createTestCase(testCase);
             }
-            else if (xrayExporterOptions.isTestCaseUpdatesEnabled())
+            else if (jiraExporterOptions.isTestCaseUpdatesEnabled())
             {
-                xrayFacade.updateTestCase(testCaseId, testCase);
+                jiraExporterFacade.updateTestCase(testCaseId, testCase);
             }
             else
             {
@@ -237,7 +237,7 @@ public class XrayExporter
         Optional<String> requirementId = scenario.getUniqueMetaValue("requirementId");
         if (requirementId.isPresent())
         {
-            xrayFacade.createTestsLink(testCaseId, requirementId.get());
+            jiraExporterFacade.createTestsLink(testCaseId, requirementId.get());
         }
     }
 

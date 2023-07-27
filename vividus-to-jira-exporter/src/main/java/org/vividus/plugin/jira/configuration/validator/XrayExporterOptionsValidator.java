@@ -27,7 +27,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import org.vividus.plugin.jira.configuration.XrayExporterOptions;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 
 @Component(EnableConfigurationProperties.VALIDATOR_BEAN_NAME)
 public class XrayExporterOptionsValidator implements Validator
@@ -37,13 +37,13 @@ public class XrayExporterOptionsValidator implements Validator
     @Override
     public boolean supports(Class<?> clazz)
     {
-        return XrayExporterOptions.class.equals(clazz);
+        return JiraExporterOptions.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors)
     {
-        XrayExporterOptions options = (XrayExporterOptions) target;
+        JiraExporterOptions options = (JiraExporterOptions) target;
         List<Path> attachments = options.getTestExecutionAttachments();
 
         attachments.forEach(attachment ->

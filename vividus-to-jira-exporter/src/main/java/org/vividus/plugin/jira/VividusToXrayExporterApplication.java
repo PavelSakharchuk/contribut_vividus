@@ -25,19 +25,19 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 import org.vividus.exporter.config.VividusExporterCommonConfiguration;
-import org.vividus.plugin.jira.configuration.XrayExporterOptions;
-import org.vividus.plugin.jira.exporter.XrayExporter;
+import org.vividus.plugin.jira.configuration.JiraExporterOptions;
+import org.vividus.plugin.jira.exporter.JiraExporter;
 
 @SpringBootApplication
 @Import(VividusExporterCommonConfiguration.class)
 @ImportResource(locations = { "org/vividus/jira/spring.xml", "org/vividus/plugin/jira/spring.xml"})
 @SuppressWarnings("checkstyle:hideutilityclassconstructor")
-@EnableConfigurationProperties(XrayExporterOptions.class)
+@EnableConfigurationProperties(JiraExporterOptions.class)
 public class VividusToXrayExporterApplication
 {
     public static void main(String[] args) throws IOException
     {
         ApplicationContext context = SpringApplication.run(VividusToXrayExporterApplication.class, args);
-        context.getBean(XrayExporter.class).exportResults();
+        context.getBean(JiraExporter.class).exportResults();
     }
 }
