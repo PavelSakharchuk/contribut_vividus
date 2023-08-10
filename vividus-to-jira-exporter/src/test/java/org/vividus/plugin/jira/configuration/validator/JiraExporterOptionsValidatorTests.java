@@ -37,7 +37,7 @@ import org.springframework.validation.Errors;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 
 @ExtendWith(MockitoExtension.class)
-class XrayExporterOptionsValidatorTests
+class JiraExporterOptionsValidatorTests
 {
     private static final String TEST_EXECUTION_ATTACHMENTS_FIELD = "test-execution-attachments";
     private static final String DATA_TXT = "data.txt";
