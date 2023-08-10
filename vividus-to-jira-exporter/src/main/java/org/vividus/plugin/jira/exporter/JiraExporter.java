@@ -77,6 +77,7 @@ public class JiraExporter
         TestCaseType.CUCUMBER, (title, scenario) -> createCucumberTestCaseParameters(scenario)
     );
 
+    // TODO: ok in general: Look to exportScenario method
     public void exportResults() throws IOException
     {
         List<Entry<String, Scenario>> testCases = new ArrayList<>();
@@ -86,61 +87,129 @@ public class JiraExporter
 
             for (Scenario scenario : story.getFoldedScenarios())
             {
+                /**
+                 *  TODO:
+                 *      - createTestCase:
+                 *          - createandlink: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario","labels":[],"components":[]}}
+                 *              - ok. It is extra I think, we need only to update status in the TestReport
+                 *          - componentslabelsupdatabletci: skip
+                 *          - createcucumber: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Cucumber"},"summary":"Dummy scenario","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}],"customfield_10057":{"value":"Scenario Outline"},"customfield_10058":"Given I setup test environment\r\nWhen I perform action on test environment\r\nThen I verify changes on test environment\r\nExamples:\r\n|parameter-key|\r\n|parameter-value-1|\r\n|parameter-value-2|\r\n|parameter-value-3|\r\n"}}
+                 *          - updatecucumber: skip
+                 *          - continueiferror: skip
+                 *          - skipped: skip
+                 *          - morethanoneid: skip
+                 *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+                 *      - updateTestCase -
+                 *          - createandlink: skip
+                 *          - componentslabelsupdatabletci: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario: componentslabelsupdatabletci","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}]}}
+                 *          - createcucumber: skip
+                 *          - updatecucumber: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Cucumber"},"summary":"Dummy scenario: updatecucumber","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}],"customfield_10057":{"value":"Scenario"},"customfield_10058":"Given I setup test environment\r\nWhen I perform action on test environment\r\nThen I verify changes on test environment"}}
+                 *          - continueiferror: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario: continueiferror 2","labels":[],"components":[]}}
+                 *          - skipped: skip
+                 *          - morethanoneid: skip
+                 *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+                 *      - createTestsLink -
+                 *          - createandlink: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-25"},"outwardIssue":{"key":"VIVIT-1"}}
+                 *          - componentslabelsupdatabletci: ok (updated): {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-2"},"outwardIssue":{"key":"VIVIT-1"}}
+                 *          - createcucumber: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-32"},"outwardIssue":{"key":"VIVIT-1"}}
+                 *          - updatecucumber: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-3"},"outwardIssue":{"key":"VIVIT-1"}}
+                 *          - continueiferror: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-5"},"outwardIssue":{"key":"VIVIT-1"}}
+                 *          - skipped: skip
+                 *          - morethanoneid: skip
+                 *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+                 */
                 exportScenario(story.getPath(), scenario).ifPresent(testCases::add);
             }
         }
 
-        addTestCasesToTestSet(testCases);
-        addTestCasesToTestExecution(testCases);
+        // TODO: Looks like It is needed to skip now because we don't have Sets in our approach
+//        addTestCasesToTestSet(testCases);
+        // TODO: Looks like It is needed to skip now because cloning of TestPlan to TestReport is simpler
+        // TODO: We need to update only result/ status
+        // TODO: From this Part: Need to investigate adding of attachments
+//        addTestCasesToTestExecution(testCases);
 
         publishErrors();
     }
 
-    private void addTestCasesToTestSet(List<Entry<String, Scenario>> testCases)
-    {
-        String testSetKey = jiraExporterOptions.getTestSetKey();
-        if (testSetKey != null)
-        {
-            List<String> testCaseIds = testCases.stream()
-                                                .map(Entry::getKey)
-                                                .collect(Collectors.toList());
+    // TODO: Looks like It is needed to skip now because we don't have Sets in our approach
+//    private void addTestCasesToTestSet(List<Entry<String, Scenario>> testCases)
+//    {
+//        String testSetKey = jiraExporterOptions.getTestSetKey();
+//        if (testSetKey != null)
+//        {
+//            List<String> testCaseIds = testCases.stream()
+//                                                .map(Entry::getKey)
+//                                                .collect(Collectors.toList());
+//
+//            executeSafely(() -> jiraExporterFacade.updateTestSet(testSetKey, testCaseIds), "test set", testSetKey);
+//        }
+//    }
 
-            executeSafely(() -> jiraExporterFacade.updateTestSet(testSetKey, testCaseIds), "test set", testSetKey);
-        }
-    }
+    // TODO: Looks like It is needed to skip now because cloning of TestPlan to TestReport is simpler
+//    private void addTestCasesToTestExecution(List<Entry<String, Scenario>> testCases)
+//    {
+//        String testExecutionKey = jiraExporterOptions.getTestExecutionKey();
+//
+//        if (testExecutionKey != null || jiraExporterOptions.getTestExecutionSummary() != null)
+//        {
+//            TestExecution testExecution = testExecutionFactory.create(testCases);
+//            executeSafely(() -> jiraExporterFacade.importTestExecution(testExecution,
+//                    jiraExporterOptions.getTestExecutionAttachments()), "test execution", testExecutionKey);
+//        }
+//    }
 
-    private void addTestCasesToTestExecution(List<Entry<String, Scenario>> testCases)
-    {
-        String testExecutionKey = jiraExporterOptions.getTestExecutionKey();
+//    private void executeSafely(FailableRunnable runnable, String type, String key)
+//    {
+//        try
+//        {
+//            runnable.run();
+//        }
+//        catch (IOException | JiraConfigurationException thrown)
+//        {
+//            String errorMessage = key == null
+//                    ? String.format("Failed to create %s: %s", type, thrown.getMessage())
+//                    : String.format("Failed to update %s with the key %s: %s", type, key, thrown.getMessage());
+//            errors.add(errorMessage);
+//        }
+//    }
 
-        if (testExecutionKey != null || jiraExporterOptions.getTestExecutionSummary() != null)
-        {
-            TestExecution testExecution = testExecutionFactory.create(testCases);
-            executeSafely(() -> jiraExporterFacade.importTestExecution(testExecution,
-                    jiraExporterOptions.getTestExecutionAttachments()), "test execution", testExecutionKey);
-        }
-    }
-
-    private void executeSafely(FailableRunnable runnable, String type, String key)
-    {
-        try
-        {
-            runnable.run();
-        }
-        catch (IOException | JiraConfigurationException thrown)
-        {
-            String errorMessage = key == null
-                    ? String.format("Failed to create %s: %s", type, thrown.getMessage())
-                    : String.format("Failed to update %s with the key %s: %s", type, key, thrown.getMessage());
-            errors.add(errorMessage);
-        }
-    }
-
+    /**
+     *  TODO:
+     *      - createTestCase:
+     *          - createandlink: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario","labels":[],"components":[]}}
+     *              - ok. It is extra I think, we need only to update status in the TestReport
+     *          - componentslabelsupdatabletci: skip
+     *          - createcucumber: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Cucumber"},"summary":"Dummy scenario","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}],"customfield_10057":{"value":"Scenario Outline"},"customfield_10058":"Given I setup test environment\r\nWhen I perform action on test environment\r\nThen I verify changes on test environment\r\nExamples:\r\n|parameter-key|\r\n|parameter-value-1|\r\n|parameter-value-2|\r\n|parameter-value-3|\r\n"}}
+     *          - updatecucumber: skip
+     *          - continueiferror: skip
+     *          - skipped: skip
+     *          - morethanoneid: skip
+     *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+     *      - updateTestCase -
+     *          - createandlink: skip
+     *          - componentslabelsupdatabletci: ok:  {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario: componentslabelsupdatabletci","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}]}}
+     *          - createcucumber: skip
+     *          - updatecucumber: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Cucumber"},"summary":"Dummy scenario: updatecucumber","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}],"customfield_10057":{"value":"Scenario"},"customfield_10058":"Given I setup test environment\r\nWhen I perform action on test environment\r\nThen I verify changes on test environment"}}
+     *          - continueiferror: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario: continueiferror 2","labels":[],"components":[]}}
+     *          - skipped: skip
+     *          - morethanoneid: skip
+     *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+     *      - createTestsLink -
+     *          - createandlink: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-25"},"outwardIssue":{"key":"VIVIT-1"}}
+     *          - componentslabelsupdatabletci: ok (updated): {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-2"},"outwardIssue":{"key":"VIVIT-1"}}
+     *          - createcucumber: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-32"},"outwardIssue":{"key":"VIVIT-1"}}
+     *          - updatecucumber: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-3"},"outwardIssue":{"key":"VIVIT-1"}}
+     *          - continueiferror: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-5"},"outwardIssue":{"key":"VIVIT-1"}}
+     *          - skipped: skip
+     *          - morethanoneid: skip
+     *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+     */
     private Optional<Entry<String, Scenario>> exportScenario(String storyTitle, Scenario scenario)
     {
         String scenarioTitle = scenario.getTitle();
 
-        if (scenario.hasMetaWithName("xray.skip-export"))
+        if (scenario.hasMetaWithName("jira.skip-export"))
         {
             LOGGER.atInfo().addArgument(scenarioTitle).log("Skip export of {} scenario");
             return Optional.empty();
@@ -157,10 +226,35 @@ public class JiraExporter
             AbstractTestCase testCase = testCaseFactories.get(testCaseType).apply(parameters);
             if (testCaseId == null)
             {
+                /**
+                 *  TODO:
+                 *      - createTestCase: I think we need only update
+                 *          - createandlink: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario","labels":[],"components":[]}}
+                 *              - It is extra I think, we need only to update status in the TestReport
+                 *          - componentslabelsupdatabletci: skip
+                 *          - createcucumber: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Cucumber"},"summary":"Dummy scenario","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}],"customfield_10057":{"value":"Scenario Outline"},"customfield_10058":"Given I setup test environment\r\nWhen I perform action on test environment\r\nThen I verify changes on test environment\r\nExamples:\r\n|parameter-key|\r\n|parameter-value-1|\r\n|parameter-value-2|\r\n|parameter-value-3|\r\n"}}
+                 *          - updatecucumber: skip
+                 *          - continueiferror: skip
+                 *          - skipped: skip
+                 *          - morethanoneid: skip
+                 *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+                 */
                 testCaseId = jiraExporterFacade.createTestCase(testCase);
             }
             else if (jiraExporterOptions.isTestCaseUpdatesEnabled())
             {
+                /**
+                 *  TODO:
+                 *      - updateTestCase -
+                 *          - createandlink: skip
+                 *          - componentslabelsupdatabletci: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario: componentslabelsupdatabletci","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}]}}
+                 *          - createcucumber: skip
+                 *          - updatecucumber: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Cucumber"},"summary":"Dummy scenario: updatecucumber","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}],"customfield_10057":{"value":"Scenario"},"customfield_10058":"Given I setup test environment\r\nWhen I perform action on test environment\r\nThen I verify changes on test environment"}}
+                 *          - continueiferror: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario: continueiferror 2","labels":[],"components":[]}}
+                 *          - skipped: skip
+                 *          - morethanoneid: skip
+                 *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+                 */
                 jiraExporterFacade.updateTestCase(testCaseId, testCase);
             }
             else
@@ -169,6 +263,18 @@ public class JiraExporter
                                .addArgument(testCaseId)
                                .log("Skipping update of {} Test Case with ID {}");
             }
+            /**
+             *  TODO:
+             *      - createTestsLink -
+             *          - createandlink: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-25"},"outwardIssue":{"key":"VIVIT-1"}}
+             *          - componentslabelsupdatabletci: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-2"},"outwardIssue":{"key":"VIVIT-1"}}
+             *          - createcucumber: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-32"},"outwardIssue":{"key":"VIVIT-1"}}
+             *          - updatecucumber: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-3"},"outwardIssue":{"key":"VIVIT-1"}}
+             *          - continueiferror: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-5"},"outwardIssue":{"key":"VIVIT-1"}}
+             *          - skipped: skip
+             *          - morethanoneid: skip
+             *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+             */
             createTestsLink(testCaseId, scenario);
             return Optional.of(entry(testCaseId, scenario));
         }
@@ -183,15 +289,22 @@ public class JiraExporter
         return Optional.empty();
     }
 
+    // TODO: ok
     private ManualTestCaseParameters createManualTestCaseParameters(String storyTitle, Scenario scenario)
             throws SyntaxException
     {
         ManualTestCaseParameters parameters = new ManualTestCaseParameters();
         fillTestCaseParameters(parameters, TestCaseType.MANUAL, scenario);
+        /**
+         * TODO:
+         *                  - Field Type (Jira): Jira does not have supported JSON field. I didn't find.
+         *                  - Notes: I think manual steps can be skipped because we will be update tasks ???
+         */
         parameters.setSteps(ManualStepConverter.convert(storyTitle, scenario.getTitle(), scenario.collectSteps()));
         return parameters;
     }
 
+    // TODO: ok
     private CucumberTestCaseParameters createCucumberTestCaseParameters(Scenario scenario)
     {
         CucumberTestCaseParameters parameters = new CucumberTestCaseParameters();
@@ -202,15 +315,17 @@ public class JiraExporter
         return parameters;
     }
 
+    // TODO: ok
     private <T extends AbstractTestCaseParameters> void fillTestCaseParameters(T parameters, TestCaseType type,
             Scenario scenario)
     {
         parameters.setType(type);
-        parameters.setLabels(scenario.getMetaValues("xray.labels"));
-        parameters.setComponents(scenario.getMetaValues("xray.components"));
+        parameters.setLabels(scenario.getMetaValues("jira.labels"));
+        parameters.setComponents(scenario.getMetaValues("jira.components"));
         parameters.setSummary(scenario.getTitle());
     }
 
+    // TODO: ok
     private void publishErrors()
     {
         if (!errors.isEmpty())
@@ -231,6 +346,18 @@ public class JiraExporter
         LOGGER.atInfo().log("Export successful");
     }
 
+    /**
+     *  TODO:
+     *      - createTestsLink -
+     *          - createandlink: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-25"},"outwardIssue":{"key":"VIVIT-1"}}
+     *          - componentslabelsupdatabletci: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-2"},"outwardIssue":{"key":"VIVIT-1"}}
+     *          - createcucumber: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-32"},"outwardIssue":{"key":"VIVIT-1"}}
+     *          - updatecucumber: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-3"},"outwardIssue":{"key":"VIVIT-1"}}
+     *          - continueiferror: ok: {"type":{"name":"Test"},"inwardIssue":{"key":"VIVIT-5"},"outwardIssue":{"key":"VIVIT-1"}}
+     *          - skipped: skip
+     *          - morethanoneid: skip
+     *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+     */
     private void createTestsLink(String testCaseId, Scenario scenario)
             throws IOException, NotUniqueMetaValueException, JiraConfigurationException
     {

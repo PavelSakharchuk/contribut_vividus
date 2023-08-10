@@ -33,11 +33,11 @@ import org.vividus.plugin.jira.exporter.JiraExporter;
 @ImportResource(locations = { "org/vividus/jira/spring.xml", "org/vividus/plugin/jira/spring.xml"})
 @SuppressWarnings("checkstyle:hideutilityclassconstructor")
 @EnableConfigurationProperties(JiraExporterOptions.class)
-public class VividusToXrayExporterApplication
+public class VividusToJiraExporterApplication
 {
     public static void main(String[] args) throws IOException
     {
-        ApplicationContext context = SpringApplication.run(VividusToXrayExporterApplication.class, args);
+        ApplicationContext context = SpringApplication.run(VividusToJiraExporterApplication.class, args);
         context.getBean(JiraExporter.class).exportResults();
     }
 }

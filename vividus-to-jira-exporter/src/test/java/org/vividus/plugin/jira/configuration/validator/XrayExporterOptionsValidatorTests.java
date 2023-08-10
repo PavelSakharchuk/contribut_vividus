@@ -44,7 +44,7 @@ class XrayExporterOptionsValidatorTests
 
     @Mock private Errors errors;
 
-    private final XrayExporterOptionsValidator validator = new XrayExporterOptionsValidator();
+    private final JiraExporterOptionsValidator validator = new JiraExporterOptionsValidator();
 
     @Test
     void shouldSupportXrayExporterOptionsClass()

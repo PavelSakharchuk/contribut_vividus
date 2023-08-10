@@ -30,13 +30,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.vividus.plugin.jira.VividusToXrayExporterApplication;
+import org.vividus.plugin.jira.VividusToJiraExporterApplication;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.exporter.JiraExporter;
 import org.vividus.plugin.jira.facade.JiraExporterFacade;
 import org.vividus.plugin.jira.factory.TestCaseFactory;
 
-@SpringBootTest(classes = VividusToXrayExporterApplication.class, properties = {
+@SpringBootTest(classes = VividusToJiraExporterApplication.class, properties = {
     "jira.endpoint=https://jira.vividus.com/",
     "xray-exporter.project-key=VIVIDUS"
 })

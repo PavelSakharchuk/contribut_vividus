@@ -11,6 +11,21 @@
           "keyword": "@",
           "name": "testCaseId",
           "value": ""
+        },
+        {
+          "keyword": "@",
+          "name": "requirementId",
+          "value": "VIVIT-1"
+        },
+        {
+          "keyword": "@",
+          "name": "jira.components",
+          "value": "dummy-component-1; dummy-component-2"
+        },
+        {
+          "keyword": "@",
+          "name": "jira.labels",
+          "value": "dummy-label-1; dummy-label-2"
         }
       ],
       "examples": {

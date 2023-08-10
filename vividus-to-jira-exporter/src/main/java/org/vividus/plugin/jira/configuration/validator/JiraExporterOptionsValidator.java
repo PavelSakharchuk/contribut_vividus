@@ -30,7 +30,7 @@ import org.springframework.validation.Validator;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 
 @Component(EnableConfigurationProperties.VALIDATOR_BEAN_NAME)
-public class XrayExporterOptionsValidator implements Validator
+public class JiraExporterOptionsValidator implements Validator
 {
     private static final String TEST_EXECUTION_ATTACHMENTS_FIELD = "test-execution-attachments";
 

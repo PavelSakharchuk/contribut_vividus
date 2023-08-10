@@ -57,17 +57,40 @@ public class JiraFacade
         this.jiraClientProvider = jiraClientProvider;
     }
 
+    /**
+     *  TODO:
+     *          - createandlink: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"summary":"Dummy scenario","labels":[],"components":[]}}
+     *          - componentslabelsupdatabletci: skip
+     *          - createcucumber: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Cucumber"},"summary":"Dummy scenario","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}],"customfield_10057":{"value":"Scenario Outline"},"customfield_10058":"Given I setup test environment\r\nWhen I perform action on test environment\r\nThen I verify changes on test environment\r\nExamples:\r\n|parameter-key|\r\n|parameter-value-1|\r\n|parameter-value-2|\r\n|parameter-value-3|\r\n"}}
+     *          - updatecucumber: skip
+     *          - continueiferror: skip
+     *          - skipped: skip
+     *          - morethanoneid: skip
+     *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+     */
     public String createIssue(String issueBody, Optional<String> jiraInstanceKey)
             throws IOException, JiraConfigurationException
     {
         return jiraClientProvider.getByJiraConfigurationKey(jiraInstanceKey).executePost(ISSUE_ENDPOINT, issueBody);
     }
 
+    /**
+     *  TODO:
+     *          - createandlink: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"summary":"Dummy scenario","labels":[],"components":[]}}
+     *          - componentslabelsupdatabletci: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"summary":"Dummy scenario","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}]}}
+     *          - createcucumber: skip
+     *          - updatecucumber: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Cucumber"},"summary":"Dummy scenario: updatecucumber","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}],"customfield_10057":{"value":"Scenario"},"customfield_10058":"Given I setup test environment\r\nWhen I perform action on test environment\r\nThen I verify changes on test environment"}}
+     *          - continueiferror: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario: continueiferror 2","labels":[],"components":[]}}
+     *          - skipped: skip
+     *          - morethanoneid: skip
+     *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+     */
     public String updateIssue(String issueKey, String issueBody) throws IOException, JiraConfigurationException
     {
         return jiraClientProvider.getByIssueKey(issueKey).executePut(ISSUE_ENDPOINT + issueKey, issueBody);
     }
 
+    // TODO: ok
     public void createIssueLink(String inwardIssueKey, String outwardIssueKey, String type)
             throws IOException, JiraConfigurationException
     {
@@ -76,23 +99,37 @@ public class JiraFacade
         jiraClientProvider.getByIssueKey(inwardIssueKey).executePost("/rest/api/latest/issueLink", createLinkRequest);
     }
 
+    /**
+     *  TODO:
+     *          - createandlink: skip
+     *          - componentslabelsupdatabletci: ok
+     *          - createcucumber: skip
+     *          - updatecucumber: ok
+     *          - continueiferror: ok
+     *          - skipped: skip
+     *          - morethanoneid: skip
+     *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+     */
     public String getIssueStatus(String issueKey) throws IOException, JiraConfigurationException
     {
         String issue = jiraClientProvider.getByIssueKey(issueKey).executeGet(ISSUE_ENDPOINT + issueKey);
         return JsonPathUtils.getData(issue, "$.fields.status.name");
     }
 
+    // TODO
     public Project getProject(String projectKey) throws IOException, JiraConfigurationException
     {
         return getJiraEntity("project/", projectKey, () -> jiraClientProvider.getByProjectKey(projectKey),
                 Project.class);
     }
 
+    // TODO: ok
     public JiraEntity getIssue(String issueKey) throws IOException, JiraConfigurationException
     {
         return getJiraEntity(ISSUE, issueKey, JiraEntity.class);
     }
 
+    // TODO
     public void addAttachments(String issueKey, List<Attachment> attachments)
             throws IOException, JiraConfigurationException
     {

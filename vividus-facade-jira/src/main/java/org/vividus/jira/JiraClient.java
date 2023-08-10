@@ -39,21 +39,25 @@ public class JiraClient
         this.httpClient = httpClient;
     }
 
+    // TODO
     public String executeGet(String relativeUrl) throws IOException
     {
         return execute(HttpMethod.GET, relativeUrl, List.of(), (HttpEntity) null);
     }
 
+    // TODO: ok
     public String executePost(String relativeUrl, String requestBody) throws IOException
     {
         return execute(HttpMethod.POST, relativeUrl, requestBody);
     }
 
+    // TODO
     public String executePost(String relativeUrl, List<Header> headers, HttpEntity content) throws IOException
     {
         return execute(HttpMethod.POST, relativeUrl, headers, content);
     }
 
+    // TODO
     public String executePut(String relativeUrl, String requestBody) throws IOException
     {
         return execute(HttpMethod.PUT, relativeUrl, requestBody);
@@ -75,7 +79,6 @@ public class JiraClient
                 .withContent(content)
                 .build();
 
-        return httpClient.execute(httpRequest)
-            .getResponseBodyAsString();
+        return httpClient.execute(httpRequest).getResponseBodyAsString();
     }
 }

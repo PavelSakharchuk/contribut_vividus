@@ -76,6 +76,18 @@ public class JiraExporterFacade
                                                   .addSerializer(CucumberTestCase.class, cucumberTestSerializer));
     }
 
+    /**
+     *  TODO:
+     *      - createandlink: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario","labels":[],"components":[]}}
+     *          - ok. It is extra I think, we need only to update status in the TestReport
+     *      - componentslabelsupdatabletci: skip
+     *      - createcucumber: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Cucumber"},"summary":"Dummy scenario","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}],"customfield_10057":{"value":"Scenario Outline"},"customfield_10058":"Given I setup test environment\r\nWhen I perform action on test environment\r\nThen I verify changes on test environment\r\nExamples:\r\n|parameter-key|\r\n|parameter-value-1|\r\n|parameter-value-2|\r\n|parameter-value-3|\r\n"}}
+     *      - updatecucumber: skip
+     *      - continueiferror: skip
+     *      - skipped: skip
+     *      - morethanoneid: skip
+     *      - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+     */
     public <T extends AbstractTestCase> String createTestCase(T testCase) throws IOException, JiraConfigurationException
     {
         String createTestRequest = objectMapper.writeValueAsString(testCase);
@@ -88,6 +100,17 @@ public class JiraExporterFacade
         return issueKey;
     }
 
+    /**
+     * TODO:
+     *          - createandlink: skip
+     *          - componentslabelsupdatabletci: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario: componentslabelsupdatabletci","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}]}}
+     *          - createcucumber: skip
+     *          - updatecucumber: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Cucumber"},"summary":"Dummy scenario: updatecucumber","labels":["dummy-label-1","dummy-label-2"],"components":[{"name":"dummy-component-1"},{"name":"dummy-component-2"}],"customfield_10057":{"value":"Scenario"},"customfield_10058":"Given I setup test environment\r\nWhen I perform action on test environment\r\nThen I verify changes on test environment"}}
+     *          - continueiferror: ok: {"fields":{"project":{"key":"VIVIT"},"issuetype":{"name":"Test"},"customfield_10055":{"value":"Manual"},"summary":"Dummy scenario: continueiferror 2","labels":[],"components":[]}}
+     *          - skipped: skip
+     *          - morethanoneid: skip
+     *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+     */
     public <T extends AbstractTestCase> void updateTestCase(String testCaseKey, T testCase)
             throws IOException, NonEditableIssueStatusException, JiraConfigurationException
     {
@@ -103,6 +126,7 @@ public class JiraExporterFacade
                        .log("{} Test with key {} has been updated");
     }
 
+    // TODO
     public void importTestExecution(TestExecution testExecution, List<Path> attachments)
             throws IOException, JiraConfigurationException
     {
@@ -131,6 +155,7 @@ public class JiraExporterFacade
         }
     }
 
+    // TODO
     public void addAttachments(String testExecutionKey, List<Path> attachmentPaths)
             throws IOException, JiraConfigurationException
     {
@@ -183,19 +208,31 @@ public class JiraExporterFacade
         return attachments;
     }
 
-    public void updateTestSet(String testSetKey, List<String> testCaseKeys)
-            throws IOException, JiraConfigurationException
-    {
-        AddOperationRequest request = new AddOperationRequest(testCaseKeys);
-        String requestBody = objectMapper.writeValueAsString(request);
-        LOGGER.atInfo()
-              .addArgument(() -> StringUtils.join(testCaseKeys, ", "))
-              .addArgument(testSetKey)
-              .log("Add {} test cases to Test Set with ID {}");
-        jiraClientProvider.getByIssueKey(testSetKey).executePost("/rest/raven/1.0/api/testset/" + testSetKey + "/test",
-                requestBody);
-    }
+    // TODO: Looks like It is needed to skip now
+//    public void updateTestSet(String testSetKey, List<String> testCaseKeys)
+//            throws IOException, JiraConfigurationException
+//    {
+//        AddOperationRequest request = new AddOperationRequest(testCaseKeys);
+//        String requestBody = objectMapper.writeValueAsString(request);
+//        LOGGER.atInfo()
+//              .addArgument(() -> StringUtils.join(testCaseKeys, ", "))
+//              .addArgument(testSetKey)
+//              .log("Add {} test cases to Test Set with ID {}");
+//        jiraClientProvider.getByIssueKey(testSetKey).executePost("/rest/raven/1.0/api/testset/" + testSetKey + "/test",
+//                requestBody);
+//    }
 
+    /**
+     *  TODO:
+     *          - createandlink: skip
+     *          - componentslabelsupdatabletci: ok
+     *          - createcucumber: skip
+     *          - updatecucumber: ok
+     *          - continueiferror: ok
+     *          - skipped: skip
+     *          - morethanoneid: skip
+     *          - empty Folder: java.lang.IllegalArgumentException: The directory 'C:\Users\PAVEL_~1\AppData\Local\Temp\junit8253403924913869911' does not contain needed JSON files
+     */
     private void checkIfIssueEditable(String issueKey)
             throws IOException, NonEditableIssueStatusException, JiraConfigurationException
     {
@@ -207,9 +244,10 @@ public class JiraExporterFacade
         }
     }
 
+    // TODO: ok
     public void createTestsLink(String testCaseId, String requirementId) throws IOException, JiraConfigurationException
     {
-        String linkType = "Tests";
+        String linkType = "Test";
         JiraEntity issue = jiraFacade.getIssue(testCaseId);
         boolean linkExists = issue.getIssueLinks().stream()
                 .anyMatch(link -> linkType.equals(link.getType()) && requirementId.equals(link.getOutwardIssueKey()));

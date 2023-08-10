@@ -5,12 +5,27 @@
   "scenarios": [
     {
       "keyword": "Scenario:",
-      "title": "Dummy scenario",
+      "title": "Dummy scenario: updatecucumber",
       "meta": [
         {
           "keyword": "@",
           "name": "testCaseId",
-          "value": "STUB-0"
+          "value": "VIVIT-3"
+        },
+        {
+          "keyword": "@",
+          "name": "requirementId",
+          "value": "VIVIT-1"
+        },
+        {
+          "keyword": "@",
+          "name": "jira.components",
+          "value": "dummy-component-1; dummy-component-2"
+        },
+        {
+          "keyword": "@",
+          "name": "jira.labels",
+          "value": "dummy-label-1; dummy-label-2"
         }
       ],
       "steps": [

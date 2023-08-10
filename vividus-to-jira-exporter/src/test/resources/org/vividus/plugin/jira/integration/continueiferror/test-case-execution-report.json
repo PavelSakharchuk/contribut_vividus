@@ -8,12 +8,17 @@
   "scenarios": [
     {
       "keyword": "Scenario:",
-      "title": "Dummy scenario",
+      "title": "Dummy scenario: continueiferror 1",
       "meta": [
         {
           "keyword": "@",
           "name": "testCaseId",
           "value": "STUB-ERROR"
+        },
+        {
+          "keyword": "@",
+          "name": "requirementId",
+          "value": "VIVIT-1"
         }
       ],
       "steps": [
@@ -33,12 +38,17 @@
     },
     {
       "keyword": "Scenario:",
-      "title": "Dummy scenario",
+      "title": "Dummy scenario: continueiferror 2",
       "meta": [
         {
           "keyword": "@",
           "name": "testCaseId",
-          "value": "STUB-0"
+          "value": "VIVIT-5"
+        },
+        {
+          "keyword": "@",
+          "name": "requirementId",
+          "value": "VIVIT-1"
         }
       ],
       "steps": [
