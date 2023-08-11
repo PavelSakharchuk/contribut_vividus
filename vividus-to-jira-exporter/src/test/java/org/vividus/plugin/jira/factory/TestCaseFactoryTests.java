@@ -36,9 +36,9 @@ import org.vividus.plugin.jira.model.TestCaseType;
 class TestCaseFactoryTests
 {
     private static final String PROJECT_KEY = "project-key";
-    private static final String ASSIGNEE = "assignee";
+    private static final String ASSIGNEE_ID = "assignee-id";
 
-    private final TestCaseFactory factory = new TestCaseFactory(PROJECT_KEY, ASSIGNEE);
+    private final TestCaseFactory factory = new TestCaseFactory(PROJECT_KEY, ASSIGNEE_ID);
 
     @Test
     void shouldCreateManualTestCase()
@@ -72,7 +72,7 @@ class TestCaseFactoryTests
     private void verifyTestCase(AbstractTestCaseParameters parameters, AbstractTestCase testCase)
     {
         assertEquals(PROJECT_KEY, testCase.getProjectKey());
-        assertEquals(ASSIGNEE, testCase.getAssignee());
+        assertEquals(ASSIGNEE_ID, testCase.getAssigneeId());
         assertEquals(parameters.getLabels(), testCase.getLabels());
         assertEquals(parameters.getComponents(), testCase.getComponents());
         assertEquals(parameters.getSummary(), testCase.getSummary());

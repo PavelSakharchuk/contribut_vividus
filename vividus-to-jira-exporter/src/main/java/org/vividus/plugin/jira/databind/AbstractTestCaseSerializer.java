@@ -48,10 +48,10 @@ public abstract class AbstractTestCaseSerializer<T extends AbstractTestCase> ext
         String projectKey = testCase.getProjectKey();
         writeObjectWithField(generator, "project", "key", projectKey);
 
-        String assignee = testCase.getAssignee();
-        if (assignee != null)
+        String assigneeId = testCase.getAssigneeId();
+        if (assigneeId != null)
         {
-            writeObjectWithField(generator, "assignee", NAME, assignee);
+            writeObjectWithField(generator, "assignee", "id", assigneeId);
         }
 
         writeObjectWithField(generator, "issuetype", NAME, "Test");

@@ -26,12 +26,12 @@ import org.vividus.plugin.jira.facade.ManualTestCaseParameters;
 public class TestCaseFactory
 {
     private final String projectKey;
-    private final String assignee;
+    private final String assigneeId;
 
-    public TestCaseFactory(String projectKey, String assignee)
+    public TestCaseFactory(String projectKey, String assigneeId)
     {
         this.projectKey = projectKey;
-        this.assignee = assignee;
+        this.assigneeId = assigneeId;
     }
 
     public ManualTestCase createManualTestCase(ManualTestCaseParameters parameters)
@@ -55,7 +55,7 @@ public class TestCaseFactory
     {
         testCase.setType(parameters.getType().getValue());
         testCase.setProjectKey(projectKey);
-        testCase.setAssignee(assignee);
+        testCase.setAssigneeId(assigneeId);
         testCase.setSummary(parameters.getSummary());
         testCase.setLabels(parameters.getLabels());
         testCase.setComponents(parameters.getComponents());

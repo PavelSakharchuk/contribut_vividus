@@ -44,6 +44,7 @@ import org.vividus.util.ResourceUtils;
 /**
  * {{Jira: Project type}}: 'company-managed project' (because 'components' is skiped in the 'team-managed project')
  * TODO: Need to investigate setting up of 'jiraExporterOptions'
+ * TODO: Add Attachments - I didn't checked
  * TODO Notes: Test is:
  *      - Manual: if all "scenarios"."steps"."outcome" == comment
  *      - Cucumber: if one "scenarios"."steps"."outcome" != "comment". Can be "successful"
@@ -154,6 +155,8 @@ import org.vividus.util.ResourceUtils;
     "jira-exporter.editable-statuses=To Do",
 //    "jira-exporter.project-key=VIVITEST",
     "jira-exporter.project-key=VIVIT",
+    // TODO: Go to profile and get Id from url: https://vivi-test.atlassian.net/jira/people/5c3c62faa217aa69bce5d9f0
+    "jira-exporter.assignee-id=5c3c62faa217aa69bce5d9f0",
 
     // jiraExporterOptions
     // TODO: Need to investigate setting up of 'jiraExporterOptions'
@@ -177,17 +180,17 @@ class MainFlowTests
     void setUpJiraExporterOptions() throws IOException, URISyntaxException
     {
         // MANUAL
-//          URI jsonResultsUri = getJsonResultsUri("createandlink");
+          URI jsonResultsUri = getJsonResultsUri("createandlink");
 //        URI jsonResultsUri = getJsonResultsUri("componentslabelsupdatabletci");
 //        URI jsonResultsUri = getJsonResultsUri("createcucumber");
 //        URI jsonResultsUri = getJsonResultsUri("updatecucumber");
 //        URI jsonResultsUri = getJsonResultsUri("continueiferror");
 //        URI jsonResultsUri = getJsonResultsUri("skipped");
 //        URI jsonResultsUri = getJsonResultsUri("morethanoneid");
-        when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(sourceDirectory);
+//        when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(sourceDirectory);
 
         // TODO: How I can manage this properties by properties file
-//        when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(Paths.get(jsonResultsUri));
+        when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(Paths.get(jsonResultsUri));
         when(jiraExporterOptions.isTestCaseUpdatesEnabled()).thenReturn(true);
         //        jiraExporterOptions.setTestExecutionAttachments(List.of(ROOT));
     }

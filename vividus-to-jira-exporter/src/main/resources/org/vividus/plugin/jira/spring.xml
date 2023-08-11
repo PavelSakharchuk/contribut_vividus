@@ -12,6 +12,6 @@
 
     <bean class="org.vividus.plugin.jira.factory.TestCaseFactory">
         <constructor-arg index="0" value="${jira-exporter.project-key}" />
-        <constructor-arg index="1" value="${jira-exporter.assignee}" />
+        <constructor-arg index="1" value="${jira-exporter.assignee-id}" />
     </bean>
 </beans>

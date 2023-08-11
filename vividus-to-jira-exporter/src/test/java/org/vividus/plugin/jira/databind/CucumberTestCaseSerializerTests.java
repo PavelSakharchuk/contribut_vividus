@@ -89,7 +89,7 @@ class CucumberTestCaseSerializerTests
         testCase.setType(TestCaseType.CUCUMBER.getValue());
         testCase.setProjectKey(PROJECT_KEY);
         testCase.setSummary("summary");
-        testCase.setAssignee("test-assignee");
+        testCase.setAssigneeId("test-assignee");
         testCase.setLabels(new LinkedHashSet<>(List.of("label-1", "label-2")));
         testCase.setComponents(new LinkedHashSet<>(List.of("component-1", "component-2")));
         testCase.setScenarioType("scenario-type");
