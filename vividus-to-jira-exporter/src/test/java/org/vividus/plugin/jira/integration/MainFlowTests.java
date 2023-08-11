@@ -180,8 +180,8 @@ class MainFlowTests
     void setUpJiraExporterOptions() throws IOException, URISyntaxException
     {
         // MANUAL
-          URI jsonResultsUri = getJsonResultsUri("createandlink");
-//        URI jsonResultsUri = getJsonResultsUri("componentslabelsupdatabletci");
+//          URI jsonResultsUri = getJsonResultsUri("createandlink");
+        URI jsonResultsUri = getJsonResultsUri("componentslabelsupdatabletci");
 //        URI jsonResultsUri = getJsonResultsUri("createcucumber");
 //        URI jsonResultsUri = getJsonResultsUri("updatecucumber");
 //        URI jsonResultsUri = getJsonResultsUri("continueiferror");

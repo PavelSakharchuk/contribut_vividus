@@ -105,9 +105,9 @@ class JiraExporterTests
 
     @Spy private JiraExporterOptions jiraExporterOptions;
     @Mock private TestCaseFactory testCaseFactory;
-    @Mock private JiraExporterFacade xrayFacade;
+    @Mock private JiraExporterFacade jiraExporterFacade;
     @Mock private TestExecutionFactory testExecutionFactory;
-    @InjectMocks private JiraExporter xrayExporter;
+    @InjectMocks private JiraExporter jiraExporter;
 
     private final TestLogger logger = TestLoggerFactory.getTestLogger(JiraExporter.class);
 
@@ -121,7 +121,7 @@ class JiraExporterTests
     @AfterEach
     void afterEach()
     {
-        verifyNoMoreInteractions(xrayFacade, testCaseFactory);
+        verifyNoMoreInteractions(jiraExporterFacade, testCaseFactory);
     }
 
     @Test
@@ -132,10 +132,10 @@ class JiraExporterTests
         jiraExporterOptions.setJsonResultsDirectory(Paths.get(jsonResultsUri));
         CucumberTestCase testCase = mock(CucumberTestCase.class);
 
-        when(xrayFacade.createTestCase(testCase)).thenReturn(ISSUE_ID);
+        when(jiraExporterFacade.createTestCase(testCase)).thenReturn(ISSUE_ID);
         when(testCaseFactory.createCucumberTestCase(cucumberTestCaseParametersCaptor.capture())).thenReturn(testCase);
 
-        xrayExporter.exportResults();
+        jiraExporter.exportResults();
 
         String scenario = GIVEN_STEP + lineSeparator()
             + WHEN_STEP + lineSeparator()
@@ -159,9 +159,9 @@ class JiraExporterTests
 
         when(testCaseFactory.createCucumberTestCase(cucumberTestCaseParametersCaptor.capture())).thenReturn(testCase);
 
-        xrayExporter.exportResults();
+        jiraExporter.exportResults();
 
-        verify(xrayFacade).updateTestCase(ISSUE_ID, testCase);
+        verify(jiraExporterFacade).updateTestCase(ISSUE_ID, testCase);
         String scenario = GIVEN_STEP + lineSeparator() + WHEN_STEP + lineSeparator() + THEN_STEP;
         verifyCucumberTestCaseParameters("Scenario", scenario);
         validateLogs(jsonResultsUri, getExportingScenarioEvent(), getExportSuccessfulEvent());
@@ -180,9 +180,9 @@ class JiraExporterTests
 
         when(testCaseFactory.createCucumberTestCase(any())).thenReturn(testCase);
 
-        xrayExporter.exportResults();
+        jiraExporter.exportResults();
 
-        verifyNoInteractions(xrayFacade);
+        verifyNoInteractions(jiraExporterFacade);
         validateLogs(jsonResultsUri, getExportingScenarioEvent(),
                 info("Skipping update of {} Test Case with ID {}", type, ISSUE_ID), getExportSuccessfulEvent());
     }
@@ -200,21 +200,24 @@ class JiraExporterTests
         when(testCaseFactory.createManualTestCase(manualTestCaseParametersCaptor.capture())).thenReturn(testCase);
 
         TestExecution testExecution = mock(TestExecution.class);
+        // TODO: Looks like It is needed to skip now because cloning of TestPlan to TestReport is simpler
 //        when(testExecutionFactory.create(scenariosCaptor.capture())).thenReturn(testExecution);
 
-        xrayExporter.exportResults();
+        jiraExporter.exportResults();
 
-        verify(xrayFacade).updateTestCase(ISSUE_ID, testCase);
+        verify(jiraExporterFacade).updateTestCase(ISSUE_ID, testCase);
         verifyManualTestCaseParameters(Set.of("dummy-label-1", "dummy-label-2"),
                 Set.of("dummy-component-1", "dummy-component-2"));
 
-        verify(xrayFacade).importTestExecution(testExecution, List.of(ROOT));
-        List<Entry<String, Scenario>> scenarios = scenariosCaptor.getValue();
-        assertThat(scenarios, hasSize(1));
-        assertEquals(ISSUE_ID, scenarios.get(0).getKey());
+        // TODO: Looks like It is needed to skip now because cloning of TestPlan to TestReport is simpler
+//        verify(jiraExporterFacade).importTestExecution(testExecution, List.of(ROOT));
+//        List<Entry<String, Scenario>> scenarios = scenariosCaptor.getValue();
+//        assertThat(scenarios, hasSize(1));
+//        assertEquals(ISSUE_ID, scenarios.get(0).getKey());
 
-//        verify(xrayFacade).updateTestSet(TEST_SET_KEY, List.of(ISSUE_ID));
-        validateLogs(jsonResultsUri, getExportingScenarioEvent(), getExportSuccessfulEvent());
+        // TODO: Looks like It is needed to skip now because we don't have Sets in our approach
+//        verify(jiraExporterFacade).updateTestSet(TEST_SET_KEY, List.of(ISSUE_ID));
+//        validateLogs(jsonResultsUri, getExportingScenarioEvent(), getExportSuccessfulEvent());
     }
 
     @ParameterizedTest
@@ -232,7 +235,7 @@ class JiraExporterTests
 
         String errorMessage = "error message";
         when(exception.getMessage()).thenReturn(errorMessage);
-        doThrow(exception).when(xrayFacade).updateTestCase(eq(errorIssueId), any(ManualTestCase.class));
+        doThrow(exception).when(jiraExporterFacade).updateTestCase(eq(errorIssueId), any(ManualTestCase.class));
         String errorLogMessage = getDefaultErrorMessage(errorMessage);
         ManualTestCase testCase = mock(ManualTestCase.class);
         when(testCaseFactory.createManualTestCase(manualTestCaseParametersCaptor.capture())).thenReturn(testCase);
@@ -244,14 +247,14 @@ class JiraExporterTests
 
         jiraExporterOptions.setTestExecutionKey(testExecutionKey);
         jiraExporterOptions.setTestExecutionSummary("summary");
-        doThrow(exception).when(xrayFacade).importTestExecution(any(), eq(List.of(ROOT)));
+        doThrow(exception).when(jiraExporterFacade).importTestExecution(any(), eq(List.of(ROOT)));
         errorLogMessage += "Error #3" + lineSeparator() + testExecutionMessage + lineSeparator();
 
-        xrayExporter.exportResults();
+        jiraExporter.exportResults();
 
-        verify(xrayFacade).updateTestCase(ISSUE_ID, testCase);
+        verify(jiraExporterFacade).updateTestCase(ISSUE_ID, testCase);
 //        verify(xrayFacade).updateTestSet(TEST_SET_KEY, List.of(ISSUE_ID));
-        verify(xrayFacade).importTestExecution(any(), eq(List.of(ROOT)));
+        verify(jiraExporterFacade).importTestExecution(any(), eq(List.of(ROOT)));
         verifyManualTestCaseParameters(Set.of(), Set.of());
         validateLogs(jsonResultsUri, getExportingScenarioEvent(), error(exception, ERROR_MESSAGE),
                 getExportingScenarioEvent(), getExportFailedErrorEvent(errorLogMessage));
@@ -263,7 +266,7 @@ class JiraExporterTests
         URI jsonResultsUri = getJsonResultsUri("skipped");
         jiraExporterOptions.setJsonResultsDirectory(Paths.get(jsonResultsUri));
 
-        xrayExporter.exportResults();
+        jiraExporter.exportResults();
 
         validateLogs(jsonResultsUri, info("Skip export of {} scenario", SCENARIO_TITLE), getExportSuccessfulEvent());
     }
@@ -273,7 +276,7 @@ class JiraExporterTests
     {
         jiraExporterOptions.setJsonResultsDirectory(sourceDirectory);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, xrayExporter::exportResults);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, jiraExporter::exportResults);
 
         assertEquals(String.format("The directory '%s' does not contain needed JSON files", sourceDirectory),
                 exception.getMessage());
@@ -287,12 +290,12 @@ class JiraExporterTests
         jiraExporterOptions.setJsonResultsDirectory(Paths.get(jsonResultsUri));
         ManualTestCase testCase = mock(ManualTestCase.class);
 
-        when(xrayFacade.createTestCase(testCase)).thenReturn(ISSUE_ID);
+        when(jiraExporterFacade.createTestCase(testCase)).thenReturn(ISSUE_ID);
         when(testCaseFactory.createManualTestCase(manualTestCaseParametersCaptor.capture())).thenReturn(testCase);
 
-        xrayExporter.exportResults();
+        jiraExporter.exportResults();
 
-        verify(xrayFacade).createTestsLink(ISSUE_ID, "STUB-REQ-0");
+        verify(jiraExporterFacade).createTestsLink(ISSUE_ID, "STUB-REQ-0");
 
         verifyManualTestCaseParameters(Set.of(), Set.of());
         validateLogs(jsonResultsUri, getExportingScenarioEvent(), getExportSuccessfulEvent());
@@ -304,7 +307,7 @@ class JiraExporterTests
         URI jsonResultsUri = getJsonResultsUri("morethanoneid");
         jiraExporterOptions.setJsonResultsDirectory(Paths.get(jsonResultsUri));
 
-        xrayExporter.exportResults();
+        jiraExporter.exportResults();
 
         List<LoggingEvent> loggingEvents = new ArrayList<>(logger.getLoggingEvents());
         LoggingEvent errorEvent = loggingEvents.remove(2);

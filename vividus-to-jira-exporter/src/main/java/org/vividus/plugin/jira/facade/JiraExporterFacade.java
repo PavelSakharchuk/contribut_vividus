@@ -126,7 +126,7 @@ public class JiraExporterFacade
                        .log("{} Test with key {} has been updated");
     }
 
-    // TODO
+    // TODO: Looks like It is needed to skip now because cloning of TestPlan to TestReport is simpler
     public void importTestExecution(TestExecution testExecution, List<Path> attachments)
             throws IOException, JiraConfigurationException
     {
@@ -208,19 +208,19 @@ public class JiraExporterFacade
         return attachments;
     }
 
-    // TODO: Looks like It is needed to skip now
-//    public void updateTestSet(String testSetKey, List<String> testCaseKeys)
-//            throws IOException, JiraConfigurationException
-//    {
-//        AddOperationRequest request = new AddOperationRequest(testCaseKeys);
-//        String requestBody = objectMapper.writeValueAsString(request);
-//        LOGGER.atInfo()
-//              .addArgument(() -> StringUtils.join(testCaseKeys, ", "))
-//              .addArgument(testSetKey)
-//              .log("Add {} test cases to Test Set with ID {}");
-//        jiraClientProvider.getByIssueKey(testSetKey).executePost("/rest/raven/1.0/api/testset/" + testSetKey + "/test",
-//                requestBody);
-//    }
+    // TODO: Looks like It is needed to skip now because we don't have Sets in our approach
+    public void updateTestSet(String testSetKey, List<String> testCaseKeys)
+            throws IOException, JiraConfigurationException
+    {
+        AddOperationRequest request = new AddOperationRequest(testCaseKeys);
+        String requestBody = objectMapper.writeValueAsString(request);
+        LOGGER.atInfo()
+              .addArgument(() -> StringUtils.join(testCaseKeys, ", "))
+              .addArgument(testSetKey)
+              .log("Add {} test cases to Test Set with ID {}");
+        jiraClientProvider.getByIssueKey(testSetKey).executePost("/rest/raven/1.0/api/testset/" + testSetKey + "/test",
+                requestBody);
+    }
 
     /**
      *  TODO:
