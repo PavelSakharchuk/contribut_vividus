@@ -38,24 +38,24 @@ import org.vividus.plugin.jira.factory.TestCaseFactory;
 
 @SpringBootTest(classes = VividusToJiraExporterApplication.class, properties = {
     "jira.endpoint=https://jira.vividus.com/",
-    "xray-exporter.project-key=VIVIDUS"
+    "jira-exporter.project-key=VIVIDUS"
 })
-class VividusToXrayExporterIntegrationTests
+class VividusToJiraExporterIntegrationTests
 {
-    @MockBean private JiraExporterOptions xrayExporterOptions;
-    @SpyBean private JiraExporterFacade xrayFacade;
+    @MockBean private JiraExporterOptions jiraExporterOptions;
+    @SpyBean private JiraExporterFacade jiraExporterFacade;
     @SpyBean private TestCaseFactory testCaseFactory;
-    @Autowired private JiraExporter xrayExporter;
+    @Autowired private JiraExporter jiraExporter;
 
     @Test
     void shouldStartContext(@TempDir Path tempDirectory) throws IOException
     {
-        when(xrayExporterOptions.getJsonResultsDirectory()).thenReturn(tempDirectory);
+        when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(tempDirectory);
 
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, xrayExporter::exportResults);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, jiraExporter::exportResults);
 
         assertEquals("The directory '" + tempDirectory + "' does not contain needed JSON files",
                 exception.getMessage());
-        verifyNoInteractions(xrayFacade, testCaseFactory);
+        verifyNoInteractions(jiraExporterFacade, testCaseFactory);
     }
 }
