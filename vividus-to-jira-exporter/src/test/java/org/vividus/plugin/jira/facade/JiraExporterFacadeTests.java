@@ -87,7 +87,7 @@ class JiraExporterFacadeTests
     private static final String TEST_EXECUTION_UPDATED_LOG = "Test Execution with key {} has been updated";
     private static final String UPDATE_TEST_EXECUTION_LOG = "Updating Test Execution with ID {}: {}";
     private static final String ISSUE_KEY = "TEST-0";
-    private static final String LINK_TYPE = "Tests";
+    private static final String LINK_TYPE = "Test";
     private static final String ISSUE_ID = "issue id";
     private static final String REQUIREMENT_ID = "requirement id";
     private static final String BODY = "{}";
