@@ -12,7 +12,7 @@
       "meta": [
         {
           "keyword": "@",
-          "name": "xray.skip-export",
+          "name": "jira.skip-export",
           "value": ""
         }
       ],
