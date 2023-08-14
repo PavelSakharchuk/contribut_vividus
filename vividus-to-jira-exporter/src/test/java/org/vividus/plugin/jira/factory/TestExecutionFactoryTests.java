@@ -61,69 +61,69 @@ class TestExecutionFactoryTests
     @Spy private JiraExporterOptions xrayExporterOptions;
     @InjectMocks private TestExecutionFactory factory;
 
-//    @Test
-//    void shouldCreateTestExecution()
-//    {
-//        List<Entry<String, Scenario>> scenarios = List.of(
-//            entry("PLAIN_SUCCESS", createPlainScenario(SUCCESS, List.of(), List.of(), List.of(), List.of())),
-//            entry("PLAIN_FAILED", createPlainScenario(FAILED, List.of(), List.of(), List.of(), List.of())),
-//            entry("MANUAL", createManualScenario()),
-//            entry("EXAMPLE_SUCCESS", createExamplesScenario(SUCCESS, List.of(), List.of(), List.of(), List.of())),
-//            entry("EXAMPLE_FAILED", createExamplesScenario(FAILED, List.of(), List.of(), List.of(), List.of())),
-//            entry("PLAIN_FAILED_IN_AFTER_USER_STEPS", createPlainScenario(SUCCESS, List.of(), List.of(),
-//                    List.of(createStep(FAILED)), List.of())),
-//            entry("PLAIN_FAILED_IN_BEFORE_USER_STEPS", createPlainScenario(SUCCESS, List.of(),
-//                    List.of(createStep(FAILED)), List.of(), List.of())),
-//            entry("EXAMPLE_FAILED_IN_AFTER_USER_STEPS", createExamplesScenario(SUCCESS, List.of(), List.of(),
-//                    List.of(createStep(FAILED)), List.of())),
-//            entry("EXAMPLE_FAILED_IN_BEFORE_USER_STEPS", createExamplesScenario(SUCCESS, List.of(),
-//                    List.of(createStep(FAILED)), List.of(), List.of())),
-//            entry("EXAMPLE_FAILED_IN_AFTER_SYSTEM_STEPS", createExamplesScenario(SUCCESS, List.of(), List.of(),
-//                    List.of(), List.of(createStep(FAILED)))),
-//            entry("PLAIN_FAILED_IN_AFTER_SYSTEM_STEPS", createPlainScenario(SUCCESS, List.of(), List.of(), List.of(),
-//                    List.of(createStep(FAILED)))),
-//            entry("EXAMPLE_FAILED_IN_BEFORE_SYSTEM_STEPS", createExamplesScenario(SUCCESS, List.of(createStep(FAILED)),
-//                    List.of(), List.of(), List.of())),
-//            entry("PLAIN_FAILED_IN_BEFORE_SYSTEM_STEPS", createPlainScenario(SUCCESS, List.of(createStep(FAILED)),
-//                    List.of(), List.of(), List.of()))
-//        );
-//        xrayExporterOptions.setTestExecutionKey(KEY);
-//        xrayExporterOptions.setTestExecutionSummary(SUMMARY);
-//
-////        TestExecution execution = factory.create(scenarios);
-//
-//        assertEquals(KEY, execution.getTestExecutionKey());
-//        TestExecutionInfo info = execution.getInfo();
-//        assertNotNull(info);
-//        assertEquals(SUMMARY, info.getSummary());
-//        List<TestExecutionItem> tests = execution.getTests();
-//        assertThat(tests, hasSize(13));
-//        assertExecutedItem(tests.get(0), TestExecutionItemStatus.PASS);
-//        assertExecutedItem(tests.get(1), TestExecutionItemStatus.FAIL);
-//        assertItem(tests.get(2), TestExecutionItemStatus.TODO, null, null);
-//        assertExecutedItem(tests.get(3), TestExecutionItemStatus.PASS);
-//        assertExecutedItem(tests.get(4), TestExecutionItemStatus.FAIL);
-//        assertExecutedItem(tests.get(5), TestExecutionItemStatus.FAIL);
-//        assertExecutedItem(tests.get(6), TestExecutionItemStatus.FAIL);
-//        assertExecutedItem(tests.get(7), TestExecutionItemStatus.FAIL);
-//        assertExecutedItem(tests.get(8), TestExecutionItemStatus.FAIL);
-//        assertExecutedItem(tests.get(9), TestExecutionItemStatus.FAIL);
-//        assertExecutedItem(tests.get(10), TestExecutionItemStatus.FAIL);
-//        assertExecutedItem(tests.get(11), TestExecutionItemStatus.FAIL);
-//        assertExecutedItem(tests.get(12), TestExecutionItemStatus.FAIL);
-//    }
+    @Test
+    void shouldCreateTestExecution()
+    {
+        List<Entry<String, Scenario>> scenarios = List.of(
+            entry("PLAIN_SUCCESS", createPlainScenario(SUCCESS, List.of(), List.of(), List.of(), List.of())),
+            entry("PLAIN_FAILED", createPlainScenario(FAILED, List.of(), List.of(), List.of(), List.of())),
+            entry("MANUAL", createManualScenario()),
+            entry("EXAMPLE_SUCCESS", createExamplesScenario(SUCCESS, List.of(), List.of(), List.of(), List.of())),
+            entry("EXAMPLE_FAILED", createExamplesScenario(FAILED, List.of(), List.of(), List.of(), List.of())),
+            entry("PLAIN_FAILED_IN_AFTER_USER_STEPS", createPlainScenario(SUCCESS, List.of(), List.of(),
+                    List.of(createStep(FAILED)), List.of())),
+            entry("PLAIN_FAILED_IN_BEFORE_USER_STEPS", createPlainScenario(SUCCESS, List.of(),
+                    List.of(createStep(FAILED)), List.of(), List.of())),
+            entry("EXAMPLE_FAILED_IN_AFTER_USER_STEPS", createExamplesScenario(SUCCESS, List.of(), List.of(),
+                    List.of(createStep(FAILED)), List.of())),
+            entry("EXAMPLE_FAILED_IN_BEFORE_USER_STEPS", createExamplesScenario(SUCCESS, List.of(),
+                    List.of(createStep(FAILED)), List.of(), List.of())),
+            entry("EXAMPLE_FAILED_IN_AFTER_SYSTEM_STEPS", createExamplesScenario(SUCCESS, List.of(), List.of(),
+                    List.of(), List.of(createStep(FAILED)))),
+            entry("PLAIN_FAILED_IN_AFTER_SYSTEM_STEPS", createPlainScenario(SUCCESS, List.of(), List.of(), List.of(),
+                    List.of(createStep(FAILED)))),
+            entry("EXAMPLE_FAILED_IN_BEFORE_SYSTEM_STEPS", createExamplesScenario(SUCCESS, List.of(createStep(FAILED)),
+                    List.of(), List.of(), List.of())),
+            entry("PLAIN_FAILED_IN_BEFORE_SYSTEM_STEPS", createPlainScenario(SUCCESS, List.of(createStep(FAILED)),
+                    List.of(), List.of(), List.of()))
+        );
+        xrayExporterOptions.setTestExecutionKey(KEY);
+        xrayExporterOptions.setTestExecutionSummary(SUMMARY);
 
-//    @Test
-//    void createTestExecutionWithKeyOnly()
-//    {
-//        xrayExporterOptions.setTestExecutionKey(KEY);
-//        xrayExporterOptions.setTestExecutionSummary(null);
-//
-////        TestExecution execution = factory.create(List.of());
-//
-//        assertEquals(KEY, execution.getTestExecutionKey());
-//        assertNull(execution.getInfo());
-//    }
+        TestExecution execution = factory.create(scenarios);
+
+        assertEquals(KEY, execution.getTestExecutionKey());
+        TestExecutionInfo info = execution.getInfo();
+        assertNotNull(info);
+        assertEquals(SUMMARY, info.getSummary());
+        List<TestExecutionItem> tests = execution.getTests();
+        assertThat(tests, hasSize(13));
+        assertExecutedItem(tests.get(0), TestExecutionItemStatus.PASS);
+        assertExecutedItem(tests.get(1), TestExecutionItemStatus.FAIL);
+        assertItem(tests.get(2), TestExecutionItemStatus.TODO, null, null);
+        assertExecutedItem(tests.get(3), TestExecutionItemStatus.PASS);
+        assertExecutedItem(tests.get(4), TestExecutionItemStatus.FAIL);
+        assertExecutedItem(tests.get(5), TestExecutionItemStatus.FAIL);
+        assertExecutedItem(tests.get(6), TestExecutionItemStatus.FAIL);
+        assertExecutedItem(tests.get(7), TestExecutionItemStatus.FAIL);
+        assertExecutedItem(tests.get(8), TestExecutionItemStatus.FAIL);
+        assertExecutedItem(tests.get(9), TestExecutionItemStatus.FAIL);
+        assertExecutedItem(tests.get(10), TestExecutionItemStatus.FAIL);
+        assertExecutedItem(tests.get(11), TestExecutionItemStatus.FAIL);
+        assertExecutedItem(tests.get(12), TestExecutionItemStatus.FAIL);
+    }
+
+    @Test
+    void createTestExecutionWithKeyOnly()
+    {
+        xrayExporterOptions.setTestExecutionKey(KEY);
+        xrayExporterOptions.setTestExecutionSummary(null);
+
+        TestExecution execution = factory.create(List.of());
+
+        assertEquals(KEY, execution.getTestExecutionKey());
+        assertNull(execution.getInfo());
+    }
 
     private static void assertExecutedItem(TestExecutionItem item, TestExecutionItemStatus status)
     {
