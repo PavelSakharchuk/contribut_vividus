@@ -136,29 +136,52 @@ import org.vividus.util.ResourceUtils;
 @SpringBootTest(classes = VividusToJiraExporterApplication.class, properties = {
     // Jira
     // Project=vivdus-test
+    // To=\vividus-facade-jira/src/main/java/org/vividus/jira/model/JiraConfiguration.java
     "jira.vivi.project-key-regex=(VIVIT)",
+    // To=\vividus-facade-jira/src/main/java/org/vividus/jira/model/JiraConfiguration.java
     "jira.vivi.endpoint=https://vivi-test.atlassian.net/",
+    // To=\vividus-http-client/src/main/java/org/vividus/http/client/AuthConfig.java
     "jira.vivi.http.auth.username=sakharchuk.pavel@gmail.com",
+    // To=\vividus-http-client/src/main/java/org/vividus/http/client/AuthConfig.java
     "jira.vivi.http.auth.password=ATATT3xFfGF099I2wPWDTFPb5lEJyvcwBiI1Wif531Ikos1bH7jqPjFCC4ABtH7yolnRlSLNYxshUXoak1eYfhl0wuTLJ7EshJozObSjPXcpNhid4o7U1V7iv368Z3BfExBlEbTM5H9Mxs5_cSe7v9woxyEnFBB2umxoSM033QwsI2Ye7BoVDfc=D442DAE2",
+    // To=\vividus-http-client/src/main/java/org/vividus/http/client/AuthConfig.java
     "jira.vivi.http.auth.preemptive-auth-enabled=true",
 //    "jira.vivi.http.socket-timeout=10000",
 
     // Mapping
     // Required
+    // Constants
+    // TO: \vividus-facade-jira/src/main/java/org/vividus/jira/JiraConfigurationProvider.java#getFieldsMappingByProjectKey
     "jira.vivi.fields-mapping.test-case-type=customfield_10055",
+    // Constants
+    // TO: \vividus-facade-jira/src/main/java/org/vividus/jira/JiraConfigurationProvider.java#getFieldsMappingByProjectKey
     "jira.vivi.fields-mapping.manual-steps=customfield_10056",
+    // Constants
+    // TO: \vividus-facade-jira/src/main/java/org/vividus/jira/JiraConfigurationProvider.java#getFieldsMappingByProjectKey
     "jira.vivi.fields-mapping.cucumber-scenario-type=customfield_10057",
+    // Constants
+    // TO: \vividus-facade-jira/src/main/java/org/vividus/jira/JiraConfigurationProvider.java#getFieldsMappingByProjectKey
     "jira.vivi.fields-mapping.cucumber-scenario=customfield_10058",
 
     // Xray -> Jira
+    // To: org.vividus.plugin.jira.configuration.JiraExporterOptions
+    // Constants
+    // To: vividus-to-jira-exporter/src/main/resources/org/vividus/plugin/jira/spring.xml
     "jira-exporter.jira-instance-key=vivi",
+    // Constants
+    // To: vividus-to-jira-exporter/src/main/resources/org/vividus/plugin/jira/spring.xml
     "jira-exporter.editable-statuses=To Do",
+//    "jira-exporter.editable-statuses=To Do, In progress, Ready for test, Failed, Passed, Blocked",
+    // Constants
+    // To: vividus-to-jira-exporter/src/main/resources/org/vividus/plugin/jira/spring.xml
 //    "jira-exporter.project-key=VIVITEST",
     "jira-exporter.project-key=VIVIT",
     // TODO: Go to profile and get Id from url: https://vivi-test.atlassian.net/jira/people/5c3c62faa217aa69bce5d9f0
+    // Constants
+    // To: vividus-to-jira-exporter/src/main/resources/org/vividus/plugin/jira/spring.xml
     "jira-exporter.assignee-id=5c3c62faa217aa69bce5d9f0",
 
-    // jiraExporterOptions
+    // To: \vividus-to-jira-exporter/src/main/java/org/vividus/plugin/jira/configuration/JiraExporterOptions.java
     // TODO: Need to investigate setting up of 'jiraExporterOptions'
 //    "jira-exporter.test-case-updates-enabled=true",
 
