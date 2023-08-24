@@ -62,9 +62,8 @@ public final class CucumberScenarioConverter
 
     private static String buildScenarioExamplesTable(Parameters parameters)
     {
-        List<String> names = parameters.getNames().stream().map(name -> "_*" + name + "*_").toList();
-        return new StringBuilder("_*Examples:*_").append(lineSeparator())
-                                             .append(joinTableRow(names))
+        return new StringBuilder("Examples:").append(lineSeparator())
+                                             .append(joinTableRow(parameters.getNames()))
                                              .append(parameters.getValues().stream()
                                                                            .map(CucumberScenarioConverter::joinTableRow)
                                                                            .collect(Collectors.joining()))

@@ -74,14 +74,14 @@ import org.vividus.plugin.jira.exception.NonEditableTestRunException;
 import org.vividus.plugin.jira.exception.NonTestCaseWithinRunException;
 import org.vividus.util.ResourceUtils;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
-import org.vividus.plugin.jira.facade.AbstractTestCaseParameters;
-import org.vividus.plugin.jira.facade.CucumberTestCaseParameters;
-import org.vividus.plugin.jira.facade.ManualTestCaseParameters;
+import org.vividus.plugin.jira.facade.AbstractScenarioParameters;
+import org.vividus.plugin.jira.facade.CucumberScenarioParameters;
+import org.vividus.plugin.jira.facade.ManualScenarioParameters;
 import org.vividus.plugin.jira.facade.JiraExporterFacade;
 import org.vividus.plugin.jira.exception.NonEditableIssueStatusException;
 import org.vividus.plugin.jira.factory.TestCaseFactory;
-import org.vividus.plugin.jira.model.CucumberTestCase;
-import org.vividus.plugin.jira.model.ManualTestCase;
+import org.vividus.plugin.jira.model.jira.CucumberTestCase;
+import org.vividus.plugin.jira.model.jira.ManualTestCase;
 import org.vividus.plugin.jira.model.TestCaseType;
 
 @ExtendWith({ MockitoExtension.class, TestLoggerFactoryExtension.class })
@@ -99,8 +99,8 @@ class JiraExporterTests
     private static final String TEST_EXECUTION_KEY = "TEST-EXEC";
     private static final Path ROOT = Paths.get("path");
 
-    @Captor private ArgumentCaptor<ManualTestCaseParameters> manualTestCaseParametersCaptor;
-    @Captor private ArgumentCaptor<CucumberTestCaseParameters> cucumberTestCaseParametersCaptor;
+    @Captor private ArgumentCaptor<ManualScenarioParameters> manualTestCaseParametersCaptor;
+    @Captor private ArgumentCaptor<CucumberScenarioParameters> cucumberTestCaseParametersCaptor;
     @Captor private ArgumentCaptor<List<Entry<String, Scenario>>> scenariosCaptor;
 
     @Spy private JiraExporterOptions jiraExporterOptions;
@@ -325,7 +325,7 @@ class JiraExporterTests
 
     private void verifyCucumberTestCaseParameters(String scenarioType, String scenario)
     {
-        CucumberTestCaseParameters parameters = cucumberTestCaseParametersCaptor.getValue();
+        CucumberScenarioParameters parameters = cucumberTestCaseParametersCaptor.getValue();
         assertEquals(scenarioType, parameters.getScenarioType());
         assertEquals(scenario, parameters.getScenario());
         verifyTestCaseParameters(parameters, Set.of(), Set.of(), TestCaseType.AUTOMATED);
@@ -333,7 +333,7 @@ class JiraExporterTests
 
     private void verifyManualTestCaseParameters(Set<String> labels, Set<String> components)
     {
-        ManualTestCaseParameters parameters = manualTestCaseParametersCaptor.getValue();
+        ManualScenarioParameters parameters = manualTestCaseParametersCaptor.getValue();
         assertThat(parameters.getSteps(), hasSize(1));
         ManualTestStep step = parameters.getSteps().get(0);
         assertEquals("Step", step.getAction());
@@ -342,7 +342,7 @@ class JiraExporterTests
         verifyTestCaseParameters(parameters, labels, components, TestCaseType.MANUAL);
     }
 
-    private void verifyTestCaseParameters(AbstractTestCaseParameters testCase, Set<String> labels,
+    private void verifyTestCaseParameters(AbstractScenarioParameters testCase, Set<String> labels,
             Set<String> components, TestCaseType type)
     {
         assertEquals(type, testCase.getType());

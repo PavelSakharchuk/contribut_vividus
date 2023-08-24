@@ -17,7 +17,6 @@
 package org.vividus.plugin.jira.exporter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -25,10 +24,7 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import java.util.stream.Stream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.vividus.model.jbehave.Scenario;
@@ -38,66 +34,68 @@ import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.exception.JiraSkipExportMetaException;
 import org.vividus.plugin.jira.exception.NonTestCaseIdException;
 import org.vividus.plugin.jira.exporter.Constants.Meta;
-import org.vividus.plugin.jira.model.VividusScenarioInfo;
+import org.vividus.plugin.jira.exporter.model.VividusScenarioInfo;
 
 @Component
-public class JiraExporter
-{
-    private static final Logger LOGGER = LoggerFactory.getLogger(JiraExporter.class);
+public class JiraExporter {
 
-    @Autowired private JiraExporterOptions jiraExporterOptions;
-    @Autowired private JiraInfoExporter jiraInfoExporter;
-    @Autowired private JiraStatusExporter jiraStatusExporter;
-    @Autowired private JiraExporterErrorCollection jiraExporterErrorCollection;
+  @Autowired
+  private JiraExporterOptions jiraExporterOptions;
+  @Autowired
+  private JiraInfoExporter jiraInfoExporter;
+  @Autowired
+  private JiraStatusExporter jiraStatusExporter;
+  @Autowired
+  private JiraExporterErrorCollection jiraExporterErrorCollection;
 
-    public void exportResults() throws IOException
-    {
-        Set<Entry<String, Scenario>> testCases = new HashSet<>();
+  public void exportResults() throws IOException {
+    Set<Entry<String, Scenario>> testCases = new HashSet<>();
 
-        Map<String, List<VividusScenarioInfo>> multiTestCaseMap =
-            OutputReader.readStoriesFromJsons(jiraExporterOptions.getJsonResultsDirectory()).stream()
-                .flatMap(this::getMultiTestCaseStream)
-                .filter(vividusScenarioInfo -> Objects.nonNull(vividusScenarioInfo.getTestCaseId()))
-                .filter(vividusScenarioInfo -> !checkIfJiraSkipExportMeta(
-                    vividusScenarioInfo.getTestCaseId(),
-                    vividusScenarioInfo.getStory(),
-                    vividusScenarioInfo.getScenario()))
-                .collect(Collectors.groupingBy(VividusScenarioInfo::getTestCaseId));
+    Map<String, List<VividusScenarioInfo>> vividusScenarioMap =
+        OutputReader.readStoriesFromJsons(jiraExporterOptions.getJsonResultsDirectory()).stream()
+            .flatMap(this::getVividusScenarioInfoStream)
+            .filter(vividusScenarioInfo -> Objects.nonNull(vividusScenarioInfo.getTestCaseId()))
+            .filter(vividusScenarioInfo -> !checkIfJiraSkipExportMeta(
+                vividusScenarioInfo.getTestCaseId(),
+                vividusScenarioInfo.getStory(),
+                vividusScenarioInfo.getScenario()))
+            .collect(Collectors.groupingBy(VividusScenarioInfo::getTestCaseId));
 
-        jiraInfoExporter.exportInfoTestCases(multiTestCaseMap).ifPresent(testCases::addAll);
-        jiraStatusExporter.exportStatusTestCases(multiTestCaseMap).ifPresent(testCases::addAll);
+    jiraInfoExporter.exportInfoTestCases(vividusScenarioMap).ifPresent(testCases::addAll);
+    jiraStatusExporter.exportStatusTestCases(vividusScenarioMap).ifPresent(testCases::addAll);
 
-        jiraExporterErrorCollection.publishErrors();
+    jiraExporterErrorCollection.publishErrors();
+  }
+
+  private Stream<VividusScenarioInfo> getVividusScenarioInfoStream(Story story) {
+    story.setPath(trimPath("/story", story.getPath()));
+    return story.getFoldedScenarios().stream()
+        .flatMap(scenario -> getVividusScenarioInfoStream(story, scenario));
+  }
+
+  private Stream<VividusScenarioInfo> getVividusScenarioInfoStream(Story story, Scenario scenario) {
+    return scenario.getMetaValues(Constants.Meta.TEST_CASE_ID).isEmpty() ?
+        Stream.of(getVividusScenarioInfoWithoutTestCaseId(story, scenario)) :
+        scenario.getMetaValues(Meta.TEST_CASE_ID).stream()
+            .map(testCaseId -> new VividusScenarioInfo(testCaseId, story, scenario));
+  }
+
+  private VividusScenarioInfo getVividusScenarioInfoWithoutTestCaseId(Story story, Scenario scenario) {
+    jiraExporterErrorCollection.addLogReaderError(new NonTestCaseIdException(), null, story, scenario);
+    return new VividusScenarioInfo(null, story, scenario);
+  }
+
+  private boolean checkIfJiraSkipExportMeta(String testCaseId, Story story, Scenario scenario) {
+    if (scenario.hasMetaWithName(Constants.Meta.JIRA_SKIP_EXPORT)) {
+      jiraExporterErrorCollection.addLogReaderError(
+          new JiraSkipExportMetaException(testCaseId, story, scenario),
+          testCaseId, story, scenario);
+      return true;
     }
+    return false;
+  }
 
-    private Stream<VividusScenarioInfo> getMultiTestCaseStream(Story story)
-    {
-        return story.getFoldedScenarios().stream()
-            .flatMap(scenario -> getMultiTestCaseStream(story, scenario));
-    }
-
-    private Stream<VividusScenarioInfo> getMultiTestCaseStream(Story story, Scenario scenario)
-    {
-        return scenario.getMetaValues(Constants.Meta.TEST_CASE_ID).isEmpty() ?
-            Stream.of(getMultiTestCaseWithoutTestCaseId(story, scenario)) :
-            scenario.getMetaValues(Meta.TEST_CASE_ID).stream()
-                .map(testCaseId -> new VividusScenarioInfo(testCaseId, story, scenario));
-    }
-
-    private VividusScenarioInfo getMultiTestCaseWithoutTestCaseId(Story story, Scenario scenario)
-    {
-        jiraExporterErrorCollection.addLogReaderError(new NonTestCaseIdException(), null, story, scenario);
-        return new VividusScenarioInfo(null, story, scenario);
-    }
-
-    private boolean checkIfJiraSkipExportMeta(String testCaseId, Story story, Scenario scenario)
-    {
-        if (scenario.hasMetaWithName(Constants.Meta.JIRA_SKIP_EXPORT)){
-            jiraExporterErrorCollection.addLogReaderError(
-                new JiraSkipExportMetaException(testCaseId, story, scenario),
-                testCaseId, story, scenario);
-            return true;
-        }
-        return false;
-    }
+  private static String trimPath(String startFragment, String path) {
+    return path.substring(path.indexOf(startFragment));
+  }
 }

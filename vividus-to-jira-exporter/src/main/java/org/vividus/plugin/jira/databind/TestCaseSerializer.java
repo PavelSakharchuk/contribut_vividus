@@ -20,22 +20,17 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import java.io.IOException;
 import java.util.Map;
 import org.springframework.stereotype.Component;
-import org.vividus.plugin.jira.exporter.Constants;
-import org.vividus.plugin.jira.model.CucumberTestCase;
-import org.vividus.plugin.jira.model.MultiTestCase;
+import org.vividus.plugin.jira.model.jira.TestCase;
 
 @Component
-public class MultiTestCaseSerializer extends AbstractTestCaseSerializer<MultiTestCase>
-{
+public class TestCaseSerializer extends AbstractTestCaseSerializer<TestCase> {
 
-    @Override
-    protected void serializeCustomFields(MultiTestCase testCase, Map<String, String> mapping,
-            JsonGenerator generator) throws IOException
-    {
-        String description = testCase.getDescription();
-        if (description != null)
-        {
-            generator.writeStringField("description", description);
-        }
+  @Override
+  protected void serializeCustomFields(TestCase testCase, Map<String, String> mapping,
+      JsonGenerator generator) throws IOException {
+    String description = testCase.getDescription();
+    if (description != null) {
+      generator.writeStringField("description", description);
     }
+  }
 }

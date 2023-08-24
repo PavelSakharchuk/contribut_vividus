@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 the original author or authors.
+ * Copyright 2019-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package org.vividus.plugin.jira.model;
+package org.vividus.plugin.jira.model.jira;
 
-public class TestExecutionInfo
-{
-    private String summary;
+public class TestCase extends AbstractTestCase {
 
-    public String getSummary()
-    {
-        return summary;
-    }
+  private String description;
 
-    public void setSummary(String summary)
-    {
-        this.summary = summary;
-    }
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
 }

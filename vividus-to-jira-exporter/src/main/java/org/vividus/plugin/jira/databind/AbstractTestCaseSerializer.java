@@ -32,8 +32,7 @@ import org.vividus.jira.JiraConfigurationException;
 import org.vividus.jira.JiraConfigurationProvider;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.exporter.Constants;
-import org.vividus.plugin.jira.exporter.Constants.JiraMappingProperties;
-import org.vividus.plugin.jira.model.AbstractTestCase;
+import org.vividus.plugin.jira.model.jira.AbstractTestCase;
 
 public abstract class AbstractTestCaseSerializer<T extends AbstractTestCase> extends JsonSerializer<T>
 {

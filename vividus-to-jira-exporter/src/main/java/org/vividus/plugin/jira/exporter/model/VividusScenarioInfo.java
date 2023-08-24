@@ -1,4 +1,4 @@
-package org.vividus.plugin.jira.model;
+package org.vividus.plugin.jira.exporter.model;
 
 import org.vividus.model.jbehave.Scenario;
 import org.vividus.model.jbehave.Story;

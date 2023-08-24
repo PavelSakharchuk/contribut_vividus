@@ -14,21 +14,30 @@
  * limitations under the License.
  */
 
-package org.vividus.plugin.jira.model;
+package org.vividus.model.jbehave;
 
-import java.util.List;
-
-public class AddOperationRequest
+public class GivenStoriesPath
 {
-    private final List<String> add;
+    private String parameters;
+    private String path;
 
-    public AddOperationRequest(List<String> add)
+    public String getParameters()
     {
-        this.add = add;
+        return parameters;
     }
 
-    public List<String> getAdd()
+    public void setParameters(String parameters)
     {
-        return add;
+        this.parameters = parameters;
+    }
+
+    public String getPath()
+    {
+        return path;
+    }
+
+    public void setPath(String path)
+    {
+        this.path = path;
     }
 }

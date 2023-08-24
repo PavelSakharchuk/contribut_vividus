@@ -23,7 +23,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 
 import org.springframework.stereotype.Component;
 import org.vividus.plugin.jira.exporter.Constants;
-import org.vividus.plugin.jira.model.CucumberTestCase;
+import org.vividus.plugin.jira.model.jira.CucumberTestCase;
 
 @Component
 public class CucumberTestCaseSerializer extends AbstractTestCaseSerializer<CucumberTestCase>

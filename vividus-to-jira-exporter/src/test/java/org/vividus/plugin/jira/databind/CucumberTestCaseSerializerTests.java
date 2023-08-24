@@ -35,7 +35,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.vividus.jira.JiraConfigurationException;
 import org.vividus.jira.JiraConfigurationProvider;
 import org.vividus.plugin.jira.exporter.Constants;
-import org.vividus.plugin.jira.model.CucumberTestCase;
+import org.vividus.plugin.jira.model.jira.CucumberTestCase;
 import org.vividus.plugin.jira.model.TestCaseType;
 
 import test.util.JsonVerificationUtils;

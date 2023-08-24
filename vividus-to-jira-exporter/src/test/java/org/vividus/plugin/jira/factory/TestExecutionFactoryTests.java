@@ -40,7 +40,6 @@ import org.vividus.model.jbehave.Examples;
 import org.vividus.model.jbehave.Scenario;
 import org.vividus.model.jbehave.Step;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
-import org.vividus.plugin.jira.model.TestExecutionInfo;
 import org.vividus.plugin.jira.model.TestCaseStatus;
 
 @ExtendWith(MockitoExtension.class)

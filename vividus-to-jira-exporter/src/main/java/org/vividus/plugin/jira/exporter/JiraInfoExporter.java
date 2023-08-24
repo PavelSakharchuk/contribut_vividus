@@ -16,22 +16,15 @@
 
 package org.vividus.plugin.jira.exporter;
 
-import static java.lang.System.lineSeparator;
-
 import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
-import java.util.StringJoiner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.function.FailableBiFunction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,204 +32,168 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.vividus.jira.JiraConfigurationException;
 import org.vividus.model.jbehave.Scenario;
+import org.vividus.model.jbehave.Story;
 import org.vividus.output.ManualStepConverter;
 import org.vividus.output.SyntaxException;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.converter.CucumberScenarioConverter;
 import org.vividus.plugin.jira.converter.CucumberScenarioConverter.CucumberScenario;
+import org.vividus.plugin.jira.converter.GivenStoriesConverter;
 import org.vividus.plugin.jira.exception.NonCucumberTypesException;
 import org.vividus.plugin.jira.exception.NonEditableIssueStatusException;
 import org.vividus.plugin.jira.exception.NonEditableTestRunException;
+import org.vividus.plugin.jira.exception.NonScenariosException;
 import org.vividus.plugin.jira.exception.NonTestCaseWithinRunException;
 import org.vividus.plugin.jira.exception.NotSingleUniqueValueException;
 import org.vividus.plugin.jira.exporter.Constants.Meta;
-import org.vividus.plugin.jira.facade.AbstractTestCaseParameters;
-import org.vividus.plugin.jira.facade.CucumberTestCaseParameters;
+import org.vividus.plugin.jira.exporter.model.VividusScenarioInfo;
+import org.vividus.plugin.jira.facade.AbstractScenarioParameters;
+import org.vividus.plugin.jira.facade.CucumberScenarioParameters;
 import org.vividus.plugin.jira.facade.JiraExporterFacade;
-import org.vividus.plugin.jira.facade.ManualTestCaseParameters;
+import org.vividus.plugin.jira.facade.ManualScenarioParameters;
+import org.vividus.plugin.jira.facade.StoryParameters;
+import org.vividus.plugin.jira.facade.TestCaseParameters;
 import org.vividus.plugin.jira.factory.TestCaseFactory;
-import org.vividus.plugin.jira.model.AbstractTestCase;
-import org.vividus.plugin.jira.model.CucumberTestCase;
-import org.vividus.plugin.jira.model.MultiTestCase;
 import org.vividus.plugin.jira.model.TestCaseType;
-import org.vividus.plugin.jira.model.VividusScenarioInfo;
+import org.vividus.plugin.jira.model.jira.AbstractTestCase;
+import org.vividus.plugin.jira.model.jira.TestCase;
 
 @Component
-public class JiraInfoExporter
-{
-    private static final Logger LOGGER = LoggerFactory.getLogger(JiraInfoExporter.class);
+public class JiraInfoExporter {
 
-    @Autowired private JiraExporterOptions jiraExporterOptions;
-    @Autowired private JiraExporterFacade jiraExporterFacade;
-    @Autowired private TestCaseFactory testCaseFactory;
-    @Autowired private JiraExporterErrorCollection jiraExporterErrorCollection;
+  private static final Logger LOGGER = LoggerFactory.getLogger(JiraInfoExporter.class);
 
-    private final Map<TestCaseType, Function<AbstractTestCaseParameters, AbstractTestCase>> testCaseFactories = Map.of(
-        TestCaseType.MANUAL, p -> testCaseFactory.createManualTestCase((ManualTestCaseParameters) p),
-        TestCaseType.AUTOMATED, p -> testCaseFactory.createCucumberTestCase((CucumberTestCaseParameters) p)
-    );
+  @Autowired
+  private JiraExporterOptions jiraExporterOptions;
+  @Autowired
+  private JiraExporterFacade jiraExporterFacade;
+  @Autowired
+  private TestCaseFactory testCaseFactory;
+  @Autowired
+  private JiraExporterErrorCollection jiraExporterErrorCollection;
 
-    private final Map<TestCaseType, CreateParametersFunction> parameterFactories = Map.of(
-        TestCaseType.MANUAL, this::createManualTestCaseParameters,
-        TestCaseType.AUTOMATED, (title, scenario) -> createCucumberTestCaseParameters(scenario)
-    );
+  private final Map<TestCaseType, Function<AbstractScenarioParameters, AbstractTestCase>> testCaseFactories = Map.of(
+      TestCaseType.MANUAL, p -> testCaseFactory.createManualTestCase((ManualScenarioParameters) p),
+      TestCaseType.AUTOMATED, p -> testCaseFactory.createCucumberTestCase((CucumberScenarioParameters) p)
+  );
 
-    public Optional<List<Entry<String, Scenario>>> exportInfoTestCases(
-        Map<String, List<VividusScenarioInfo>> multiTestCaseMap)
-    {
-        List<Entry<String, Scenario>> testCases = new ArrayList<>();
-        if (jiraExporterOptions.isTestCaseInfoUpdatesEnabled())
-        {
-            for (Map.Entry<String,List<VividusScenarioInfo>> testCaseEntry : multiTestCaseMap.entrySet())
-            {
-                LOGGER.atInfo().addArgument(testCaseEntry.getKey()).log("Exporting Test Case: {}");
-                this.exportTestCaseInfo(testCaseEntry.getKey(), testCaseEntry.getValue()).ifPresent(testCases::addAll);
-            }
-        }
-        else
-        {
-            LOGGER.atInfo().log("Test Case Information Exporting is switched off");
-        }
-        return Optional.of(testCases);
+  private final Map<TestCaseType, CreateParametersFunction> parameterFactories = Map.of(
+      TestCaseType.MANUAL, this::createManualScenarioParameters,
+      TestCaseType.AUTOMATED, this::createCucumberScenarioParameters
+  );
+
+  public Optional<List<Entry<String, Scenario>>> exportInfoTestCases(
+      Map<String, List<VividusScenarioInfo>> vividusScenarioInfoMap) {
+
+    if (jiraExporterOptions.isTestCaseInfoUpdatesEnabled()) {
+      return Optional.of(vividusScenarioInfoMap.entrySet().stream()
+          .flatMap(
+              entry -> exportTestCaseInfo(entry.getKey(), entry.getValue()).orElseGet(ArrayList::new).stream())
+          .toList());
+    } else {
+      LOGGER.atInfo().log("Test Case Information Exporting is switched off");
+    }
+    return Optional.empty();
+  }
+
+  private Optional<List<Entry<String, Scenario>>> exportTestCaseInfo(
+      String testCaseId, List<VividusScenarioInfo> vividusScenarioInfoList) {
+    LOGGER.atInfo().addArgument(testCaseId).log("Exporting Test Case: {}");
+
+    try {
+      TestCase testCase = createTestCaseParameters(testCaseId, vividusScenarioInfoList).get();
+      exportTestCase(testCase);
+
+      return Optional.of(vividusScenarioInfoList.stream()
+          .map(VividusScenarioInfo::getScenario)
+          .map(scenario -> new SimpleEntry<>(testCaseId, scenario))
+          .collect(Collectors.toList()));
+    } catch (IOException | SyntaxException | NonCucumberTypesException | NonScenariosException
+             | NotSingleUniqueValueException
+             | NonEditableTestRunException | NonEditableIssueStatusException | NonTestCaseWithinRunException
+             | JiraConfigurationException e) {
+      vividusScenarioInfoList.forEach(multiTestCase -> jiraExporterErrorCollection
+          .addLogTestCaseInfoExportError(e, testCaseId, multiTestCase.getStory(), multiTestCase.getScenario()));
+    }
+    return Optional.empty();
+  }
+
+  private Optional<TestCase> createTestCaseParameters(
+      String testCaseId, List<VividusScenarioInfo> vividusScenarioInfoList)
+      throws SyntaxException {
+    Map<Story, List<Scenario>> testCaseStoryMap = vividusScenarioInfoList.stream()
+        .collect(Collectors.groupingBy(
+            VividusScenarioInfo::getStory,
+            Collectors.mapping(VividusScenarioInfo::getScenario, Collectors.toList())
+        ));
+
+    List<StoryParameters> storyParametersList = new ArrayList<>();
+    for (Entry<Story, List<Scenario>> storyEntry : testCaseStoryMap.entrySet()) {
+      Story story = storyEntry.getKey();
+      List<Scenario> scenarioInfoList = storyEntry.getValue();
+
+      LOGGER.atInfo().addArgument(story.getPath()).log("Processing Story: {}");
+      List<AbstractScenarioParameters> scenarioParametersList = new ArrayList<>();
+      for (Scenario scenario : scenarioInfoList) {
+        LOGGER.atInfo().addArgument(scenario.getTitle()).log("Processing Scenario: {}");
+        scenarioParametersList.add(createScenarioParameters(story, scenario));
+      }
+
+      StoryParameters storyParameters = new StoryParameters();
+      storyParameters.setPath(story.getPath());
+      storyParameters.setGivenStories(GivenStoriesConverter.convert(story.getGivenStories()));
+      storyParameters.setScenarios(scenarioParametersList);
+
+      storyParametersList.add(storyParameters);
     }
 
-    private Optional<List<Entry<String, Scenario>>> exportTestCaseInfo(
-        String testCaseId, List<VividusScenarioInfo> multiTestCaseList)
-    {
-        List<AbstractTestCase> testCaseScenarioList = new ArrayList<>();
-        for (VividusScenarioInfo multiTestCase : multiTestCaseList)
-        {
-            Scenario scenario = multiTestCase.getScenario();
-            try
-            {
-                getTestCaseScenario(scenario).ifPresent(testCaseScenarioList::add);
-            } catch (SyntaxException e) {
-                jiraExporterErrorCollection
-                    .addLogTestCaseInfoExportError(e, testCaseId, multiTestCase.getStory(), scenario);
-            }
-        }
+    TestCaseParameters testCaseParameters = new TestCaseParameters(testCaseId);
+    testCaseParameters.setStories(storyParametersList);
 
-        try
-        {
-            exportMultiTestCase(testCaseId, testCaseScenarioList);
+    return Optional.of(testCaseFactory.createTestCase(testCaseParameters));
+  }
 
-            return Optional.of(multiTestCaseList.stream()
-                .map(VividusScenarioInfo::getScenario)
-                .map(scenario -> new SimpleEntry<>(testCaseId, scenario))
-                .collect(Collectors.toList()));
-        }
-        catch (IOException | NonCucumberTypesException | NotSingleUniqueValueException
-               | NonEditableTestRunException | NonEditableIssueStatusException | NonTestCaseWithinRunException
-               | JiraConfigurationException e)
-        {
-            multiTestCaseList.forEach(multiTestCase -> jiraExporterErrorCollection
-                .addLogTestCaseInfoExportError(e, testCaseId, multiTestCase.getStory(), multiTestCase.getScenario()));
-        }
-        return Optional.empty();
-    }
+  private void exportTestCase(TestCase testCase)
+      throws IOException, NonCucumberTypesException, NonScenariosException, NotSingleUniqueValueException,
+      NonEditableIssueStatusException, NonTestCaseWithinRunException, JiraConfigurationException,
+      NonEditableTestRunException {
+    jiraExporterFacade.updateTestCase(testCase);
+  }
 
-    private Optional<AbstractTestCase> getTestCaseScenario(Scenario scenario) throws SyntaxException
-    {
-        String scenarioTitle = scenario.getTitle();
+  public AbstractScenarioParameters createScenarioParameters(Story story, Scenario scenario)
+      throws SyntaxException {
+    return parameterFactories.get(TestCaseType.AUTOMATED).apply(story, scenario);
+  }
 
-        LOGGER.atInfo().addArgument(scenarioTitle).log("Processing scenario: {}");
-        TestCaseType testCaseType = scenario.isManual() ? TestCaseType.MANUAL : TestCaseType.AUTOMATED;
-        AbstractTestCaseParameters parameters = parameterFactories.get(testCaseType).apply(scenarioTitle, scenario);
-        return Optional.of(testCaseFactories.get(testCaseType).apply(parameters));
-    }
+  private ManualScenarioParameters createManualScenarioParameters(Story story, Scenario scenario)
+      throws SyntaxException {
+    ManualScenarioParameters parameters = new ManualScenarioParameters();
+    fillTestCaseParameters(parameters, TestCaseType.MANUAL, scenario);
+    parameters.setSteps(ManualStepConverter.convert(story.getPath(), scenario.getTitle(), scenario.collectSteps()));
+    return parameters;
+  }
 
-    private void exportMultiTestCase(String testCaseId, List<AbstractTestCase> testScenarioList)
-        throws IOException, NonCucumberTypesException, NotSingleUniqueValueException, NonEditableIssueStatusException,
-        NonTestCaseWithinRunException, JiraConfigurationException, NonEditableTestRunException
-    {
-        if (CollectionUtils.isNotEmpty(testScenarioList))
-        {
-            checkIfAutomatedType(testScenarioList);
-            MultiTestCase multiTestCase = generateMultiTestCase(testScenarioList);
-            jiraExporterFacade.updateTestCase(testCaseId, multiTestCase);
-        }
-    }
+  private CucumberScenarioParameters createCucumberScenarioParameters(Story story, Scenario scenario) {
+    CucumberScenarioParameters scenarioParameters = new CucumberScenarioParameters();
+    fillTestCaseParameters(scenarioParameters, TestCaseType.AUTOMATED, scenario);
+    CucumberScenario cucumberScenario = CucumberScenarioConverter.convert(scenario);
+    scenarioParameters.setScenarioType(cucumberScenario.getType());
+    scenarioParameters.setScenario(cucumberScenario.getScenario());
+    scenarioParameters.setGivenStories(GivenStoriesConverter.convert(scenario.getGivenStories()));
+    return scenarioParameters;
+  }
 
-    private MultiTestCase generateMultiTestCase(List<AbstractTestCase> testScenarioList)
-        throws NotSingleUniqueValueException
-    {
-        String description = testScenarioList.stream()
-            .map(testScenario -> generateScenarioDescription((CucumberTestCase) testScenario))
-            .collect(Collectors.joining(lineSeparator() + "----" + lineSeparator()));
+  private <T extends AbstractScenarioParameters> void fillTestCaseParameters(T parameters, TestCaseType type,
+      Scenario scenario) {
+    parameters.setType(type);
+    parameters.setLabels(scenario.getMetaValues(Meta.JIRA_LABELS));
+    parameters.setComponents(scenario.getMetaValues(Meta.JIRA_COMPONENTS));
+    parameters.setSummary(scenario.getTitle());
+  }
 
-        MultiTestCase multiTestCase = new MultiTestCase();
-        multiTestCase.setType(getSingleUniqueValue(testScenarioList, AbstractTestCase::getType).orElse(null));
-        multiTestCase.setProjectKey(getSingleUniqueValue(testScenarioList, AbstractTestCase::getProjectKey).orElse(null));
-        multiTestCase.setAssigneeId(getSingleUniqueValue(testScenarioList, AbstractTestCase::getAssigneeId).orElse(null));
-        multiTestCase.setDescription(description);
+  @FunctionalInterface
+  private interface CreateParametersFunction
+      extends FailableBiFunction<Story, Scenario, AbstractScenarioParameters, SyntaxException> {
 
-        return multiTestCase;
-    }
-
-    private String generateScenarioDescription(CucumberTestCase cucumberTestCase)
-    {
-        return new StringJoiner(System.lineSeparator())
-            .add("*Scenario:* " + cucumberTestCase.getSummary())
-            .add(cucumberTestCase.getScenario())
-            .toString();
-    }
-
-    private void checkIfAutomatedType(List<AbstractTestCase> testScenarioList) throws NonCucumberTypesException
-    {
-        if (testScenarioList.stream()
-            .noneMatch(testScenario -> TestCaseType.AUTOMATED.getValue().equals(testScenario.getType())))
-        {
-            throw new NonCucumberTypesException();
-        }
-    }
-
-    private Optional<String> getSingleUniqueValue(
-        List<AbstractTestCase> testScenarioList, Function<AbstractTestCase, String> valueFunc)
-        throws NotSingleUniqueValueException
-    {
-        Set<String> values = testScenarioList.stream()
-            .map(valueFunc)
-            .filter(Objects::nonNull)
-            .collect(Collectors.toCollection(LinkedHashSet::new));
-
-        if (values.size() > 1)
-        {
-            throw new NotSingleUniqueValueException(values);
-        }
-        return values.isEmpty() ? Optional.empty() : Optional.of(values.iterator().next());
-    }
-
-    private ManualTestCaseParameters createManualTestCaseParameters(String storyTitle, Scenario scenario)
-            throws SyntaxException
-    {
-        ManualTestCaseParameters parameters = new ManualTestCaseParameters();
-        fillTestCaseParameters(parameters, TestCaseType.MANUAL, scenario);
-        parameters.setSteps(ManualStepConverter.convert(storyTitle, scenario.getTitle(), scenario.collectSteps()));
-        return parameters;
-    }
-
-    private CucumberTestCaseParameters createCucumberTestCaseParameters(Scenario scenario)
-    {
-        CucumberTestCaseParameters parameters = new CucumberTestCaseParameters();
-        fillTestCaseParameters(parameters, TestCaseType.AUTOMATED, scenario);
-        CucumberScenario cucumberScenario = CucumberScenarioConverter.convert(scenario);
-        parameters.setScenarioType(cucumberScenario.getType());
-        parameters.setScenario(cucumberScenario.getScenario());
-        return parameters;
-    }
-
-    private <T extends AbstractTestCaseParameters> void fillTestCaseParameters(T parameters, TestCaseType type,
-            Scenario scenario)
-    {
-        parameters.setType(type);
-        parameters.setLabels(scenario.getMetaValues(Meta.JIRA_LABELS));
-        parameters.setComponents(scenario.getMetaValues(Meta.JIRA_COMPONENTS));
-        parameters.setSummary(scenario.getTitle());
-    }
-
-    @FunctionalInterface
-    private interface CreateParametersFunction
-            extends FailableBiFunction<String, Scenario, AbstractTestCaseParameters, SyntaxException>
-    {
-    }
+  }
 }

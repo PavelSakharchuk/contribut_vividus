@@ -33,7 +33,7 @@ import org.vividus.jira.JiraConfigurationException;
 import org.vividus.jira.JiraConfigurationProvider;
 import org.vividus.output.ManualTestStep;
 import org.vividus.plugin.jira.exporter.Constants;
-import org.vividus.plugin.jira.model.ManualTestCase;
+import org.vividus.plugin.jira.model.jira.ManualTestCase;
 import org.vividus.plugin.jira.model.TestCaseType;
 
 import test.util.JsonVerificationUtils;

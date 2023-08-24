@@ -2,7 +2,7 @@ project.description = 'VIVIDUS to Jira exporter'
 
 buildscript {
     ext {
-        springBootVersion = '2.7.13'
+        springBootVersion = '2.7.14'
     }
 
     repositories {
@@ -32,13 +32,13 @@ dependencies {
     implementation project(':vividus-facade-jira')
     implementation project(':vividus-exporter-commons')
 
-    implementation(group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0')
+    implementation(group: 'org.apache.commons', name: 'commons-lang3', version: '3.13.0')
     implementation(group: 'org.apache.commons', name: 'commons-collections4', version: '4.4')
 
     implementation(group: 'org.zeroturnaround', name: 'zt-zip', version: '1.15')
 
     testImplementation(group: 'org.springframework.boot', name: 'spring-boot-starter-test')
-    testImplementation platform(group: 'org.junit', name: 'junit-bom', version: '5.9.3')
+    testImplementation platform(group: 'org.junit', name: 'junit-bom', version: '5.10.0')
     testImplementation(group: 'org.junit.jupiter', name: 'junit-jupiter')
     testImplementation platform(group: 'org.mockito', name: 'mockito-bom', version: '5.4.0')
     testImplementation(group: 'org.mockito', name: 'mockito-junit-jupiter')

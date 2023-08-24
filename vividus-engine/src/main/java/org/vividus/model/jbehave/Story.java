@@ -28,6 +28,7 @@ public class Story
 {
     private String path;
     private Lifecycle lifecycle;
+    private GivenStories givenStories;
     private List<Scenario> scenarios;
 
     public String getPath()
@@ -48,6 +49,16 @@ public class Story
     public void setLifecycle(Lifecycle lifecycle)
     {
         this.lifecycle = lifecycle;
+    }
+
+    public GivenStories getGivenStories()
+    {
+        return givenStories;
+    }
+
+    public void setGivenStories(GivenStories givenStories)
+    {
+        this.givenStories = givenStories;
     }
 
     public List<Scenario> getScenarios()

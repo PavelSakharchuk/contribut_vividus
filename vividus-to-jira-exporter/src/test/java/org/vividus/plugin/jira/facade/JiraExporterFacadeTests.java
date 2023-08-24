@@ -30,18 +30,13 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -51,12 +46,9 @@ import com.github.valfirst.slf4jtest.TestLogger;
 import com.github.valfirst.slf4jtest.TestLoggerFactory;
 import com.github.valfirst.slf4jtest.TestLoggerFactoryExtension;
 
-import org.apache.commons.io.FilenameUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.io.TempDir;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.vividus.jira.JiraClient;
@@ -64,25 +56,21 @@ import org.vividus.jira.JiraClientProvider;
 import org.vividus.jira.JiraConfigurationException;
 import org.vividus.jira.JiraConfigurationProvider;
 import org.vividus.jira.JiraFacade;
-import org.vividus.jira.model.Attachment;
 import org.vividus.jira.model.IssueLink;
 import org.vividus.jira.model.JiraEntity;
 import org.vividus.output.ManualTestStep;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
-import org.vividus.plugin.jira.databind.MultiTestCaseSerializer;
+import org.vividus.plugin.jira.databind.TestCaseSerializer;
 import org.vividus.plugin.jira.exception.NonEditableTestRunException;
 import org.vividus.plugin.jira.exception.NonTestCaseWithinRunException;
-import org.vividus.util.zip.ZipUtils;
 import org.vividus.plugin.jira.databind.AbstractTestCaseSerializer;
 import org.vividus.plugin.jira.databind.CucumberTestCaseSerializer;
 import org.vividus.plugin.jira.databind.ManualTestCaseSerializer;
 import org.vividus.plugin.jira.exception.NonEditableIssueStatusException;
-import org.vividus.plugin.jira.model.AbstractTestCase;
-import org.vividus.plugin.jira.model.CucumberTestCase;
-import org.vividus.plugin.jira.model.ManualTestCase;
+import org.vividus.plugin.jira.model.jira.AbstractTestCase;
+import org.vividus.plugin.jira.model.jira.CucumberTestCase;
+import org.vividus.plugin.jira.model.jira.ManualTestCase;
 import org.vividus.plugin.jira.model.TestCaseType;
-import org.vividus.plugin.jira.model.TestExecutionInfo;
-import org.vividus.plugin.jira.model.TestCaseStatus;
 
 @ExtendWith({ MockitoExtension.class, TestLoggerFactoryExtension.class })
 class JiraExporterFacadeTests
@@ -105,7 +93,7 @@ class JiraExporterFacadeTests
 
     @Mock private ManualTestCaseSerializer manualTestSerializer;
     @Mock private CucumberTestCaseSerializer cucumberTestSerializer;
-    @Mock private MultiTestCaseSerializer multiTestSerializer;
+    @Mock private TestCaseSerializer testCaseSerializer;
     @Mock private JiraFacade jiraFacade;
     @Mock private JiraConfigurationProvider jiraConfigurationProvider;
     @Mock private JiraClient jiraClient;
@@ -422,7 +410,7 @@ class JiraExporterFacadeTests
     {
         jiraExporterFacade = new JiraExporterFacade(
             Optional.empty(), editableStatuses, jiraFacade, jiraConfigurationProvider, jiraClientProvider,
-            jiraExporterOptions, manualTestSerializer, cucumberTestSerializer, multiTestSerializer);
+            jiraExporterOptions, manualTestSerializer, cucumberTestSerializer, testCaseSerializer);
     }
 
     private <T extends AbstractTestCase> void mockSerialization(AbstractTestCaseSerializer<T> serializer,

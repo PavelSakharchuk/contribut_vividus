@@ -27,12 +27,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.vividus.output.ManualTestStep;
 import org.vividus.plugin.jira.exporter.Constants;
-import org.vividus.plugin.jira.facade.AbstractTestCaseParameters;
-import org.vividus.plugin.jira.facade.CucumberTestCaseParameters;
-import org.vividus.plugin.jira.facade.ManualTestCaseParameters;
-import org.vividus.plugin.jira.model.AbstractTestCase;
-import org.vividus.plugin.jira.model.CucumberTestCase;
-import org.vividus.plugin.jira.model.ManualTestCase;
+import org.vividus.plugin.jira.facade.AbstractScenarioParameters;
+import org.vividus.plugin.jira.facade.CucumberScenarioParameters;
+import org.vividus.plugin.jira.facade.ManualScenarioParameters;
+import org.vividus.plugin.jira.model.jira.AbstractTestCase;
+import org.vividus.plugin.jira.model.jira.CucumberTestCase;
+import org.vividus.plugin.jira.model.jira.ManualTestCase;
 import org.vividus.plugin.jira.model.TestCaseType;
 
 class TestCaseFactoryTests
@@ -46,8 +46,8 @@ class TestCaseFactoryTests
     void shouldCreateManualTestCase()
     {
         ManualTestStep step = Mockito.mock(ManualTestStep.class);
-        ManualTestCaseParameters parameters = createTestCaseParameters(TestCaseType.MANUAL,
-                ManualTestCaseParameters::new);
+        ManualScenarioParameters parameters = createTestCaseParameters(TestCaseType.MANUAL,
+                ManualScenarioParameters::new);
         parameters.setSteps(List.of(step));
 
         ManualTestCase testCase = factory.createManualTestCase(parameters);
@@ -59,8 +59,8 @@ class TestCaseFactoryTests
     @Test
     void shouldCreateCucumberTestCase()
     {
-        CucumberTestCaseParameters parameters = createTestCaseParameters(TestCaseType.AUTOMATED,
-                CucumberTestCaseParameters::new);
+        CucumberScenarioParameters parameters = createTestCaseParameters(TestCaseType.AUTOMATED,
+                CucumberScenarioParameters::new);
         parameters.setScenarioType("scenario-type");
         parameters.setScenario("scenario");
 
@@ -71,7 +71,7 @@ class TestCaseFactoryTests
         verifyTestCase(parameters, testCase);
     }
 
-    private void verifyTestCase(AbstractTestCaseParameters parameters, AbstractTestCase testCase)
+    private void verifyTestCase(AbstractScenarioParameters parameters, AbstractTestCase testCase)
     {
         assertEquals(PROJECT_KEY, testCase.getProjectKey());
         assertEquals(ASSIGNEE_ID, testCase.getAssigneeId());
@@ -81,10 +81,10 @@ class TestCaseFactoryTests
     }
 
     @SuppressWarnings("unchecked")
-    private static <T extends AbstractTestCaseParameters> T createTestCaseParameters(TestCaseType type,
+    private static <T extends AbstractScenarioParameters> T createTestCaseParameters(TestCaseType type,
             Supplier<T> factory)
     {
-        AbstractTestCaseParameters testCase = factory.get();
+        AbstractScenarioParameters testCase = factory.get();
         testCase.setType(type);
         testCase.setSummary("summary");
         testCase.setLabels(Set.of("labels-1"));

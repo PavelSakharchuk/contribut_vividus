@@ -25,7 +25,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import org.springframework.stereotype.Component;
 import org.vividus.output.ManualTestStep;
 import org.vividus.plugin.jira.exporter.Constants;
-import org.vividus.plugin.jira.model.ManualTestCase;
+import org.vividus.plugin.jira.model.jira.ManualTestCase;
 
 @Component
 public class ManualTestCaseSerializer extends AbstractTestCaseSerializer<ManualTestCase>
@@ -33,26 +33,26 @@ public class ManualTestCaseSerializer extends AbstractTestCaseSerializer<ManualT
     private static final String MANUAL_STEPS_FIELD_KEY = Constants.JiraMappingProperties.MANUAL_STEPS;
 
     @Override
-     // TODO Notes: I think manual steps can be skipped because we will be update tasks ???
     protected void serializeCustomFields(ManualTestCase testCase, Map<String, String> mapping, JsonGenerator generator)
             throws IOException
     {
-//        List<ManualTestStep> manualTestSteps = testCase.getManualTestSteps();
-//
-//        generator.writeObjectFieldStart(getSafely(MANUAL_STEPS_FIELD_KEY, mapping));
-//        generator.writeArrayFieldStart("steps");
-//        for (int stepIndex = 0; stepIndex < manualTestSteps.size(); stepIndex++)
-//        {
-//            ManualTestStep manualTestStep = manualTestSteps.get(stepIndex);
-//            generator.writeStartObject();
-//            generator.writeNumberField("index", stepIndex + 1);
-//            generator.writeObjectFieldStart("fields");
-//            generator.writeStringField("Action", manualTestStep.getAction());
-//            generator.writeStringField("Data", manualTestStep.getData());
-//            generator.writeStringField("Expected Result", manualTestStep.getExpectedResult());
-//            generator.writeEndObject();
-//            generator.writeEndObject();
-//        }
-//        generator.writeEndArray();
+        List<ManualTestStep> manualTestSteps = testCase.getManualTestSteps();
+
+        generator.writeObjectFieldStart(
+            jiraConfigurationProvider.getMappedFieldSafely(MANUAL_STEPS_FIELD_KEY, mapping));
+        generator.writeArrayFieldStart("steps");
+        for (int stepIndex = 0; stepIndex < manualTestSteps.size(); stepIndex++)
+        {
+            ManualTestStep manualTestStep = manualTestSteps.get(stepIndex);
+            generator.writeStartObject();
+            generator.writeNumberField("index", stepIndex + 1);
+            generator.writeObjectFieldStart("fields");
+            generator.writeStringField("Action", manualTestStep.getAction());
+            generator.writeStringField("Data", manualTestStep.getData());
+            generator.writeStringField("Expected Result", manualTestStep.getExpectedResult());
+            generator.writeEndObject();
+            generator.writeEndObject();
+        }
+        generator.writeEndArray();
     }
 }

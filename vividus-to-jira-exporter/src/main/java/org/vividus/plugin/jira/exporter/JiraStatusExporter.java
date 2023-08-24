@@ -41,7 +41,7 @@ import org.vividus.plugin.jira.exception.NonEditableTestRunException;
 import org.vividus.plugin.jira.exception.NonTestCaseWithinRunException;
 import org.vividus.plugin.jira.facade.JiraExporterFacade;
 import org.vividus.plugin.jira.model.TestCaseStatus;
-import org.vividus.plugin.jira.model.VividusScenarioInfo;
+import org.vividus.plugin.jira.exporter.model.VividusScenarioInfo;
 
 @Component
 public class JiraStatusExporter
@@ -99,7 +99,7 @@ public class JiraStatusExporter
     {
         List<TestCaseStatus> scenarioStatuses = multiTestCaseList.stream()
             .map(multiTestCase -> calculateScenarioStatus(multiTestCase.getScenario()))
-            .collect(Collectors.toList());
+            .toList();
 
         return scenarioStatuses.stream()
             .filter(scenarioStatus -> scenarioStatus == TestCaseStatus.FAILED)

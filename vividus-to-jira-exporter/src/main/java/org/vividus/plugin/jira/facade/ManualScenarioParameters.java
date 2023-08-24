@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2020 the original author or authors.
+ * Copyright 2019-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,28 +16,21 @@
 
 package org.vividus.plugin.jira.facade;
 
-public class CucumberTestCaseParameters extends AbstractTestCaseParameters
+import java.util.List;
+
+import org.vividus.output.ManualTestStep;
+
+public class ManualScenarioParameters extends AbstractScenarioParameters
 {
-    private String scenario;
-    private String scenarioType;
+    private List<ManualTestStep> steps;
 
-    public String getScenario()
+    public List<ManualTestStep> getSteps()
     {
-        return scenario;
+        return steps;
     }
 
-    public void setScenario(String scenario)
+    public void setSteps(List<ManualTestStep> steps)
     {
-        this.scenario = scenario;
-    }
-
-    public String getScenarioType()
-    {
-        return scenarioType;
-    }
-
-    public void setScenarioType(String scenarioType)
-    {
-        this.scenarioType = scenarioType;
+        this.steps = steps;
     }
 }

@@ -44,6 +44,7 @@ import org.vividus.util.ResourceUtils;
 /**
  * {{Jira: Project type}}: 'company-managed project' (because 'components' is skiped in the 'team-managed project')
  * TODO: After updating: Scenario without TestCaseId in the @Meta will be skipped
+ * TODO: MANUAL Scenarios will be skipped - Need to Update
  *
  *
  * TODO: Need to investigate setting up of 'jiraExporterOptions'
@@ -176,7 +177,7 @@ import org.vividus.util.ResourceUtils;
     // Xray -> Jira
     // Constants
     // To: vividus-to-jira-exporter/src/main/resources/org/vividus/plugin/jira/spring.xml
-    "jira-exporter.jira-instance-key=nucleus",
+//    "jira-exporter.jira-instance-key=nucleus",
     // Constants
     // To: vividus-to-jira-exporter/src/main/resources/org/vividus/plugin/jira/spring.xml
 //    "jira-exporter.editable-statuses=To Do, In progress, Ready for test, Failed, Passed, Blocked",
@@ -184,7 +185,7 @@ import org.vividus.util.ResourceUtils;
     // To: \vividus-to-jira-exporter/src/main/java/org/vividus/plugin/jira/configuration/JiraExporterOptions.java
 //    "jira-exporter.project-key=VIVITEST",
 //    "jira-exporter.project-key=VIVIT",
-    "jira-exporter.project-key=NUC",
+//    "jira-exporter.project-key=NUC",
     // TODO: Go to profile and get Id from url: https://vivi-test.atlassian.net/jira/people/5c3c62faa217aa69bce5d9f0
     // Constants
     // To: \vividus-to-jira-exporter/src/main/java/org/vividus/plugin/jira/configuration/JiraExporterOptions.java
@@ -203,11 +204,12 @@ import org.vividus.util.ResourceUtils;
 
     "jira.nucleus.project-key-regex=(NUC)",
     "jira.nucleus.endpoint=https://jjmtdf.atlassian.net/",
-    "jira.nucleus.http.headers.Cookie=ajs_anonymous_id=%221ca66645-9074-4e34-b1c2-034dd34b2d89%22; atlassian.xsrf.token=4733b3edec66b02fc99a11a3d2a83ea3783071b4_lin; SL_G_WPT_TO=ru; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; tenant.session.token=eyJraWQiOiJzZXNzaW9uLXNlcnZpY2VcL3Byb2QtMTU5Mjg1ODM5NCIsImFsZyI6IlJTMjU2In0.eyJhc3NvY2lhdGlvbnMiOltdLCJzdWIiOiI3MTIwMjA6YzIzMTVhNjMtNWQ2OC00ZmZiLWE3ZDItNzBkZTJhNTc4OWFhIiwiZW1haWxEb21haW4iOiJlcGFtLmNvbSIsImltcGVyc29uYXRpb24iOltdLCJjcmVhdGVkIjoxNjg4OTkyODA4LCJyZWZyZXNoVGltZW91dCI6MTY5MjY5ODcxNiwidmVyaWZpZWQiOnRydWUsImlzcyI6InNlc3Npb24tc2VydmljZSIsInNlc3Npb25JZCI6IjYyOTdiMTU3LTZmOTMtNDk4NS04NDMwLWE3MDA2ZTZhZWQwZCIsInN0ZXBVcHMiOltdLCJvcmdJZCI6IjRhNjIyZmE3LTcxZDMtNGQwZC04MzJkLWFjZWE4MzE4NTJjNiIsImF1ZCI6ImF0bGFzc2lhbiIsIm5iZiI6MTY5MjY5ODExNiwiZXhwIjoxNjk1MjkwMTE2LCJpYXQiOjE2OTI2OTgxMTYsImVtYWlsIjoicGF2ZWxfc2FraGFyY2h1a0BlcGFtLmNvbSIsImp0aSI6IjYyOTdiMTU3LTZmOTMtNDk4NS04NDMwLWE3MDA2ZTZhZWQwZCJ9.rsgCHPjTAgsumtMmamywOdOQ1XEJHrbcPYGAsSlGECIba8XF4nkfwSHVti_9zkGRuu2fLcnGNDvuptVRZ_QuAc4rpl2XYmJsS7scKTa8B9HaijzXrHXQ3J3ywQPihhqefalaA_bGG5pjXpY9EmI6Wkw3hi1XRi8gBRJfO3kCrOrdnTotPxWeAmF-V2iHefv90uFK3wPfaYxlMgZDi5m6NWl9uXnZ4CVynOOOQ4FQgt0GNIE6EoLXirrPySUNSbfTE9aZKEbky1uO_8mb1hDMkZRldtC68ZGD53YnbEz0SAknI1KKdEQDao9HYFW0Iqvmj-lrsR6ZysGBgyY7MZXVkQ; JSESSIONID=6D83580E9A926EFAA08AD834323E5CD9",
+    "jira.nucleus.http.headers.Cookie=ajs_anonymous_id=%221ca66645-9074-4e34-b1c2-034dd34b2d89%22; atlassian.xsrf.token=a9401f60b60df5baec9b870b1e9ff03ab626bae0_lin; SL_G_WPT_TO=ru; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; tenant.session.token=eyJraWQiOiJzZXNzaW9uLXNlcnZpY2VcL3Byb2QtMTU5Mjg1ODM5NCIsImFsZyI6IlJTMjU2In0.eyJhc3NvY2lhdGlvbnMiOltdLCJzdWIiOiI3MTIwMjA6YzIzMTVhNjMtNWQ2OC00ZmZiLWE3ZDItNzBkZTJhNTc4OWFhIiwiZW1haWxEb21haW4iOiJlcGFtLmNvbSIsImltcGVyc29uYXRpb24iOltdLCJjcmVhdGVkIjoxNjg4OTkyODA4LCJyZWZyZXNoVGltZW91dCI6MTY5MzAwMjk5OSwidmVyaWZpZWQiOnRydWUsImlzcyI6InNlc3Npb24tc2VydmljZSIsInNlc3Npb25JZCI6IjYyOTdiMTU3LTZmOTMtNDk4NS04NDMwLWE3MDA2ZTZhZWQwZCIsInN0ZXBVcHMiOltdLCJvcmdJZCI6IjRhNjIyZmE3LTcxZDMtNGQwZC04MzJkLWFjZWE4MzE4NTJjNiIsImF1ZCI6ImF0bGFzc2lhbiIsIm5iZiI6MTY5MzAwMjM5OSwiZXhwIjoxNjk1NTk0Mzk5LCJpYXQiOjE2OTMwMDIzOTksImVtYWlsIjoicGF2ZWxfc2FraGFyY2h1a0BlcGFtLmNvbSIsImp0aSI6IjYyOTdiMTU3LTZmOTMtNDk4NS04NDMwLWE3MDA2ZTZhZWQwZCJ9.eXpzx2FuUJsK3aXjZWyP9Pah86gHjNp9HcmtCu25XpahdMnqR_Hbn5pN0gZOmU3iqeGzH6dnGOkkx5KloIdRmXpoy9Lw-5BFiaUd1QgIJzIk_YXkq6EJYvGH9PC_lPHz4vv5Y8nUpQlbfxv9rkW5HWwCwXkf0hxFyuSlTbY7JyJJUpxAVmYr_B4dLleRdpwMZS1kTJa19pDfo9Z5nvnw2cEhnkhroJsRGrRW73VqKnXfXur8eOxJfUnna4Jirbe3i7fJskNnbikCI0g0tQ0JutZ8CWXGBGrSAFqvauwJZlDgd2gNwXoiD0vaNZ9FKmtIwmtUUg1_9Kp2doyMoc3lHw; JSESSIONID=0B4A1263DD64C57056893C4851EF514B",
 
     "jira.nucleus.fields-mapping.initial-test-case=customfield_10096",
     "jira.nucleus.fields-mapping.test-case-type=customfield_10045",
 
+    "jira-exporter.jira-instance-key=nucleus",
     "jira-exporter.project-key=NUC",
     "jira-exporter.editable-statuses=To Do, In progress, Ready for test, Failed, Passed, Blocked",
 
@@ -240,8 +242,16 @@ class MainFlowTests
 
 //          URI jsonResultsUri = getJsonResultsUri("batch-1");
 //          URI jsonResultsUri = getJsonResultsUri("batch-2");
-          URI jsonResultsUri = getJsonResultsUri("batch-22082023");
+//          URI jsonResultsUri = getJsonResultsUri("batch-22082023");
 //          URI jsonResultsUri = getJsonResultsUri("batch-22082023_2");
+//          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_comment");
+//          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_without_GivenStories");
+//          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_givenStories_with_few_Scenarios");
+//          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_givenStories_if_one_TC-id_in_different_story_files");
+//          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_givenStories_with_parameters");
+//          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_few_givenStories_within_one_file");
+//          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_specific_GivenStory");
+          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_specific_GivenStory_second");
 
 //          URI jsonResultsUri = getJsonResultsUri("createandlink");
 //          URI jsonResultsUri = getJsonResultsUri("createandlink2");
@@ -258,9 +268,9 @@ class MainFlowTests
         // TODO: How I can manage this properties by properties file
         when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(Paths.get(jsonResultsUri));
         when(jiraExporterOptions.getProjectKey()).thenReturn("NUC");
-        when(jiraExporterOptions.getTestRunId()).thenReturn("NUC-700");
+        when(jiraExporterOptions.getTestRunId()).thenReturn("NUC-1679");
         when(jiraExporterOptions.isTestCaseInfoUpdatesEnabled()).thenReturn(true);
-        when(jiraExporterOptions.isTestCaseStatusUpdatesEnabled()).thenReturn(true);
+//        when(jiraExporterOptions.isTestCaseStatusUpdatesEnabled()).thenReturn(true);
         when(jiraExporterOptions.getTestIssueType()).thenReturn("Test Case");
         //        jiraExporterOptions.setTestExecutionAttachments(List.of(ROOT));
     }
@@ -268,7 +278,6 @@ class MainFlowTests
     @Test
     void mainFlowTest(@TempDir Path tempDirectory) throws IOException, URISyntaxException
     {
-//        jiraExporter.exportResults();
         jiraExporter.exportResults();
     }
 

@@ -14,12 +14,24 @@
  * limitations under the License.
  */
 
-package org.vividus.plugin.jira.model;
+package org.vividus.plugin.jira.model.jira;
+
+import java.util.List;
+import org.vividus.plugin.jira.facade.CucumberScenarioParameters;
 
 public class CucumberTestCase extends AbstractTestCase
 {
+//    private List<CucumberScenarioParameters> givenStories;
     private String scenario;
     private String scenarioType;
+
+//    public List<CucumberScenarioParameters> getGivenStories() {
+//        return givenStories;
+//    }
+
+//    public void setGivenStories(List<CucumberScenarioParameters> givenStories) {
+//        this.givenStories = givenStories;
+//    }
 
     public String getScenario()
     {

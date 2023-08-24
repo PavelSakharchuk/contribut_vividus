@@ -31,6 +31,7 @@ public class Scenario extends AbstractStepsContainer
 {
     private String title;
     private List<Meta> meta;
+    private GivenStories givenStories;
     private Examples examples;
     private long start;
     private long end;
@@ -53,6 +54,16 @@ public class Scenario extends AbstractStepsContainer
     public void setMeta(List<Meta> meta)
     {
         this.meta = meta;
+    }
+
+    public GivenStories getGivenStories()
+    {
+        return givenStories;
+    }
+
+    public void setGivenStories(GivenStories givenStories)
+    {
+        this.givenStories = givenStories;
     }
 
     public Examples getExamples()

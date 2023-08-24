@@ -20,7 +20,7 @@ import java.util.Set;
 
 import org.vividus.plugin.jira.model.TestCaseType;
 
-public abstract class AbstractTestCaseParameters
+public abstract class AbstractScenarioParameters
 {
     private TestCaseType type;
     private String summary;

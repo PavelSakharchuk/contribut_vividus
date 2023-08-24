@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
-package org.vividus.plugin.jira.model;
+package org.vividus.plugin.jira.model.jira;
 
 import java.util.List;
+
 import org.vividus.output.ManualTestStep;
+import org.vividus.plugin.jira.model.jira.AbstractTestCase;
 
-public class MultiTestCase extends AbstractTestCase
+public class ManualTestCase extends AbstractTestCase
 {
-    private String description;
+    private List<ManualTestStep> manualTestSteps;
 
-    public String getDescription()
+    public List<ManualTestStep> getManualTestSteps()
     {
-        return description;
+        return manualTestSteps;
     }
 
-    public void setDescription(String description)
+    public void setManualTestSteps(List<ManualTestStep> manualTestSteps)
     {
-        this.description = description;
+        this.manualTestSteps = manualTestSteps;
     }
 }

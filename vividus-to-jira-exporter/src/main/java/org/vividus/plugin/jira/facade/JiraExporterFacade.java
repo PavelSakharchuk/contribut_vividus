@@ -43,17 +43,17 @@ import org.vividus.jira.model.JiraEntity;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.databind.CucumberTestCaseSerializer;
 import org.vividus.plugin.jira.databind.ManualTestCaseSerializer;
-import org.vividus.plugin.jira.databind.MultiTestCaseSerializer;
+import org.vividus.plugin.jira.databind.TestCaseSerializer;
 import org.vividus.plugin.jira.exception.NonAccessTestCaseStatusException;
 import org.vividus.plugin.jira.exception.NonEditableIssueStatusException;
 import org.vividus.plugin.jira.exception.NonEditableTestRunException;
 import org.vividus.plugin.jira.exception.NonTestCaseWithinRunException;
 import org.vividus.plugin.jira.exporter.Constants;
-import org.vividus.plugin.jira.model.AbstractTestCase;
-import org.vividus.plugin.jira.model.CucumberTestCase;
-import org.vividus.plugin.jira.model.IssueTransitionUpdateRequest;
-import org.vividus.plugin.jira.model.ManualTestCase;
-import org.vividus.plugin.jira.model.MultiTestCase;
+import org.vividus.plugin.jira.model.jira.AbstractTestCase;
+import org.vividus.plugin.jira.model.jira.CucumberTestCase;
+import org.vividus.plugin.jira.model.jira.TestCase;
+import org.vividus.plugin.jira.model.rest.IssueTransitionUpdateRequest;
+import org.vividus.plugin.jira.model.jira.ManualTestCase;
 import org.vividus.plugin.jira.model.TestCaseStatus;
 import org.zeroturnaround.zip.ZipException;
 import org.zeroturnaround.zip.ZipUtil;
@@ -73,7 +73,7 @@ public class JiraExporterFacade
     public JiraExporterFacade(Optional<String> jiraInstanceKey, List<String> editableStatuses, JiraFacade jiraFacade,
         JiraConfigurationProvider jiraConfigurationProvider, JiraClientProvider jiraClientProvider,
         JiraExporterOptions jiraExporterOptions, ManualTestCaseSerializer manualTestSerializer,
-        CucumberTestCaseSerializer cucumberTestSerializer, MultiTestCaseSerializer multiTestSerializer) {
+        CucumberTestCaseSerializer cucumberTestSerializer, TestCaseSerializer testCaseSerializer) {
         this.jiraInstanceKey = jiraInstanceKey;
         this.editableStatuses = editableStatuses;
         this.jiraFacade = jiraFacade;
@@ -85,8 +85,31 @@ public class JiraExporterFacade
             .setSerializationInclusion(Include.NON_NULL)
             .registerModule(new SimpleModule().addSerializer(ManualTestCase.class, manualTestSerializer)
                 .addSerializer(CucumberTestCase.class, cucumberTestSerializer)
-                .addSerializer(MultiTestCase.class, multiTestSerializer)
+                .addSerializer(TestCase.class, testCaseSerializer)
             );
+    }
+
+    public <T extends AbstractTestCase> void updateTestCase(T testCase) throws IOException,
+        NonEditableTestRunException, NonEditableIssueStatusException, NonTestCaseWithinRunException,
+        JiraConfigurationException
+    {
+        String testCaseId = testCase.getTestCaseId();
+        JiraEntity testRun = checkIfRunEditable(jiraExporterOptions.getTestRunId());
+        JiraEntity testCaseOfRun = checkIfIssueEditable(testRun, testCase.getTestCaseId());
+
+        String updateTestRequest = objectMapper.writeValueAsString(testCase);
+        LOGGER.atInfo().addArgument(testCase::getType)
+                       .addArgument(testCaseOfRun.getKey())
+                       .addArgument(testCaseId)
+                       .addArgument(testRun.getKey())
+                       .addArgument(updateTestRequest)
+                       .log("Updating {} Test Case with ID {} [Initial TC: {}] for {} Test Run: {}");
+        jiraFacade.updateIssue(testCaseOfRun.getKey(), updateTestRequest);
+        LOGGER.atInfo().addArgument(testCase::getType)
+            .addArgument(testCaseOfRun.getKey())
+            .addArgument(testCaseId)
+            .addArgument(testRun.getKey())
+            .log("{} Test Case with key {} [Initial TC: {}] for {} Test Run has been updated");
     }
 
     public <T extends AbstractTestCase> void updateTestCase(String testCaseKey, T testCase) throws IOException,
