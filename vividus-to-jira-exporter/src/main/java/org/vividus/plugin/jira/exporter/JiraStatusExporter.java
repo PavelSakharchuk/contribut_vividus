@@ -17,13 +17,10 @@
 package org.vividus.plugin.jira.exporter;
 
 import java.io.IOException;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,100 +36,85 @@ import org.vividus.plugin.jira.exception.NonAccessTestCaseStatusException;
 import org.vividus.plugin.jira.exception.NonEditableIssueStatusException;
 import org.vividus.plugin.jira.exception.NonEditableTestRunException;
 import org.vividus.plugin.jira.exception.NonTestCaseWithinRunException;
-import org.vividus.plugin.jira.facade.JiraExporterFacade;
-import org.vividus.plugin.jira.model.TestCaseStatus;
+import org.vividus.plugin.jira.exporter.model.TestCaseInfo;
 import org.vividus.plugin.jira.exporter.model.VividusScenarioInfo;
+import org.vividus.plugin.jira.facade.JiraExporterFacade;
+import org.vividus.plugin.jira.exporter.model.TestCaseStatus;
 
 @Component
-public class JiraStatusExporter
-{
-    private static final Logger LOGGER = LoggerFactory.getLogger(JiraStatusExporter.class);
+public class JiraStatusExporter {
 
-    @Autowired private JiraExporterOptions jiraExporterOptions;
-    @Autowired private JiraExporterFacade jiraExporterFacade;
-    @Autowired private JiraExporterErrorCollection jiraExporterErrorCollection;
+  private static final Logger LOGGER = LoggerFactory.getLogger(JiraStatusExporter.class);
 
-    public Optional<List<Entry<String, Scenario>>> exportStatusTestCases(
-        Map<String, List<VividusScenarioInfo>> multiTestCaseMap)
-    {
-        List<Entry<String, Scenario>> testCases = new ArrayList<>();
-        if (jiraExporterOptions.isTestCaseStatusUpdatesEnabled())
-        {
-            for (Map.Entry<String,List<VividusScenarioInfo>> testCaseEntry : multiTestCaseMap.entrySet())
-            {
-                LOGGER.atInfo().addArgument(testCaseEntry.getKey()).log("Exporting Status: {}");
-                this.exportTestCaseStatus(testCaseEntry.getKey(), testCaseEntry.getValue())
-                    .ifPresent(testCases::addAll);
-            }
-        }
-        else
-        {
-            LOGGER.atInfo().log("Test Case Statuses Exporting is switched off");
-        }
-        return Optional.of(testCases);
+  @Autowired
+  private JiraExporterOptions jiraExporterOptions;
+  @Autowired
+  private JiraExporterFacade jiraExporterFacade;
+  @Autowired
+  private JiraExporterErrorCollection jiraExporterErrorCollection;
+
+  public void exportStatusTestCases(
+      Map<TestCaseInfo, List<VividusScenarioInfo>> multiTestCaseMap) {
+    if (jiraExporterOptions.isTestCaseStatusUpdatesEnabled()) {
+      multiTestCaseMap.forEach(this::exportTestCaseStatus);
+    } else {
+      LOGGER.atInfo().log("Test Case Statuses Exporting is switched off");
     }
+  }
 
-    private Optional<List<Entry<String, Scenario>>> exportTestCaseStatus(
-        String testCaseId, List<VividusScenarioInfo> multiTestCaseList)
-    {
-
-        try {
-            IssueTransitionStatus jiraExecutionStatus =
-                jiraExporterFacade.getTransitionStatus(testCaseId, calculateTestCaseStatus(multiTestCaseList));
-            jiraExporterFacade.updateStatus(testCaseId, jiraExecutionStatus);
-
-            return Optional.of(multiTestCaseList.stream()
-                .map(VividusScenarioInfo::getScenario)
-                .map(scenario -> new SimpleEntry<>(testCaseId, scenario))
-                .collect(Collectors.toList()));
-        }
-        catch (IOException| JiraConfigurationException | NonEditableTestRunException | NonTestCaseWithinRunException
-               | NonEditableIssueStatusException | NonAccessTestCaseStatusException e)
-        {
-            multiTestCaseList.forEach(multiTestCase -> jiraExporterErrorCollection
-                .addLogTestCaseStatusExportError(e, testCaseId, multiTestCase.getStory(), multiTestCase.getScenario()));
-        }
-        return Optional.empty();
+  private void exportTestCaseStatus(
+      TestCaseInfo testCaseInfo, List<VividusScenarioInfo> vividusScenarioInfoList) {
+    String testCaseId = testCaseInfo.getTestCaseId();
+    LOGGER.atInfo().addArgument(testCaseId).log("Exporting Status: {}");
+    try {
+      TestCaseStatus testCaseStatus = calculateTestCaseStatus(vividusScenarioInfoList);
+      IssueTransitionStatus jiraTransitionStatus = jiraExporterFacade.getTransitionStatus(testCaseInfo, testCaseStatus);
+      jiraExporterFacade.updateStatus(testCaseId, jiraTransitionStatus);
+      vividusScenarioInfoList
+          .forEach(vividusScenarioInfo -> vividusScenarioInfo.getTestCase().setTestCaseStatus(testCaseStatus));
+    } catch (IOException | JiraConfigurationException | NonEditableTestRunException | NonTestCaseWithinRunException
+             | NonEditableIssueStatusException | NonAccessTestCaseStatusException e) {
+      vividusScenarioInfoList.forEach(multiTestCase -> jiraExporterErrorCollection
+          .addLogTestCaseStatusExportError(e, testCaseId, multiTestCase.getStory(), multiTestCase.getScenario()));
     }
+  }
 
-    private TestCaseStatus calculateTestCaseStatus(List<VividusScenarioInfo> multiTestCaseList)
-    {
-        List<TestCaseStatus> scenarioStatuses = multiTestCaseList.stream()
-            .map(multiTestCase -> calculateScenarioStatus(multiTestCase.getScenario()))
-            .toList();
+  private TestCaseStatus calculateTestCaseStatus(List<VividusScenarioInfo> vividusScenarioInfoList) {
+    List<TestCaseStatus> scenarioStatuses = vividusScenarioInfoList.stream()
+        .map(vividusScenarioInfo -> {
+          TestCaseStatus scenarioStatus = calculateScenarioStatus(vividusScenarioInfo.getScenario());
+          vividusScenarioInfo.setScenarioStatus(scenarioStatus);
+          return scenarioStatus;
+        })
+        .collect(Collectors.toList());
 
-        return scenarioStatuses.stream()
-            .filter(scenarioStatus -> scenarioStatus == TestCaseStatus.FAILED)
-            .findFirst()
-            .orElse(TestCaseStatus.PASSED);
+    return scenarioStatuses.stream()
+        .filter(scenarioStatus -> scenarioStatus == TestCaseStatus.FAILED)
+        .findFirst()
+        .orElse(TestCaseStatus.PASSED);
+  }
+
+  private TestCaseStatus calculateScenarioStatus(Scenario scenario) {
+    if (scenario.getExamples() == null) {
+      return calculateStatus(scenario);
+    } else {
+      List<TestCaseStatus> exampleStatuses =
+          scenario.getExamples().getExamples().stream()
+              .map(JiraStatusExporter::calculateStatus)
+              .collect(Collectors.toList());
+
+      return exampleStatuses.stream()
+          .filter(ts -> ts == TestCaseStatus.FAILED)
+          .findFirst()
+          .orElse(TestCaseStatus.PASSED);
     }
+  }
 
-    private TestCaseStatus calculateScenarioStatus(Scenario scenario)
-    {
-        if (scenario.getExamples() == null)
-        {
-            return calculateStatus(scenario);
-        }
-        else
-        {
-            List<TestCaseStatus> exampleStatuses =
-                scenario.getExamples().getExamples().stream()
-                    .map(JiraStatusExporter::calculateStatus)
-                    .collect(Collectors.toList());
-
-            return exampleStatuses.stream()
-                .filter(ts -> ts == TestCaseStatus.FAILED)
-                .findFirst()
-                .orElse(TestCaseStatus.PASSED);
-        }
-    }
-
-    private static TestCaseStatus calculateStatus(AbstractStepsContainer scenario)
-    {
-        return scenario.createStreamOfAllSteps().anyMatch(step ->
-            Arrays.asList(StepStatus.FAILED.getName(), StepStatus.NOT_PERFORMED.getName())
-                .contains(step.getOutcome()))
-            ? TestCaseStatus.FAILED
-            : TestCaseStatus.PASSED;
-    }
+  private static TestCaseStatus calculateStatus(AbstractStepsContainer scenario) {
+    return scenario.createStreamOfAllSteps().anyMatch(step ->
+        Arrays.asList(StepStatus.FAILED.getName(), StepStatus.NOT_PERFORMED.getName())
+            .contains(step.getOutcome()))
+        ? TestCaseStatus.FAILED
+        : TestCaseStatus.PASSED;
+  }
 }

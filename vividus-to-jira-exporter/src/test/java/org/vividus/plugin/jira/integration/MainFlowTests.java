@@ -41,10 +41,13 @@ import org.vividus.plugin.jira.facade.JiraExporterFacade;
 import org.vividus.plugin.jira.factory.TestCaseFactory;
 import org.vividus.util.ResourceUtils;
 
+
+
 /**
  * {{Jira: Project type}}: 'company-managed project' (because 'components' is skiped in the 'team-managed project')
  * TODO: After updating: Scenario without TestCaseId in the @Meta will be skipped
  * TODO: MANUAL Scenarios will be skipped - Need to Update
+ * TODO: Markdown: https://support.atlassian.com/jira-software-cloud/docs/markdown-and-keyboard-shortcuts/
  *
  *
  * TODO: Need to investigate setting up of 'jiraExporterOptions'
@@ -204,7 +207,13 @@ import org.vividus.util.ResourceUtils;
 
     "jira.nucleus.project-key-regex=(NUC)",
     "jira.nucleus.endpoint=https://jjmtdf.atlassian.net/",
-    "jira.nucleus.http.headers.Cookie=ajs_anonymous_id=%221ca66645-9074-4e34-b1c2-034dd34b2d89%22; atlassian.xsrf.token=a9401f60b60df5baec9b870b1e9ff03ab626bae0_lin; SL_G_WPT_TO=ru; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; tenant.session.token=eyJraWQiOiJzZXNzaW9uLXNlcnZpY2VcL3Byb2QtMTU5Mjg1ODM5NCIsImFsZyI6IlJTMjU2In0.eyJhc3NvY2lhdGlvbnMiOltdLCJzdWIiOiI3MTIwMjA6YzIzMTVhNjMtNWQ2OC00ZmZiLWE3ZDItNzBkZTJhNTc4OWFhIiwiZW1haWxEb21haW4iOiJlcGFtLmNvbSIsImltcGVyc29uYXRpb24iOltdLCJjcmVhdGVkIjoxNjg4OTkyODA4LCJyZWZyZXNoVGltZW91dCI6MTY5MzAwMjk5OSwidmVyaWZpZWQiOnRydWUsImlzcyI6InNlc3Npb24tc2VydmljZSIsInNlc3Npb25JZCI6IjYyOTdiMTU3LTZmOTMtNDk4NS04NDMwLWE3MDA2ZTZhZWQwZCIsInN0ZXBVcHMiOltdLCJvcmdJZCI6IjRhNjIyZmE3LTcxZDMtNGQwZC04MzJkLWFjZWE4MzE4NTJjNiIsImF1ZCI6ImF0bGFzc2lhbiIsIm5iZiI6MTY5MzAwMjM5OSwiZXhwIjoxNjk1NTk0Mzk5LCJpYXQiOjE2OTMwMDIzOTksImVtYWlsIjoicGF2ZWxfc2FraGFyY2h1a0BlcGFtLmNvbSIsImp0aSI6IjYyOTdiMTU3LTZmOTMtNDk4NS04NDMwLWE3MDA2ZTZhZWQwZCJ9.eXpzx2FuUJsK3aXjZWyP9Pah86gHjNp9HcmtCu25XpahdMnqR_Hbn5pN0gZOmU3iqeGzH6dnGOkkx5KloIdRmXpoy9Lw-5BFiaUd1QgIJzIk_YXkq6EJYvGH9PC_lPHz4vv5Y8nUpQlbfxv9rkW5HWwCwXkf0hxFyuSlTbY7JyJJUpxAVmYr_B4dLleRdpwMZS1kTJa19pDfo9Z5nvnw2cEhnkhroJsRGrRW73VqKnXfXur8eOxJfUnna4Jirbe3i7fJskNnbikCI0g0tQ0JutZ8CWXGBGrSAFqvauwJZlDgd2gNwXoiD0vaNZ9FKmtIwmtUUg1_9Kp2doyMoc3lHw; JSESSIONID=0B4A1263DD64C57056893C4851EF514B",
+    "jira.nucleus.http.auth.preemptive-auth-enabled=true",
+//    "jira.nucleus.http.headers.Cookie=ajs_anonymous_id=%221ca66645-9074-4e34-b1c2-034dd34b2d89%22; atlassian.xsrf.token=a9401f60b60df5baec9b870b1e9ff03ab626bae0_lin; SL_G_WPT_TO=ru; SL_GWPT_Show_Hide_tmp=1; SL_wptGlobTipTmp=1; JSESSIONID=BFCB1B9D665AEEC17E85E8DF459B3B02; tenant.session.token=eyJraWQiOiJzZXNzaW9uLXNlcnZpY2VcL3Byb2QtMTU5Mjg1ODM5NCIsImFsZyI6IlJTMjU2In0.eyJhc3NvY2lhdGlvbnMiOltdLCJzdWIiOiI3MTIwMjA6YzIzMTVhNjMtNWQ2OC00ZmZiLWE3ZDItNzBkZTJhNTc4OWFhIiwiZW1haWxEb21haW4iOiJlcGFtLmNvbSIsImltcGVyc29uYXRpb24iOltdLCJjcmVhdGVkIjoxNjg4OTkyODA4LCJyZWZyZXNoVGltZW91dCI6MTY5MzIyMDY0NSwidmVyaWZpZWQiOnRydWUsImlzcyI6InNlc3Npb24tc2VydmljZSIsInNlc3Npb25JZCI6IjYyOTdiMTU3LTZmOTMtNDk4NS04NDMwLWE3MDA2ZTZhZWQwZCIsInN0ZXBVcHMiOltdLCJvcmdJZCI6IjRhNjIyZmE3LTcxZDMtNGQwZC04MzJkLWFjZWE4MzE4NTJjNiIsImF1ZCI6ImF0bGFzc2lhbiIsIm5iZiI6MTY5MzIyMDA0NSwiZXhwIjoxNjk1ODEyMDQ1LCJpYXQiOjE2OTMyMjAwNDUsImVtYWlsIjoicGF2ZWxfc2FraGFyY2h1a0BlcGFtLmNvbSIsImp0aSI6IjYyOTdiMTU3LTZmOTMtNDk4NS04NDMwLWE3MDA2ZTZhZWQwZCJ9.pYPM9lHTzOYfsTOcTBV9QuYCy6nDCtYNeQ2MpouTDL3GKWc0KDIbZO1erm7_K_qcl76iwZBiBQISICdkdrQWntVSMMNcuwWI9t0CuWJ7H3vLa0t4H1Wyq98SBfES1HG4-tQ2wsa9KI-nMvlDn8oU3SKNw4NCPhJyApAOdeO3LoZJBwVAk23ODDnIPXrp286IFdqXcMmRSTWT-KI26_BBEd2fyf8a8WisaO9bxCVNigN9WW_VhJXFIkXoMzj_qOg4hdhbcTXPd8Rg4pGktQtMcfDuWPghyHDVycinX8XtLsXvKhZpgJvrP44B8ZArGHjzHiQfjBtajz-KzLJ5Z6yNGQ",
+//    "jira.nucleus.http.auth.username=",
+//    "jira.nucleus.http.auth.password=",
+    "jira.nucleus.http.auth.username=pavel_sakharchuk@epam.com",
+//    "jira.nucleus.http.auth.password=SaharSahar1",
+    "jira.nucleus.http.auth.password=ATATT3xFfGF0fatUG_Lpw7pnbzQLGqD-p4gySQkoiNRivxFMRg7gEtdtrJZnHU4Zgx_OCN5IirCgPZTVWhlJTm89QqFgkGAkYGo-Q1iYbECpe4biL0IGsz2ZA4ggeaNbSFxoPonwnyl76WNHZQqsricCFeEzxrf6eaJ6d2t7hSuvmvrUiq23A8M=AD51A42B",
 
     "jira.nucleus.fields-mapping.initial-test-case=customfield_10096",
     "jira.nucleus.fields-mapping.test-case-type=customfield_10045",
@@ -235,7 +244,7 @@ class MainFlowTests
     @BeforeEach
     void setUpJiraExporterOptions() throws IOException, URISyntaxException
     {
-//          URI jsonResultsUri = getJsonResultsUri("jnj");
+          URI jsonResultsUri = getJsonResultsUri("jnj");
 //          URI jsonResultsUri = getJsonResultsUri("jnj_full");
 //          URI jsonResultsUri = getJsonResultsUri("jnj_one_scenario_to_few_cases");
 //          URI jsonResultsUri = getJsonResultsUri("jnj_few_scenario_to_one_case");
@@ -251,7 +260,7 @@ class MainFlowTests
 //          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_givenStories_with_parameters");
 //          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_few_givenStories_within_one_file");
 //          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_specific_GivenStory");
-          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_specific_GivenStory_second");
+//        URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_specific_GivenStory_second");
 
 //          URI jsonResultsUri = getJsonResultsUri("createandlink");
 //          URI jsonResultsUri = getJsonResultsUri("createandlink2");
@@ -268,9 +277,9 @@ class MainFlowTests
         // TODO: How I can manage this properties by properties file
         when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(Paths.get(jsonResultsUri));
         when(jiraExporterOptions.getProjectKey()).thenReturn("NUC");
-        when(jiraExporterOptions.getTestRunId()).thenReturn("NUC-1679");
+        when(jiraExporterOptions.getTestRunId()).thenReturn("NUC-1783");
         when(jiraExporterOptions.isTestCaseInfoUpdatesEnabled()).thenReturn(true);
-//        when(jiraExporterOptions.isTestCaseStatusUpdatesEnabled()).thenReturn(true);
+        when(jiraExporterOptions.isTestCaseStatusUpdatesEnabled()).thenReturn(true);
         when(jiraExporterOptions.getTestIssueType()).thenReturn("Test Case");
         //        jiraExporterOptions.setTestExecutionAttachments(List.of(ROOT));
     }

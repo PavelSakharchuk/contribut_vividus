@@ -1,1 +1,947 @@
-{"id": "cf5f9fbb-b82e-460b-9f4e-3db4f0d3a3e4", "path": "file:\/C:\/01.Projects\/05.JAJ-MTDF\/jnj-auto-tests\/output\/resources\/main\/story\/nucleus\/web\/second_new_ep_of_care.story", "title": "","meta": [{"keyword": "@", "name": "critical_path", "value": ""},{"keyword": "@", "name": "layout", "value": "desktop"}],"beforeSystemStorySteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeStory()"}],"beforeUserStorySteps": [],"givenStories": {"keyword": "GivenStories:", "givenStories":[{"parameters": "{}", "path": "story\/nucleus\/web\/new_case.story#{given-1:scenario-1}"}],"stories": [{"id": "08449491-4892-4ab4-813d-c1833ef0568f", "path": "story\/nucleus\/web\/new_case.story", "title": "","meta": [{"keyword": "@", "name": "critical_path", "value": ""},{"keyword": "@", "name": "layout", "value": "desktop"}],"beforeSystemStorySteps": [],"beforeUserStorySteps": [],"givenStories": {"keyword": "GivenStories:", "givenStories":[{"parameters": "{}", "path": "story\/nucleus\/web\/my_cases.story#{given-1:scenario-1;given-2:scenario-2}"}],"stories": [{"id": "7023dfdd-be10-4c0c-9da8-95d84890271f", "path": "story\/nucleus\/web\/my_cases.story", "title": "","meta": [{"keyword": "@", "name": "critical_path", "value": ""},{"keyword": "@", "name": "layout", "value": "desktop"}],"beforeSystemStorySteps": [],"beforeUserStorySteps": [],"givenStories": {"keyword": "GivenStories:", "givenStories":[{"parameters": "", "path": "story\/nucleus\/web\/open_app.story"}],"stories": [{"id": "d6c62076-469f-41a5-be27-ac255040df03", "path": "story\/nucleus\/web\/open_app.story", "title": "","meta": [{"keyword": "@", "name": "critical_path", "value": ""},{"keyword": "@", "name": "layout", "value": "desktop"},{"keyword": "@", "name": "smoke", "value": ""}],"beforeSystemStorySteps": [],"beforeUserStorySteps": [],"scenarios": [{"keyword": "Scenario:", "id": "473f82be-6590-4818-b9b2-4a1193b820c0", "title": "open main application page","beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"steps": [{"outcome": "successful", "value": "Given I am on main application page"},{"outcome": "successful", "value": "When I change window size to `${resolution}`"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162821120,"end":1693162822228}],"afterUserStorySteps": [],"afterSystemStorySteps": []}]},"scenarios": [{"keyword": "Scenario:", "id": "05a04f9b-5ab0-4f4e-b9e6-7db965820b4d", "title": "open my cases page","meta": [{"keyword": "@", "name": "given-1", "value": "scenario-1"},{"keyword": "@", "name": "testCaseId", "value": "NUC-1106;NUC-1094"}],"beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"steps": [{"outcome": "successful", "value": "When I go to relative URL `\/my-cases`"},{"outcome": "successful", "value": "When I wait until element located by `caseSensitiveText(There are no cases at the moment.)` appears"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162822232,"end":1693162822483},{"keyword": "Scenario:", "id": "307f7637-0d39-407f-8866-cbc06319f0a4", "title": "check create new case button","meta": [{"keyword": "@", "name": "given-2", "value": "scenario-2"},{"keyword": "@", "name": "testCaseId", "value": "NUC-1106"}],"beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"steps": [{"outcome": "successful", "value": "When I click on element located by `tagName(button)->filter.textPart(Create New Case)`"},{"outcome": "successful", "value": "When I wait until element located by `caseSensitiveText(Select Case Type)` appears"},{"outcome": "successful", "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/new-case`"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162822485,"end":1693162823586}],"afterUserStorySteps": [],"afterSystemStorySteps": []}]},"scenarios": [{"keyword": "Scenario:", "id": "8b2c410a-39ba-4cb8-9b92-84f38b8e6a46", "title": "check create new episode of care button","meta": [{"keyword": "@", "name": "given-1", "value": "scenario-1"},{"keyword": "@", "name": "testCaseId", "value": "NUC-1108"}],"beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"steps": [{"outcome": "successful", "value": "When I go to relative URL `\/new-case`"},{"outcome": "successful", "value": "When I click on element located by `testId(jnj-new-case-card-button)->filter.index(1)`"},{"outcome": "successful", "value": "When I wait until element located by `testId(jnj-save-button)` appears"},{"outcome": "successful", "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/new-case\/episode-of-care`"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162823589,"end":1693162824724}],"afterUserStorySteps": [],"afterSystemStorySteps": []}]},"scenarios": [{"keyword": "Scenario:", "id": "5caa86c0-52d9-4cbc-a319-94d2d0d141c4", "title": "Second fill patient form fields","meta": [{"keyword": "@", "name": "given-1", "value": "scenario-1"}],"beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"steps": [{"outcome": "successful", "value": "When I enter `#{generate(regexify '[0-9]{8}')}` in field located by `fieldName(patientId)`"},{"outcome": "successful", "value": "When I enter `#{generate(Name.firstName)}` in field located by `fieldName(firstName)`"},{"outcome": "successful", "value": "When I enter `#{generate(Name.lastName)}` in field located by `fieldName(lastName)`"},{"outcome": "successful", "value": "When I enter `#{randomInt(1, 30)}` in field located by `fieldName(bmi)`"},{"outcome": "successful", "value": "When I click on element located by `xpath(\/\/*[@aria-label='Choose date'])`"},{"outcome": "successful", "value": "When I click on element located by `xpath(\/\/*[@aria-current='date'])`"},{"outcome": "successful", "value": "When I click on element located by `testId(jnj-patient-form-gender)`"},{"outcome": "successful", "value": "When I click on element located by `xpath(\/\/*[@role='option'])->filter.index(#{generate(regexify '[1-3]')})`"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162824726,"end":1693162828779},{"keyword": "Scenario:", "id": "78eaeb19-b7a5-4a9d-813a-d889a1785825", "title": "Second check surgery section","meta": [{"keyword": "@", "name": "testCaseId", "value": "NUC-508"}],"beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"givenStories": {"keyword": "GivenStories:", "givenStories":[{"parameters": "{}", "path": "story\/nucleus\/web\/new_case.story#{given-1:scenario-1}"}],"stories": [{"id": "7ee36089-da25-4b53-8258-b52ffc48437f", "path": "story\/nucleus\/web\/new_case.story", "title": "","meta": [{"keyword": "@", "name": "critical_path", "value": ""},{"keyword": "@", "name": "layout", "value": "desktop"}],"beforeSystemStorySteps": [],"beforeUserStorySteps": [],"givenStories": {"keyword": "GivenStories:", "givenStories":[{"parameters": "{}", "path": "story\/nucleus\/web\/my_cases.story#{given-1:scenario-1;given-2:scenario-2}"}],"stories": [{"id": "3b8c45fd-e8c7-4a3f-ad4e-2bf36ce296aa", "path": "story\/nucleus\/web\/my_cases.story", "title": "","meta": [{"keyword": "@", "name": "critical_path", "value": ""},{"keyword": "@", "name": "layout", "value": "desktop"}],"beforeSystemStorySteps": [],"beforeUserStorySteps": [],"givenStories": {"keyword": "GivenStories:", "givenStories":[{"parameters": "", "path": "story\/nucleus\/web\/open_app.story"}],"stories": [{"id": "531cdce6-b0ff-4b29-b0be-f5dbb540f0d9", "path": "story\/nucleus\/web\/open_app.story", "title": "","meta": [{"keyword": "@", "name": "critical_path", "value": ""},{"keyword": "@", "name": "layout", "value": "desktop"},{"keyword": "@", "name": "smoke", "value": ""}],"beforeSystemStorySteps": [],"beforeUserStorySteps": [],"scenarios": [{"keyword": "Scenario:", "id": "068db5b6-aeca-4c76-8494-761c130cfdc6", "title": "open main application page","beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"steps": [{"outcome": "successful", "value": "Given I am on main application page"},{"outcome": "successful", "value": "When I change window size to `${resolution}`"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162828784,"end":1693162828974}],"afterUserStorySteps": [],"afterSystemStorySteps": []}]},"scenarios": [{"keyword": "Scenario:", "id": "853e4ed1-498e-4764-8d65-576b1ec3ed08", "title": "open my cases page","meta": [{"keyword": "@", "name": "given-1", "value": "scenario-1"},{"keyword": "@", "name": "testCaseId", "value": "NUC-1106;NUC-1094"}],"beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"steps": [{"outcome": "successful", "value": "When I go to relative URL `\/my-cases`"},{"outcome": "successful", "value": "When I wait until element located by `caseSensitiveText(There are no cases at the moment.)` appears"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162828976,"end":1693162829095},{"keyword": "Scenario:", "id": "65a9139c-f5e1-4b2e-9d31-e4c056baa02e", "title": "check create new case button","meta": [{"keyword": "@", "name": "given-2", "value": "scenario-2"},{"keyword": "@", "name": "testCaseId", "value": "NUC-1106"}],"beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"steps": [{"outcome": "successful", "value": "When I click on element located by `tagName(button)->filter.textPart(Create New Case)`"},{"outcome": "successful", "value": "When I wait until element located by `caseSensitiveText(Select Case Type)` appears"},{"outcome": "successful", "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/new-case`"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162829096,"end":1693162830018}],"afterUserStorySteps": [],"afterSystemStorySteps": []}]},"scenarios": [{"keyword": "Scenario:", "id": "5b8f0467-ac30-4364-a832-cad30f81b748", "title": "check create new episode of care button","meta": [{"keyword": "@", "name": "given-1", "value": "scenario-1"},{"keyword": "@", "name": "testCaseId", "value": "NUC-1108"}],"beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"steps": [{"outcome": "successful", "value": "When I go to relative URL `\/new-case`"},{"outcome": "successful", "value": "When I click on element located by `testId(jnj-new-case-card-button)->filter.index(1)`"},{"outcome": "successful", "value": "When I wait until element located by `testId(jnj-save-button)` appears"},{"outcome": "successful", "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/new-case\/episode-of-care`"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162830018,"end":1693162830960}],"afterUserStorySteps": [],"afterSystemStorySteps": []}]},"steps": [{"outcome": "successful", "value": "When I change context to element located `xpath(\/\/*[@data-test-id='jnj-surgery-user-name']\/div[1])`"},{"outcome": "successful", "value": "Then number of elements found by `xpath(\/\/input[@id='surgery-user-name-field' and @disabled])` is ((=)) `1`"},{"outcome": "successful", "value": "When I change context to element located `xpath(\/\/*[@data-test-id='jnj-surgery-form-operating-room'])`"},{"outcome": "successful", "value": "When I change context to element located `xpath(\/\/*[@data-test-id='jnj-surgery-add-date']\/span[1])`"},{"outcome": "successful", "value": "When I click on element located `xpath(\/\/*[@data-test-id='jnj-surgery-add-date'])`"},{"outcome": "successful", "value": "Then field located `xpath(\/\/*[@data-test-id='jnj-surgery-form-time'])` exists"},{"outcome": "successful", "value": "Then field located `xpath(\/\/*[@data-test-id='jnj-surgery-form-estimated-duration'])` exists"},{"outcome": "successful", "value": "When I change context to element located `id(Surgery)`"},{"outcome": "successful", "value": "When I ((${visual-action})) baseline with name `${profile}-${resolution}-surgery-section`"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "failed", "keyword": "FAILED", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()", "failure": "org.jbehave.core.failures.BeforeOrAfterFailed: Method verifyIfAssertionsPassed (annotated with @AfterScenario in class org.vividus.steps.AssertSteps) failed: org.vividus.softassert.exception.VerificationError: \r\n1) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-time']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\r\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\r\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\r\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\r\n2) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-estimated-duration']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\r\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\r\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\r\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\r\n3) java.lang.AssertionError: Unable to find baseline with name: web-desktop-chrome-1440x900-surgery-section\r\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:424)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\r\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\r\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:89)\r\n"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162828781,"end":1693162834068,"failure": "org.jbehave.core.failures.BeforeOrAfterFailed: Method verifyIfAssertionsPassed (annotated with @AfterScenario in class org.vividus.steps.AssertSteps) failed: org.vividus.softassert.exception.VerificationError: \n1) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-time']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\n2) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-estimated-duration']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\n3) java.lang.AssertionError: Unable to find baseline with name: web-desktop-chrome-1440x900-surgery-section\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:424)\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:89)\n\n\tat org.jbehave.core.steps.StepCreator$BeforeOrAfterStep.perform(StepCreator.java:703)\n\tat org.jbehave.core.steps.StepCreator$ReportingAbstractStep.perform(StepCreator.java:638)\n\tat org.jbehave.core.steps.StepCreator$DelegatingStep.perform(StepCreator.java:662)\n\tat org.jbehave.core.embedder.PerformableTree$FineSoFar.run(PerformableTree.java:379)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableSteps.perform(PerformableTree.java:1441)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performHookSteps(PerformableTree.java:999)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performAfterSteps(PerformableTree.java:978)\n\tat org.jbehave.core.embedder.PerformableTree$AbstractPerformableScenario.lambda$performScenario$1(PerformableTree.java:1291)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performWithStopExecutionExceptionHandling(PerformableTree.java:967)\n\tat org.jbehave.core.embedder.PerformableTree$AbstractPerformableScenario.performScenario(PerformableTree.java:1276)\n\tat org.jbehave.core.embedder.PerformableTree$NormalPerformableScenario.perform(PerformableTree.java:1332)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableScenario.perform(PerformableTree.java:1225)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableStory.lambda$perform$0(PerformableTree.java:1090)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performWithStopExecutionExceptionHandling(PerformableTree.java:965)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableStory.perform(PerformableTree.java:1082)\n\tat org.jbehave.core.embedder.PerformableTree.performCancellable(PerformableTree.java:521)\n\tat org.jbehave.core.embedder.PerformableTree.perform(PerformableTree.java:488)\n\tat org.jbehave.core.embedder.StoryManager$EnqueuedStory.call(StoryManager.java:305)\n\tat org.jbehave.core.embedder.StoryManager$EnqueuedStory.call(StoryManager.java:278)\n\tat java.base\/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat java.base\/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)\n\tat java.base\/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)\n\tat java.base\/java.lang.Thread.run(Thread.java:833)\nCaused by: org.vividus.softassert.exception.VerificationError: \n1) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-time']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\n2) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-estimated-duration']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\n3) java.lang.AssertionError: Unable to find baseline with name: web-desktop-chrome-1440x900-surgery-section\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:424)\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:89)\n\n\tat org.vividus.softassert.SoftAssert.verify(SoftAssert.java:298)\n\tat org.vividus.steps.AssertSteps.verifyIfAssertionsPassed(AssertSteps.java:45)\n\tat jdk.internal.reflect.GeneratedMethodAccessor68.invoke(Unknown Source)\n\tat java.base\/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base\/java.lang.reflect.Method.invoke(Method.java:568)\n\tat org.jbehave.core.steps.StepCreator$MethodInvoker.invoke(StepCreator.java:1087)\n\tat org.jbehave.core.steps.StepCreator$BeforeOrAfterStep.perform(StepCreator.java:699)\n\t... 22 more\n" },{"keyword": "Scenario:", "id": "2db22120-e6a4-4a63-bb6f-dc4e1b2845be", "title": "Second  check left bar complete state of patient section","meta": [{"keyword": "@", "name": "testCaseId", "value": "NUC-508"}],"beforeSystemScenarioSteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"}],"beforeUserScenarioSteps": [],"steps": [{"outcome": "successful", "value": "When I change context to element located by `testId(jnj-vertical-stepper)`"},{"outcome": "successful", "value": "When I ((${visual-action})) baseline with name `${profile}-${resolution}-new-case-left-bar-complete-patient` using screenshot configuration:\n|shootingStrategy|cutRight               |\n|SIMPLE          |${context-x-coordinate}|"},{"outcome": "successful", "value": "When I reset context"}],"afterUserScenarioSteps": [],"afterSystemScenarioSteps": [{"outcome": "failed", "keyword": "FAILED", "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()", "failure": "org.jbehave.core.failures.BeforeOrAfterFailed: Method verifyIfAssertionsPassed (annotated with @AfterScenario in class org.vividus.steps.AssertSteps) failed: org.vividus.softassert.exception.VerificationError: \r\n1) java.lang.AssertionError: Visual check passed [The condition is false]\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.verifyResult(AbstractVisualSteps.java:93)\r\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:429)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\r\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\r\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:119)\r\n"},{"outcome": "successful", "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"},{"outcome": "successful", "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"},{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"}],"start":1693162834069,"end":1693162834367,"failure": "org.jbehave.core.failures.BeforeOrAfterFailed: Method verifyIfAssertionsPassed (annotated with @AfterScenario in class org.vividus.steps.AssertSteps) failed: org.vividus.softassert.exception.VerificationError: \n1) java.lang.AssertionError: Visual check passed [The condition is false]\n\tat org.vividus.visual.steps.AbstractVisualSteps.verifyResult(AbstractVisualSteps.java:93)\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:429)\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:119)\n\n\tat org.jbehave.core.steps.StepCreator$BeforeOrAfterStep.perform(StepCreator.java:703)\n\tat org.jbehave.core.steps.StepCreator$ReportingAbstractStep.perform(StepCreator.java:638)\n\tat org.jbehave.core.steps.StepCreator$DelegatingStep.perform(StepCreator.java:662)\n\tat org.jbehave.core.embedder.PerformableTree$FineSoFar.run(PerformableTree.java:379)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableSteps.perform(PerformableTree.java:1441)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performHookSteps(PerformableTree.java:999)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performAfterSteps(PerformableTree.java:978)\n\tat org.jbehave.core.embedder.PerformableTree$AbstractPerformableScenario.lambda$performScenario$1(PerformableTree.java:1291)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performWithStopExecutionExceptionHandling(PerformableTree.java:967)\n\tat org.jbehave.core.embedder.PerformableTree$AbstractPerformableScenario.performScenario(PerformableTree.java:1276)\n\tat org.jbehave.core.embedder.PerformableTree$NormalPerformableScenario.perform(PerformableTree.java:1332)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableScenario.perform(PerformableTree.java:1225)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableStory.lambda$perform$0(PerformableTree.java:1090)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performWithStopExecutionExceptionHandling(PerformableTree.java:965)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableStory.perform(PerformableTree.java:1082)\n\tat org.jbehave.core.embedder.PerformableTree.performCancellable(PerformableTree.java:521)\n\tat org.jbehave.core.embedder.PerformableTree.perform(PerformableTree.java:488)\n\tat org.jbehave.core.embedder.StoryManager$EnqueuedStory.call(StoryManager.java:305)\n\tat org.jbehave.core.embedder.StoryManager$EnqueuedStory.call(StoryManager.java:278)\n\tat java.base\/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat java.base\/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)\n\tat java.base\/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)\n\tat java.base\/java.lang.Thread.run(Thread.java:833)\nCaused by: org.vividus.softassert.exception.VerificationError: \n1) java.lang.AssertionError: Visual check passed [The condition is false]\n\tat org.vividus.visual.steps.AbstractVisualSteps.verifyResult(AbstractVisualSteps.java:93)\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:429)\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:119)\n\n\tat org.vividus.softassert.SoftAssert.verify(SoftAssert.java:298)\n\tat org.vividus.steps.AssertSteps.verifyIfAssertionsPassed(AssertSteps.java:45)\n\tat jdk.internal.reflect.GeneratedMethodAccessor68.invoke(Unknown Source)\n\tat java.base\/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base\/java.lang.reflect.Method.invoke(Method.java:568)\n\tat org.jbehave.core.steps.StepCreator$MethodInvoker.invoke(StepCreator.java:1087)\n\tat org.jbehave.core.steps.StepCreator$BeforeOrAfterStep.perform(StepCreator.java:699)\n\t... 22 more\n" }],"afterUserStorySteps": [],"afterSystemStorySteps": [{"outcome": "successful", "value": "org.vividus.steps.WebDriverSetupSteps.afterStory()"},{"outcome": "successful", "value": "org.vividus.http.CookieStoreProvider.resetStoryCookies()"}]}
+{
+  "id": "cf5f9fbb-b82e-460b-9f4e-3db4f0d3a3e4",
+  "path": "file:\/C:\/01.Projects\/05.JAJ-MTDF\/jnj-auto-tests\/output\/resources\/main\/story\/nucleus\/web\/second_new_ep_of_care.story",
+  "title": "",
+  "meta": [
+    {
+      "keyword": "@",
+      "name": "critical_path",
+      "value": ""
+    },
+    {
+      "keyword": "@",
+      "name": "layout",
+      "value": "desktop"
+    }
+  ],
+  "beforeSystemStorySteps": [
+    {
+      "outcome": "successful",
+      "value": "org.vividus.steps.WebDriverSetupSteps.beforeStory()"
+    }
+  ],
+  "beforeUserStorySteps": [],
+  "givenStories": {
+    "keyword": "GivenStories:",
+    "givenStories": [
+      {
+        "parameters": "{}",
+        "path": "story\/nucleus\/web\/new_case.story#{given-1:scenario-1}"
+      }
+    ],
+    "stories": [
+      {
+        "id": "08449491-4892-4ab4-813d-c1833ef0568f",
+        "path": "story\/nucleus\/web\/new_case.story",
+        "title": "",
+        "meta": [
+          {
+            "keyword": "@",
+            "name": "critical_path",
+            "value": ""
+          },
+          {
+            "keyword": "@",
+            "name": "layout",
+            "value": "desktop"
+          }
+        ],
+        "beforeSystemStorySteps": [],
+        "beforeUserStorySteps": [],
+        "givenStories": {
+          "keyword": "GivenStories:",
+          "givenStories": [
+            {
+              "parameters": "{}",
+              "path": "story\/nucleus\/web\/my_cases.story#{given-1:scenario-1;given-2:scenario-2}"
+            }
+          ],
+          "stories": [
+            {
+              "id": "7023dfdd-be10-4c0c-9da8-95d84890271f",
+              "path": "story\/nucleus\/web\/my_cases.story",
+              "title": "",
+              "meta": [
+                {
+                  "keyword": "@",
+                  "name": "critical_path",
+                  "value": ""
+                },
+                {
+                  "keyword": "@",
+                  "name": "layout",
+                  "value": "desktop"
+                }
+              ],
+              "beforeSystemStorySteps": [],
+              "beforeUserStorySteps": [],
+              "givenStories": {
+                "keyword": "GivenStories:",
+                "givenStories": [
+                  {
+                    "parameters": "",
+                    "path": "story\/nucleus\/web\/open_app.story"
+                  }
+                ],
+                "stories": [
+                  {
+                    "id": "d6c62076-469f-41a5-be27-ac255040df03",
+                    "path": "story\/nucleus\/web\/open_app.story",
+                    "title": "",
+                    "meta": [
+                      {
+                        "keyword": "@",
+                        "name": "critical_path",
+                        "value": ""
+                      },
+                      {
+                        "keyword": "@",
+                        "name": "layout",
+                        "value": "desktop"
+                      },
+                      {
+                        "keyword": "@",
+                        "name": "smoke",
+                        "value": ""
+                      }
+                    ],
+                    "beforeSystemStorySteps": [],
+                    "beforeUserStorySteps": [],
+                    "scenarios": [
+                      {
+                        "keyword": "Scenario:",
+                        "id": "473f82be-6590-4818-b9b2-4a1193b820c0",
+                        "title": "open main application page",
+                        "beforeSystemScenarioSteps": [
+                          {
+                            "outcome": "successful",
+                            "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+                          }
+                        ],
+                        "beforeUserScenarioSteps": [],
+                        "steps": [
+                          {
+                            "outcome": "successful",
+                            "value": "Given I am on main application page"
+                          },
+                          {
+                            "outcome": "successful",
+                            "value": "When I change window size to `${resolution}`"
+                          }
+                        ],
+                        "afterUserScenarioSteps": [],
+                        "afterSystemScenarioSteps": [
+                          {
+                            "outcome": "successful",
+                            "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+                          },
+                          {
+                            "outcome": "successful",
+                            "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+                          },
+                          {
+                            "outcome": "successful",
+                            "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+                          },
+                          {
+                            "outcome": "successful",
+                            "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+                          },
+                          {
+                            "outcome": "successful",
+                            "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+                          }
+                        ],
+                        "start": 1693162821120,
+                        "end": 1693162822228
+                      }
+                    ],
+                    "afterUserStorySteps": [],
+                    "afterSystemStorySteps": []
+                  }
+                ]
+              },
+              "scenarios": [
+                {
+                  "keyword": "Scenario:",
+                  "id": "05a04f9b-5ab0-4f4e-b9e6-7db965820b4d",
+                  "title": "open my cases page",
+                  "meta": [
+                    {
+                      "keyword": "@",
+                      "name": "given-1",
+                      "value": "scenario-1"
+                    },
+                    {
+                      "keyword": "@",
+                      "name": "testCaseId",
+                      "value": "NUC-1106;NUC-1094"
+                    }
+                  ],
+                  "beforeSystemScenarioSteps": [
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+                    }
+                  ],
+                  "beforeUserScenarioSteps": [],
+                  "steps": [
+                    {
+                      "outcome": "successful",
+                      "value": "When I go to relative URL `\/my-cases`"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "When I wait until element located by `caseSensitiveText(There are no cases at the moment.)` appears"
+                    }
+                  ],
+                  "afterUserScenarioSteps": [],
+                  "afterSystemScenarioSteps": [
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+                    }
+                  ],
+                  "start": 1693162822232,
+                  "end": 1693162822483
+                },
+                {
+                  "keyword": "Scenario:",
+                  "id": "307f7637-0d39-407f-8866-cbc06319f0a4",
+                  "title": "check create new case button",
+                  "meta": [
+                    {
+                      "keyword": "@",
+                      "name": "given-2",
+                      "value": "scenario-2"
+                    },
+                    {
+                      "keyword": "@",
+                      "name": "testCaseId",
+                      "value": "NUC-1106"
+                    }
+                  ],
+                  "beforeSystemScenarioSteps": [
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+                    }
+                  ],
+                  "beforeUserScenarioSteps": [],
+                  "steps": [
+                    {
+                      "outcome": "successful",
+                      "value": "When I click on element located by `tagName(button)->filter.textPart(Create New Case)`"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "When I wait until element located by `caseSensitiveText(Select Case Type)` appears"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/new-case`"
+                    }
+                  ],
+                  "afterUserScenarioSteps": [],
+                  "afterSystemScenarioSteps": [
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+                    },
+                    {
+                      "outcome": "successful",
+                      "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+                    }
+                  ],
+                  "start": 1693162822485,
+                  "end": 1693162823586
+                }
+              ],
+              "afterUserStorySteps": [],
+              "afterSystemStorySteps": []
+            }
+          ]
+        },
+        "scenarios": [
+          {
+            "keyword": "Scenario:",
+            "id": "8b2c410a-39ba-4cb8-9b92-84f38b8e6a46",
+            "title": "check create new episode of care button",
+            "meta": [
+              {
+                "keyword": "@",
+                "name": "given-1",
+                "value": "scenario-1"
+              },
+              {
+                "keyword": "@",
+                "name": "testCaseId",
+                "value": "NUC-1108"
+              }
+            ],
+            "beforeSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+              }
+            ],
+            "beforeUserScenarioSteps": [],
+            "steps": [
+              {
+                "outcome": "successful",
+                "value": "When I go to relative URL `\/new-case`"
+              },
+              {
+                "outcome": "successful",
+                "value": "When I click on element located by `testId(jnj-new-case-card-button)->filter.index(1)`"
+              },
+              {
+                "outcome": "successful",
+                "value": "When I wait until element located by `testId(jnj-save-button)` appears"
+              },
+              {
+                "outcome": "successful",
+                "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/new-case\/episode-of-care`"
+              }
+            ],
+            "afterUserScenarioSteps": [],
+            "afterSystemScenarioSteps": [
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+              },
+              {
+                "outcome": "successful",
+                "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+              }
+            ],
+            "start": 1693162823589,
+            "end": 1693162824724
+          }
+        ],
+        "afterUserStorySteps": [],
+        "afterSystemStorySteps": []
+      }
+    ]
+  },
+  "scenarios": [
+    {
+      "keyword": "Scenario:",
+      "id": "5caa86c0-52d9-4cbc-a319-94d2d0d141c4",
+      "title": "Second fill patient form fields",
+      "meta": [
+        {
+          "keyword": "@",
+          "name": "given-1",
+          "value": "scenario-1"
+        }
+      ],
+      "beforeSystemScenarioSteps": [
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+        }
+      ],
+      "beforeUserScenarioSteps": [],
+      "steps": [
+        {
+          "outcome": "successful",
+          "value": "When I enter `#{generate(regexify '[0-9]{8}')}` in field located by `fieldName(patientId)`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I enter `#{generate(Name.firstName)}` in field located by `fieldName(firstName)`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I enter `#{generate(Name.lastName)}` in field located by `fieldName(lastName)`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I enter `#{randomInt(1, 30)}` in field located by `fieldName(bmi)`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I click on element located by `xpath(\/\/*[@aria-label='Choose date'])`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I click on element located by `xpath(\/\/*[@aria-current='date'])`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I click on element located by `testId(jnj-patient-form-gender)`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I click on element located by `xpath(\/\/*[@role='option'])->filter.index(#{generate(regexify '[1-3]')})`"
+        }
+      ],
+      "afterUserScenarioSteps": [],
+      "afterSystemScenarioSteps": [
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+        }
+      ],
+      "start": 1693162824726,
+      "end": 1693162828779
+    },
+    {
+      "keyword": "Scenario:",
+      "id": "78eaeb19-b7a5-4a9d-813a-d889a1785825",
+      "title": "Second check surgery section",
+      "meta": [
+        {
+          "keyword": "@",
+          "name": "testCaseId",
+          "value": "NUC-508"
+        }
+      ],
+      "beforeSystemScenarioSteps": [
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+        }
+      ],
+      "beforeUserScenarioSteps": [],
+      "givenStories": {
+        "keyword": "GivenStories:",
+        "givenStories": [
+          {
+            "parameters": "{}",
+            "path": "story\/nucleus\/web\/new_case.story#{given-1:scenario-1}"
+          }
+        ],
+        "stories": [
+          {
+            "id": "7ee36089-da25-4b53-8258-b52ffc48437f",
+            "path": "story\/nucleus\/web\/new_case.story",
+            "title": "",
+            "meta": [
+              {
+                "keyword": "@",
+                "name": "critical_path",
+                "value": ""
+              },
+              {
+                "keyword": "@",
+                "name": "layout",
+                "value": "desktop"
+              }
+            ],
+            "beforeSystemStorySteps": [],
+            "beforeUserStorySteps": [],
+            "givenStories": {
+              "keyword": "GivenStories:",
+              "givenStories": [
+                {
+                  "parameters": "{}",
+                  "path": "story\/nucleus\/web\/my_cases.story#{given-1:scenario-1;given-2:scenario-2}"
+                }
+              ],
+              "stories": [
+                {
+                  "id": "3b8c45fd-e8c7-4a3f-ad4e-2bf36ce296aa",
+                  "path": "story\/nucleus\/web\/my_cases.story",
+                  "title": "",
+                  "meta": [
+                    {
+                      "keyword": "@",
+                      "name": "critical_path",
+                      "value": ""
+                    },
+                    {
+                      "keyword": "@",
+                      "name": "layout",
+                      "value": "desktop"
+                    }
+                  ],
+                  "beforeSystemStorySteps": [],
+                  "beforeUserStorySteps": [],
+                  "givenStories": {
+                    "keyword": "GivenStories:",
+                    "givenStories": [
+                      {
+                        "parameters": "",
+                        "path": "story\/nucleus\/web\/open_app.story"
+                      }
+                    ],
+                    "stories": [
+                      {
+                        "id": "531cdce6-b0ff-4b29-b0be-f5dbb540f0d9",
+                        "path": "story\/nucleus\/web\/open_app.story",
+                        "title": "",
+                        "meta": [
+                          {
+                            "keyword": "@",
+                            "name": "critical_path",
+                            "value": ""
+                          },
+                          {
+                            "keyword": "@",
+                            "name": "layout",
+                            "value": "desktop"
+                          },
+                          {
+                            "keyword": "@",
+                            "name": "smoke",
+                            "value": ""
+                          }
+                        ],
+                        "beforeSystemStorySteps": [],
+                        "beforeUserStorySteps": [],
+                        "scenarios": [
+                          {
+                            "keyword": "Scenario:",
+                            "id": "068db5b6-aeca-4c76-8494-761c130cfdc6",
+                            "title": "open main application page",
+                            "beforeSystemScenarioSteps": [
+                              {
+                                "outcome": "successful",
+                                "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+                              }
+                            ],
+                            "beforeUserScenarioSteps": [],
+                            "steps": [
+                              {
+                                "outcome": "successful",
+                                "value": "Given I am on main application page"
+                              },
+                              {
+                                "outcome": "successful",
+                                "value": "When I change window size to `${resolution}`"
+                              }
+                            ],
+                            "afterUserScenarioSteps": [],
+                            "afterSystemScenarioSteps": [
+                              {
+                                "outcome": "successful",
+                                "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+                              },
+                              {
+                                "outcome": "successful",
+                                "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+                              },
+                              {
+                                "outcome": "successful",
+                                "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+                              },
+                              {
+                                "outcome": "successful",
+                                "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+                              },
+                              {
+                                "outcome": "successful",
+                                "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+                              }
+                            ],
+                            "start": 1693162828784,
+                            "end": 1693162828974
+                          }
+                        ],
+                        "afterUserStorySteps": [],
+                        "afterSystemStorySteps": []
+                      }
+                    ]
+                  },
+                  "scenarios": [
+                    {
+                      "keyword": "Scenario:",
+                      "id": "853e4ed1-498e-4764-8d65-576b1ec3ed08",
+                      "title": "open my cases page",
+                      "meta": [
+                        {
+                          "keyword": "@",
+                          "name": "given-1",
+                          "value": "scenario-1"
+                        },
+                        {
+                          "keyword": "@",
+                          "name": "testCaseId",
+                          "value": "NUC-1106;NUC-1094"
+                        }
+                      ],
+                      "beforeSystemScenarioSteps": [
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+                        }
+                      ],
+                      "beforeUserScenarioSteps": [],
+                      "steps": [
+                        {
+                          "outcome": "successful",
+                          "value": "When I go to relative URL `\/my-cases`"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "When I wait until element located by `caseSensitiveText(There are no cases at the moment.)` appears"
+                        }
+                      ],
+                      "afterUserScenarioSteps": [],
+                      "afterSystemScenarioSteps": [
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+                        }
+                      ],
+                      "start": 1693162828976,
+                      "end": 1693162829095
+                    },
+                    {
+                      "keyword": "Scenario:",
+                      "id": "65a9139c-f5e1-4b2e-9d31-e4c056baa02e",
+                      "title": "check create new case button",
+                      "meta": [
+                        {
+                          "keyword": "@",
+                          "name": "given-2",
+                          "value": "scenario-2"
+                        },
+                        {
+                          "keyword": "@",
+                          "name": "testCaseId",
+                          "value": "NUC-1106"
+                        }
+                      ],
+                      "beforeSystemScenarioSteps": [
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+                        }
+                      ],
+                      "beforeUserScenarioSteps": [],
+                      "steps": [
+                        {
+                          "outcome": "successful",
+                          "value": "When I click on element located by `tagName(button)->filter.textPart(Create New Case)`"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "When I wait until element located by `caseSensitiveText(Select Case Type)` appears"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/new-case`"
+                        }
+                      ],
+                      "afterUserScenarioSteps": [],
+                      "afterSystemScenarioSteps": [
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+                        },
+                        {
+                          "outcome": "successful",
+                          "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+                        }
+                      ],
+                      "start": 1693162829096,
+                      "end": 1693162830018
+                    }
+                  ],
+                  "afterUserStorySteps": [],
+                  "afterSystemStorySteps": []
+                }
+              ]
+            },
+            "scenarios": [
+              {
+                "keyword": "Scenario:",
+                "id": "5b8f0467-ac30-4364-a832-cad30f81b748",
+                "title": "check create new episode of care button",
+                "meta": [
+                  {
+                    "keyword": "@",
+                    "name": "given-1",
+                    "value": "scenario-1"
+                  },
+                  {
+                    "keyword": "@",
+                    "name": "testCaseId",
+                    "value": "NUC-1108"
+                  }
+                ],
+                "beforeSystemScenarioSteps": [
+                  {
+                    "outcome": "successful",
+                    "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+                  }
+                ],
+                "beforeUserScenarioSteps": [],
+                "steps": [
+                  {
+                    "outcome": "successful",
+                    "value": "When I go to relative URL `\/new-case`"
+                  },
+                  {
+                    "outcome": "successful",
+                    "value": "When I click on element located by `testId(jnj-new-case-card-button)->filter.index(1)`"
+                  },
+                  {
+                    "outcome": "successful",
+                    "value": "When I wait until element located by `testId(jnj-save-button)` appears"
+                  },
+                  {
+                    "outcome": "successful",
+                    "value": "Then `#{extractPathFromUrl(${current-page-url})}` is ((equal to)) `\/new-case\/episode-of-care`"
+                  }
+                ],
+                "afterUserScenarioSteps": [],
+                "afterSystemScenarioSteps": [
+                  {
+                    "outcome": "successful",
+                    "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()"
+                  },
+                  {
+                    "outcome": "successful",
+                    "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+                  },
+                  {
+                    "outcome": "successful",
+                    "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+                  },
+                  {
+                    "outcome": "successful",
+                    "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+                  },
+                  {
+                    "outcome": "successful",
+                    "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+                  }
+                ],
+                "start": 1693162830018,
+                "end": 1693162830960
+              }
+            ],
+            "afterUserStorySteps": [],
+            "afterSystemStorySteps": []
+          }
+        ]
+      },
+      "steps": [
+        {
+          "outcome": "successful",
+          "value": "When I change context to element located `xpath(\/\/*[@data-test-id='jnj-surgery-user-name']\/div[1])`"
+        },
+        {
+          "outcome": "successful",
+          "value": "Then number of elements found by `xpath(\/\/input[@id='surgery-user-name-field' and @disabled])` is ((=)) `1`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I change context to element located `xpath(\/\/*[@data-test-id='jnj-surgery-form-operating-room'])`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I change context to element located `xpath(\/\/*[@data-test-id='jnj-surgery-add-date']\/span[1])`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I click on element located `xpath(\/\/*[@data-test-id='jnj-surgery-add-date'])`"
+        },
+        {
+          "outcome": "successful",
+          "value": "Then field located `xpath(\/\/*[@data-test-id='jnj-surgery-form-time'])` exists"
+        },
+        {
+          "outcome": "successful",
+          "value": "Then field located `xpath(\/\/*[@data-test-id='jnj-surgery-form-estimated-duration'])` exists"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I change context to element located `id(Surgery)`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I ((${visual-action})) baseline with name `${profile}-${resolution}-surgery-section`"
+        }
+      ],
+      "afterUserScenarioSteps": [],
+      "afterSystemScenarioSteps": [
+        {
+          "outcome": "failed",
+          "keyword": "FAILED",
+          "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()",
+          "failure": "org.jbehave.core.failures.BeforeOrAfterFailed: Method verifyIfAssertionsPassed (annotated with @AfterScenario in class org.vividus.steps.AssertSteps) failed: org.vividus.softassert.exception.VerificationError: \r\n1) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-time']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\r\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\r\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\r\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\r\n2) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-estimated-duration']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\r\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\r\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\r\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\r\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\r\n3) java.lang.AssertionError: Unable to find baseline with name: web-desktop-chrome-1440x900-surgery-section\r\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:424)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\r\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\r\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:89)\r\n"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+        }
+      ],
+      "start": 1693162828781,
+      "end": 1693162834068,
+      "failure": "org.jbehave.core.failures.BeforeOrAfterFailed: Method verifyIfAssertionsPassed (annotated with @AfterScenario in class org.vividus.steps.AssertSteps) failed: org.vividus.softassert.exception.VerificationError: \n1) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-time']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\n2) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-estimated-duration']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\n3) java.lang.AssertionError: Unable to find baseline with name: web-desktop-chrome-1440x900-surgery-section\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:424)\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:89)\n\n\tat org.jbehave.core.steps.StepCreator$BeforeOrAfterStep.perform(StepCreator.java:703)\n\tat org.jbehave.core.steps.StepCreator$ReportingAbstractStep.perform(StepCreator.java:638)\n\tat org.jbehave.core.steps.StepCreator$DelegatingStep.perform(StepCreator.java:662)\n\tat org.jbehave.core.embedder.PerformableTree$FineSoFar.run(PerformableTree.java:379)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableSteps.perform(PerformableTree.java:1441)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performHookSteps(PerformableTree.java:999)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performAfterSteps(PerformableTree.java:978)\n\tat org.jbehave.core.embedder.PerformableTree$AbstractPerformableScenario.lambda$performScenario$1(PerformableTree.java:1291)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performWithStopExecutionExceptionHandling(PerformableTree.java:967)\n\tat org.jbehave.core.embedder.PerformableTree$AbstractPerformableScenario.performScenario(PerformableTree.java:1276)\n\tat org.jbehave.core.embedder.PerformableTree$NormalPerformableScenario.perform(PerformableTree.java:1332)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableScenario.perform(PerformableTree.java:1225)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableStory.lambda$perform$0(PerformableTree.java:1090)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performWithStopExecutionExceptionHandling(PerformableTree.java:965)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableStory.perform(PerformableTree.java:1082)\n\tat org.jbehave.core.embedder.PerformableTree.performCancellable(PerformableTree.java:521)\n\tat org.jbehave.core.embedder.PerformableTree.perform(PerformableTree.java:488)\n\tat org.jbehave.core.embedder.StoryManager$EnqueuedStory.call(StoryManager.java:305)\n\tat org.jbehave.core.embedder.StoryManager$EnqueuedStory.call(StoryManager.java:278)\n\tat java.base\/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat java.base\/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)\n\tat java.base\/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)\n\tat java.base\/java.lang.Thread.run(Thread.java:833)\nCaused by: org.vividus.softassert.exception.VerificationError: \n1) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-time']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\n2) java.lang.AssertionError: A field with attributes XPath: '\/\/*[@data-test-id='jnj-surgery-form-estimated-duration']'; Visibility: VISIBLE; [Expected: exists Actual: does not exist]\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.recordAssertionOutcome(DescriptiveSoftAssert.java:69)\n\tat org.vividus.steps.ui.validation.DescriptiveSoftAssert.assertThat(DescriptiveSoftAssert.java:39)\n\tat org.vividus.steps.ui.validation.BaseValidations.lambda$assertIfElementExists$3(BaseValidations.java:151)\n\tat org.vividus.steps.ui.validation.BaseValidations.runValidatingSearchContext(BaseValidations.java:204)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:143)\n\tat org.vividus.steps.ui.validation.BaseValidations.assertIfElementExists(BaseValidations.java:102)\n\tat org.vividus.steps.ui.web.FieldSteps.findFieldBy(FieldSteps.java:365)\n3) java.lang.AssertionError: Unable to find baseline with name: web-desktop-chrome-1440x900-surgery-section\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:424)\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:89)\n\n\tat org.vividus.softassert.SoftAssert.verify(SoftAssert.java:298)\n\tat org.vividus.steps.AssertSteps.verifyIfAssertionsPassed(AssertSteps.java:45)\n\tat jdk.internal.reflect.GeneratedMethodAccessor68.invoke(Unknown Source)\n\tat java.base\/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base\/java.lang.reflect.Method.invoke(Method.java:568)\n\tat org.jbehave.core.steps.StepCreator$MethodInvoker.invoke(StepCreator.java:1087)\n\tat org.jbehave.core.steps.StepCreator$BeforeOrAfterStep.perform(StepCreator.java:699)\n\t... 22 more\n"
+    },
+    {
+      "keyword": "Scenario:",
+      "id": "2db22120-e6a4-4a63-bb6f-dc4e1b2845be",
+      "title": "Second  check left bar complete state of patient section",
+      "meta": [
+        {
+          "keyword": "@",
+          "name": "testCaseId",
+          "value": "NUC-508"
+        }
+      ],
+      "beforeSystemScenarioSteps": [
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebDriverSetupSteps.beforeScenario()"
+        }
+      ],
+      "beforeUserScenarioSteps": [],
+      "steps": [
+        {
+          "outcome": "successful",
+          "value": "When I change context to element located by `testId(jnj-vertical-stepper)`"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I ((${visual-action})) baseline with name `${profile}-${resolution}-new-case-left-bar-complete-patient` using screenshot configuration:\n|shootingStrategy|cutRight               |\n|SIMPLE          |${context-x-coordinate}|"
+        },
+        {
+          "outcome": "successful",
+          "value": "When I reset context"
+        }
+      ],
+      "afterUserScenarioSteps": [],
+      "afterSystemScenarioSteps": [
+        {
+          "outcome": "failed",
+          "keyword": "FAILED",
+          "value": "org.vividus.steps.AssertSteps.verifyIfAssertionsPassed()",
+          "failure": "org.jbehave.core.failures.BeforeOrAfterFailed: Method verifyIfAssertionsPassed (annotated with @AfterScenario in class org.vividus.steps.AssertSteps) failed: org.vividus.softassert.exception.VerificationError: \r\n1) java.lang.AssertionError: Visual check passed [The condition is false]\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.verifyResult(AbstractVisualSteps.java:93)\r\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:429)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\r\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\r\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\r\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\r\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:119)\r\n"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.visual.screenshot.ScenarioBasedIndexer.resetIndex()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebUiVividusSetupSteps.afterScenario()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.http.CookieStoreProvider.resetScenarioCookies()"
+        },
+        {
+          "outcome": "successful",
+          "value": "org.vividus.steps.WebDriverSetupSteps.afterScenario()"
+        }
+      ],
+      "start": 1693162834069,
+      "end": 1693162834367,
+      "failure": "org.jbehave.core.failures.BeforeOrAfterFailed: Method verifyIfAssertionsPassed (annotated with @AfterScenario in class org.vividus.steps.AssertSteps) failed: org.vividus.softassert.exception.VerificationError: \n1) java.lang.AssertionError: Visual check passed [The condition is false]\n\tat org.vividus.visual.steps.AbstractVisualSteps.verifyResult(AbstractVisualSteps.java:93)\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:429)\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:119)\n\n\tat org.jbehave.core.steps.StepCreator$BeforeOrAfterStep.perform(StepCreator.java:703)\n\tat org.jbehave.core.steps.StepCreator$ReportingAbstractStep.perform(StepCreator.java:638)\n\tat org.jbehave.core.steps.StepCreator$DelegatingStep.perform(StepCreator.java:662)\n\tat org.jbehave.core.embedder.PerformableTree$FineSoFar.run(PerformableTree.java:379)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableSteps.perform(PerformableTree.java:1441)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performHookSteps(PerformableTree.java:999)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performAfterSteps(PerformableTree.java:978)\n\tat org.jbehave.core.embedder.PerformableTree$AbstractPerformableScenario.lambda$performScenario$1(PerformableTree.java:1291)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performWithStopExecutionExceptionHandling(PerformableTree.java:967)\n\tat org.jbehave.core.embedder.PerformableTree$AbstractPerformableScenario.performScenario(PerformableTree.java:1276)\n\tat org.jbehave.core.embedder.PerformableTree$NormalPerformableScenario.perform(PerformableTree.java:1332)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableScenario.perform(PerformableTree.java:1225)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableStory.lambda$perform$0(PerformableTree.java:1090)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableEntity.performWithStopExecutionExceptionHandling(PerformableTree.java:965)\n\tat org.jbehave.core.embedder.PerformableTree$PerformableStory.perform(PerformableTree.java:1082)\n\tat org.jbehave.core.embedder.PerformableTree.performCancellable(PerformableTree.java:521)\n\tat org.jbehave.core.embedder.PerformableTree.perform(PerformableTree.java:488)\n\tat org.jbehave.core.embedder.StoryManager$EnqueuedStory.call(StoryManager.java:305)\n\tat org.jbehave.core.embedder.StoryManager$EnqueuedStory.call(StoryManager.java:278)\n\tat java.base\/java.util.concurrent.FutureTask.run(FutureTask.java:264)\n\tat java.base\/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)\n\tat java.base\/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)\n\tat java.base\/java.lang.Thread.run(Thread.java:833)\nCaused by: org.vividus.softassert.exception.VerificationError: \n1) java.lang.AssertionError: Visual check passed [The condition is false]\n\tat org.vividus.visual.steps.AbstractVisualSteps.verifyResult(AbstractVisualSteps.java:93)\n\tat org.vividus.visual.VisualSteps.verifyResult(VisualSteps.java:429)\n\tat org.vividus.visual.steps.AbstractVisualSteps.lambda$execute$2(AbstractVisualSteps.java:84)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:80)\n\tat org.vividus.visual.steps.AbstractVisualSteps.execute(AbstractVisualSteps.java:56)\n\tat org.vividus.visual.VisualSteps.lambda$performVisualAction$3(VisualSteps.java:346)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:361)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:339)\n\tat org.vividus.visual.VisualSteps.performVisualAction(VisualSteps.java:333)\n\tat org.vividus.visual.VisualSteps.runVisualTests(VisualSteps.java:119)\n\n\tat org.vividus.softassert.SoftAssert.verify(SoftAssert.java:298)\n\tat org.vividus.steps.AssertSteps.verifyIfAssertionsPassed(AssertSteps.java:45)\n\tat jdk.internal.reflect.GeneratedMethodAccessor68.invoke(Unknown Source)\n\tat java.base\/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.base\/java.lang.reflect.Method.invoke(Method.java:568)\n\tat org.jbehave.core.steps.StepCreator$MethodInvoker.invoke(StepCreator.java:1087)\n\tat org.jbehave.core.steps.StepCreator$BeforeOrAfterStep.perform(StepCreator.java:699)\n\t... 22 more\n"
+    }
+  ],
+  "afterUserStorySteps": [],
+  "afterSystemStorySteps": [
+    {
+      "outcome": "successful",
+      "value": "org.vividus.steps.WebDriverSetupSteps.afterStory()"
+    },
+    {
+      "outcome": "successful",
+      "value": "org.vividus.http.CookieStoreProvider.resetStoryCookies()"
+    }
+  ]
+}

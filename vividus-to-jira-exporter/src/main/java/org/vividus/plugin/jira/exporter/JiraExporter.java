@@ -17,12 +17,9 @@
 package org.vividus.plugin.jira.exporter;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +31,9 @@ import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.exception.JiraSkipExportMetaException;
 import org.vividus.plugin.jira.exception.NonTestCaseIdException;
 import org.vividus.plugin.jira.exporter.Constants.Meta;
+import org.vividus.plugin.jira.exporter.model.TestCaseInfo;
 import org.vividus.plugin.jira.exporter.model.VividusScenarioInfo;
+import org.vividus.plugin.jira.log.ExporterStatisticLogger;
 
 @Component
 public class JiraExporter {
@@ -49,22 +48,22 @@ public class JiraExporter {
   private JiraExporterErrorCollection jiraExporterErrorCollection;
 
   public void exportResults() throws IOException {
-    Set<Entry<String, Scenario>> testCases = new HashSet<>();
-
-    Map<String, List<VividusScenarioInfo>> vividusScenarioMap =
+    List<VividusScenarioInfo> vividusScenarioInfoList =
         OutputReader.readStoriesFromJsons(jiraExporterOptions.getJsonResultsDirectory()).stream()
             .flatMap(this::getVividusScenarioInfoStream)
-            .filter(vividusScenarioInfo -> Objects.nonNull(vividusScenarioInfo.getTestCaseId()))
-            .filter(vividusScenarioInfo -> !checkIfJiraSkipExportMeta(
-                vividusScenarioInfo.getTestCaseId(),
-                vividusScenarioInfo.getStory(),
-                vividusScenarioInfo.getScenario()))
-            .collect(Collectors.groupingBy(VividusScenarioInfo::getTestCaseId));
+            .collect(Collectors.toList());
 
-    jiraInfoExporter.exportInfoTestCases(vividusScenarioMap).ifPresent(testCases::addAll);
-    jiraStatusExporter.exportStatusTestCases(vividusScenarioMap).ifPresent(testCases::addAll);
+    Map<TestCaseInfo, List<VividusScenarioInfo>> vividusScenarioMap = vividusScenarioInfoList.stream()
+            .filter(vividusScenarioInfo -> Objects.nonNull(vividusScenarioInfo.getTestCaseId()))
+            .filter(vividusScenarioInfo ->
+                !checkIfJiraSkipExportMeta(vividusScenarioInfo.getTestCaseId(), vividusScenarioInfo))
+            .collect(Collectors.groupingBy(VividusScenarioInfo::getTestCase));
+
+    jiraInfoExporter.exportInfoTestCases(vividusScenarioMap);
+    jiraStatusExporter.exportStatusTestCases(vividusScenarioMap);
 
     jiraExporterErrorCollection.publishErrors();
+    new ExporterStatisticLogger(jiraExporterOptions, vividusScenarioInfoList).logTestExecutionResults();
   }
 
   private Stream<VividusScenarioInfo> getVividusScenarioInfoStream(Story story) {
@@ -81,21 +80,25 @@ public class JiraExporter {
   }
 
   private VividusScenarioInfo getVividusScenarioInfoWithoutTestCaseId(Story story, Scenario scenario) {
-    jiraExporterErrorCollection.addLogReaderError(new NonTestCaseIdException(), null, story, scenario);
-    return new VividusScenarioInfo(null, story, scenario);
+    VividusScenarioInfo vividusScenarioInfo = new VividusScenarioInfo(null, story, scenario);
+    jiraExporterErrorCollection.addLogReaderError(new NonTestCaseIdException(), null, vividusScenarioInfo);
+    return vividusScenarioInfo;
   }
 
-  private boolean checkIfJiraSkipExportMeta(String testCaseId, Story story, Scenario scenario) {
+  private boolean checkIfJiraSkipExportMeta(String testCaseId, VividusScenarioInfo vividusScenarioInfo) {
+    Story story = vividusScenarioInfo.getStory();
+    Scenario scenario = vividusScenarioInfo.getScenario();
     if (scenario.hasMetaWithName(Constants.Meta.JIRA_SKIP_EXPORT)) {
       jiraExporterErrorCollection.addLogReaderError(
           new JiraSkipExportMetaException(testCaseId, story, scenario),
-          testCaseId, story, scenario);
+          testCaseId, vividusScenarioInfo);
       return true;
     }
     return false;
   }
 
   private static String trimPath(String startFragment, String path) {
-    return path.substring(path.indexOf(startFragment));
+    int startIndex = path.indexOf(startFragment);
+    return startIndex < 0 ? path : path.substring(startIndex);
   }
 }

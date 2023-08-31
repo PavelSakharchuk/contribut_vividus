@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2023 the original author or authors.
+ * Copyright 2019-2021 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,15 +14,8 @@
  * limitations under the License.
  */
 
-package org.vividus.plugin.jira.exception;
+package org.vividus.plugin.jira.exporter.model;
 
-import org.vividus.plugin.jira.model.TestCaseType;
-
-public final class NonCucumberTypesException extends Exception {
-
-  private static final long serialVersionUID = -7652198889958024012L;
-
-  public NonCucumberTypesException() {
-    super(String.format("Scenario is not '%s' type", TestCaseType.AUTOMATED));
-  }
+public enum TestCaseStatus {
+  PASSED, FAILED, TODO, SKIPPED
 }

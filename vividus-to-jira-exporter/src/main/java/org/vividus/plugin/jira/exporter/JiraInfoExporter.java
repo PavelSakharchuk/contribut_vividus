@@ -46,6 +46,7 @@ import org.vividus.plugin.jira.exception.NonScenariosException;
 import org.vividus.plugin.jira.exception.NonTestCaseWithinRunException;
 import org.vividus.plugin.jira.exception.NotSingleUniqueValueException;
 import org.vividus.plugin.jira.exporter.Constants.Meta;
+import org.vividus.plugin.jira.exporter.model.TestCaseInfo;
 import org.vividus.plugin.jira.exporter.model.VividusScenarioInfo;
 import org.vividus.plugin.jira.facade.AbstractScenarioParameters;
 import org.vividus.plugin.jira.facade.CucumberScenarioParameters;
@@ -72,50 +73,35 @@ public class JiraInfoExporter {
   @Autowired
   private JiraExporterErrorCollection jiraExporterErrorCollection;
 
-  private final Map<TestCaseType, Function<AbstractScenarioParameters, AbstractTestCase>> testCaseFactories = Map.of(
-      TestCaseType.MANUAL, p -> testCaseFactory.createManualTestCase((ManualScenarioParameters) p),
-      TestCaseType.AUTOMATED, p -> testCaseFactory.createCucumberTestCase((CucumberScenarioParameters) p)
-  );
-
   private final Map<TestCaseType, CreateParametersFunction> parameterFactories = Map.of(
       TestCaseType.MANUAL, this::createManualScenarioParameters,
       TestCaseType.AUTOMATED, this::createCucumberScenarioParameters
   );
 
-  public Optional<List<Entry<String, Scenario>>> exportInfoTestCases(
-      Map<String, List<VividusScenarioInfo>> vividusScenarioInfoMap) {
-
+  public void exportInfoTestCases(Map<TestCaseInfo, List<VividusScenarioInfo>> vividusScenarioInfoMap) {
     if (jiraExporterOptions.isTestCaseInfoUpdatesEnabled()) {
-      return Optional.of(vividusScenarioInfoMap.entrySet().stream()
-          .flatMap(
-              entry -> exportTestCaseInfo(entry.getKey(), entry.getValue()).orElseGet(ArrayList::new).stream())
-          .toList());
+      vividusScenarioInfoMap.forEach(this::exportTestCaseInfo);
     } else {
       LOGGER.atInfo().log("Test Case Information Exporting is switched off");
     }
-    return Optional.empty();
   }
 
-  private Optional<List<Entry<String, Scenario>>> exportTestCaseInfo(
-      String testCaseId, List<VividusScenarioInfo> vividusScenarioInfoList) {
+  private void exportTestCaseInfo(
+      TestCaseInfo testCaseInfo, List<VividusScenarioInfo> vividusScenarioInfoList) {
+    String testCaseId = testCaseInfo.getTestCaseId();
     LOGGER.atInfo().addArgument(testCaseId).log("Exporting Test Case: {}");
 
     try {
       TestCase testCase = createTestCaseParameters(testCaseId, vividusScenarioInfoList).get();
       exportTestCase(testCase);
-
-      return Optional.of(vividusScenarioInfoList.stream()
-          .map(VividusScenarioInfo::getScenario)
-          .map(scenario -> new SimpleEntry<>(testCaseId, scenario))
-          .collect(Collectors.toList()));
+      vividusScenarioInfoList.forEach(vividusScenarioInfo -> vividusScenarioInfo.getTestCase().setUpdatedInfo(true));
     } catch (IOException | SyntaxException | NonCucumberTypesException | NonScenariosException
              | NotSingleUniqueValueException
              | NonEditableTestRunException | NonEditableIssueStatusException | NonTestCaseWithinRunException
              | JiraConfigurationException e) {
-      vividusScenarioInfoList.forEach(multiTestCase -> jiraExporterErrorCollection
-          .addLogTestCaseInfoExportError(e, testCaseId, multiTestCase.getStory(), multiTestCase.getScenario()));
+      vividusScenarioInfoList.forEach(vividusScenarioInfo -> jiraExporterErrorCollection
+          .addLogTestCaseInfoExportError(e, testCaseId, vividusScenarioInfo));
     }
-    return Optional.empty();
   }
 
   private Optional<TestCase> createTestCaseParameters(
@@ -131,18 +117,12 @@ public class JiraInfoExporter {
     for (Entry<Story, List<Scenario>> storyEntry : testCaseStoryMap.entrySet()) {
       Story story = storyEntry.getKey();
       List<Scenario> scenarioInfoList = storyEntry.getValue();
-
       LOGGER.atInfo().addArgument(story.getPath()).log("Processing Story: {}");
-      List<AbstractScenarioParameters> scenarioParametersList = new ArrayList<>();
-      for (Scenario scenario : scenarioInfoList) {
-        LOGGER.atInfo().addArgument(scenario.getTitle()).log("Processing Scenario: {}");
-        scenarioParametersList.add(createScenarioParameters(story, scenario));
-      }
 
       StoryParameters storyParameters = new StoryParameters();
       storyParameters.setPath(story.getPath());
       storyParameters.setGivenStories(GivenStoriesConverter.convert(story.getGivenStories()));
-      storyParameters.setScenarios(scenarioParametersList);
+      storyParameters.setScenarios(createScenarioParametersList(story, scenarioInfoList));
 
       storyParametersList.add(storyParameters);
     }
@@ -158,6 +138,16 @@ public class JiraInfoExporter {
       NonEditableIssueStatusException, NonTestCaseWithinRunException, JiraConfigurationException,
       NonEditableTestRunException {
     jiraExporterFacade.updateTestCase(testCase);
+  }
+
+  public List<AbstractScenarioParameters> createScenarioParametersList(Story story, List<Scenario> scenarioInfoList)
+      throws SyntaxException {
+    List<AbstractScenarioParameters> scenarioParametersList = new ArrayList<>();
+    for (Scenario scenario : scenarioInfoList) {
+      LOGGER.atInfo().addArgument(scenario.getTitle()).log("Processing Scenario: {}");
+      scenarioParametersList.add(createScenarioParameters(story, scenario));
+    }
+    return scenarioParametersList;
   }
 
   public AbstractScenarioParameters createScenarioParameters(Story story, Scenario scenario)

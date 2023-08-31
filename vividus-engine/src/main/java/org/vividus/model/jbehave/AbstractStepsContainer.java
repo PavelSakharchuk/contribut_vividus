@@ -17,6 +17,7 @@
 package org.vividus.model.jbehave;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public abstract class AbstractStepsContainer
@@ -80,6 +81,8 @@ public abstract class AbstractStepsContainer
     public Stream<Step> createStreamOfAllSteps()
     {
         return Stream.of(getBeforeSystemScenarioSteps(), getBeforeUserScenarioSteps(), getSteps(),
-                getAfterUserScenarioSteps(), getAfterSystemScenarioSteps()).flatMap(List::stream);
+                getAfterUserScenarioSteps(), getAfterSystemScenarioSteps())
+            .filter(Objects::nonNull)
+            .flatMap(List::stream);
     }
 }

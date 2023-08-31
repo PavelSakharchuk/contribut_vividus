@@ -16,7 +16,6 @@
 
 package org.vividus.plugin.jira.factory;
 
-import static java.util.Map.entry;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,11 +27,8 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.List;
-import java.util.Map.Entry;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.vividus.model.jbehave.Example;
@@ -40,7 +36,6 @@ import org.vividus.model.jbehave.Examples;
 import org.vividus.model.jbehave.Scenario;
 import org.vividus.model.jbehave.Step;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
-import org.vividus.plugin.jira.model.TestCaseStatus;
 
 @ExtendWith(MockitoExtension.class)
 class TestExecutionFactoryTests

@@ -148,7 +148,7 @@
               {
                 "keyword": "@",
                 "name": "testCaseId",
-                "value": "VIVIT-12"
+                "value": "NUC-587"
               }
             ],
             "beforeSystemScenarioSteps": [
@@ -207,7 +207,7 @@
               {
                 "keyword": "@",
                 "name": "testCaseId",
-                "value": "VIVIT-12"
+                "value": "NUC-587"
               }
             ],
             "beforeSystemScenarioSteps": [
@@ -383,7 +383,7 @@
         {
           "keyword": "@",
           "name": "testCaseId",
-          "value": "VIVIT-18;VIVIT-19"
+          "value": "NUC-587;VIVIT-19"
         }
       ],
       "examples": {

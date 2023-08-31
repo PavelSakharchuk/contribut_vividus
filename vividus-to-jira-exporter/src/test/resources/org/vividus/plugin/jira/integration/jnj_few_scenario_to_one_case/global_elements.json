@@ -116,7 +116,7 @@
         {
           "keyword": "@",
           "name": "testCaseId",
-          "value": "VIVIT-21"
+          "value": "NUC-587"
         }
       ],
       "beforeSystemScenarioSteps": [
@@ -170,7 +170,7 @@
         {
           "keyword": "@",
           "name": "testCaseId",
-          "value": "VIVIT-21"
+          "value": "NUC-587"
         }
       ],
       "examples": {
@@ -206,7 +206,7 @@
               "page": "\/my-cases",
               "critical_path": "",
               "layout": "desktop",
-              "testCaseId": "VIVIT-21"
+              "testCaseId": "NUC-587"
             },
             "beforeSystemScenarioSteps": [
               {
@@ -259,7 +259,7 @@
               "page": "\/live-session",
               "critical_path": "",
               "layout": "desktop",
-              "testCaseId": "VIVIT-21"
+              "testCaseId": "NUC-587"
             },
             "beforeSystemScenarioSteps": [
               {
@@ -312,7 +312,7 @@
               "page": "\/library",
               "critical_path": "",
               "layout": "desktop",
-              "testCaseId": "VIVIT-21"
+              "testCaseId": "NUC-587"
             },
             "beforeSystemScenarioSteps": [
               {
@@ -365,7 +365,7 @@
               "page": "\/insights",
               "critical_path": "",
               "layout": "desktop",
-              "testCaseId": "VIVIT-21"
+              "testCaseId": "NUC-587"
             },
             "beforeSystemScenarioSteps": [
               {
