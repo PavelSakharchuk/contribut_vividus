@@ -244,7 +244,7 @@ class MainFlowTests
     @BeforeEach
     void setUpJiraExporterOptions() throws IOException, URISyntaxException
     {
-          URI jsonResultsUri = getJsonResultsUri("jnj");
+//          URI jsonResultsUri = getJsonResultsUri("jnj");
 //          URI jsonResultsUri = getJsonResultsUri("jnj_full");
 //          URI jsonResultsUri = getJsonResultsUri("jnj_one_scenario_to_few_cases");
 //          URI jsonResultsUri = getJsonResultsUri("jnj_few_scenario_to_one_case");
@@ -274,10 +274,13 @@ class MainFlowTests
 //        URI jsonResultsUri = getJsonResultsUri("morethanoneid");
 //        when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(sourceDirectory);
 
+        URI jsonResultsUri = getJsonResultsUri("batch-1_31082023_1783");
+
+
         // TODO: How I can manage this properties by properties file
         when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(Paths.get(jsonResultsUri));
         when(jiraExporterOptions.getProjectKey()).thenReturn("NUC");
-        when(jiraExporterOptions.getTestRunId()).thenReturn("NUC-1783");
+        when(jiraExporterOptions.getTestRunId()).thenReturn("NUC-1977");
         when(jiraExporterOptions.isTestCaseInfoUpdatesEnabled()).thenReturn(true);
         when(jiraExporterOptions.isTestCaseStatusUpdatesEnabled()).thenReturn(true);
         when(jiraExporterOptions.getTestIssueType()).thenReturn("Test Case");

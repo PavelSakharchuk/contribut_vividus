@@ -56,7 +56,8 @@ public class JiraStatusExporter {
   public void exportStatusTestCases(
       Map<TestCaseInfo, List<VividusScenarioInfo>> multiTestCaseMap) {
     if (jiraExporterOptions.isTestCaseStatusUpdatesEnabled()) {
-      multiTestCaseMap.forEach(this::exportTestCaseStatus);
+      multiTestCaseMap.entrySet().parallelStream()
+          .forEach(entry -> exportTestCaseStatus(entry.getKey(), entry.getValue()));
     } else {
       LOGGER.atInfo().log("Test Case Statuses Exporting is switched off");
     }

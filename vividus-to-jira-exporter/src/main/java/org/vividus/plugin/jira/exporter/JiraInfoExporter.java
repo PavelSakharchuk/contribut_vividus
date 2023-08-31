@@ -80,7 +80,8 @@ public class JiraInfoExporter {
 
   public void exportInfoTestCases(Map<TestCaseInfo, List<VividusScenarioInfo>> vividusScenarioInfoMap) {
     if (jiraExporterOptions.isTestCaseInfoUpdatesEnabled()) {
-      vividusScenarioInfoMap.forEach(this::exportTestCaseInfo);
+      vividusScenarioInfoMap.entrySet().parallelStream()
+          .forEach(entry -> exportTestCaseInfo(entry.getKey(), entry.getValue()));
     } else {
       LOGGER.atInfo().log("Test Case Information Exporting is switched off");
     }
