@@ -1,0 +1,16 @@
+#org.jbehave.core.embedder.StoryManager
+#Mon Sep 25 12:55:16 UTC 2023
+threadAverage=232000
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/new_ep_of_care.story=48000
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/global_elements.story=33000
+threads=1
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/open_app.story=1000
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/library.story=2000
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/insights.story=9000
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/new_case.story=7000
+total=232000
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/empty_page_state.story=10000
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/upload_video.story=16000
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/case_details.story=70000
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/my_cases.story=28000
+file\:/home/gradle/jnj-auto-tests/output/resources/main/story/nucleus/web/surgeon_profile.story=8000

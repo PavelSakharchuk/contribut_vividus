@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vividus.jira.JiraClientProvider;
@@ -257,7 +258,8 @@ public class JiraExporterFacade {
         jiraConfigurationProvider.getFieldsMappingByProjectKey(jiraExporterOptions.getProjectKey()));
 
     for (JiraEntity subtask : jiraFacade.getIssue(runId).getSubtasks()) {
-      String initialTestCaseId = jiraFacade.getIssueField(subtask.getKey(), initialTestCaseCustomField).trim();
+      String initialTestCaseId =
+              Optional.ofNullable(jiraFacade.getIssueField(subtask.getKey(), initialTestCaseCustomField)).orElse(Strings.EMPTY).trim();
       if (initialTestCaseId.equals(targetInitialTestCaseId)) {
         return Optional.of(subtask);
       }

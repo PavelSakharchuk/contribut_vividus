@@ -262,6 +262,7 @@ class MainFlowTests
 //          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_specific_GivenStory");
 //        URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_specific_GivenStory_second");
 //        URI jsonResultsUri = getJsonResultsUri("story_meta");
+        URI jsonResultsUri = getJsonResultsUri("docker-reports_25062023_NUC-4120");
 
 //          URI jsonResultsUri = getJsonResultsUri("createandlink");
 //          URI jsonResultsUri = getJsonResultsUri("createandlink2");
@@ -276,13 +277,13 @@ class MainFlowTests
 //        when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(sourceDirectory);
 
 //        URI jsonResultsUri = getJsonResultsUri("batch-1_31082023_1783");
-        URI jsonResultsUri = getJsonResultsUri("batch-1_18092023_3676");
+//        URI jsonResultsUri = getJsonResultsUri("batch-1_18092023_3676");
 
 
         // TODO: How I can manage this properties by properties file
         when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(Paths.get(jsonResultsUri));
         when(jiraExporterOptions.getProjectKey()).thenReturn("NUC");
-        when(jiraExporterOptions.getTestRunId()).thenReturn("NUC-3869");
+        when(jiraExporterOptions.getTestRunId()).thenReturn("NUC-4120");
         when(jiraExporterOptions.isTestCaseInfoUpdatesEnabled()).thenReturn(true);
         when(jiraExporterOptions.isTestCaseStatusUpdatesEnabled()).thenReturn(true);
         when(jiraExporterOptions.getTestIssueType()).thenReturn("Test Case");
