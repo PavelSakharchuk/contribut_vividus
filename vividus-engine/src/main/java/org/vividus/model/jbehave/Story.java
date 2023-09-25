@@ -16,17 +16,23 @@
 
 package org.vividus.model.jbehave;
 
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import java.util.stream.Stream;
+import org.vividus.model.MetaWrapper;
 
 public class Story
 {
     private String path;
+    private List<Meta> meta;
     private Lifecycle lifecycle;
     private GivenStories givenStories;
     private List<Scenario> scenarios;
@@ -39,6 +45,16 @@ public class Story
     public void setPath(String path)
     {
         this.path = path;
+    }
+
+    public List<Meta> getMeta()
+    {
+        return meta;
+    }
+
+    public void setMeta(List<Meta> meta)
+    {
+        this.meta = meta;
     }
 
     public Lifecycle getLifecycle()
@@ -69,6 +85,27 @@ public class Story
     public void setScenarios(List<Scenario> scenarios)
     {
         this.scenarios = scenarios;
+    }
+
+    /**
+     * Get all <b>meta</b> values
+     *
+     * <p><i>Notes</i>
+     * <ul>
+     * <li><b>meta</b>s without value are ignored</li>
+     * <li><b>meta</b> values are trimmed upon returning</li>
+     * <li><i>;</i> char is used as a separator for <b>meta</b> with multiple values</li>
+     * </ul>
+     *
+     * @param metaName the meta name
+     * @return  the meta values
+     */
+    public Set<String> getMetaValues(String metaName)
+    {
+        return getMetaStream().filter(m -> metaName.equals(m.getName()))
+            .map(Meta::getValue)
+            .flatMap(value -> MetaWrapper.parsePropertyValues(value).stream())
+            .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
     /**
@@ -126,5 +163,10 @@ public class Story
                                                  .collect(Collectors.toList());
 
         scenarioParameters.setValues(adjustedValues);
+    }
+
+    private Stream<Meta> getMetaStream()
+    {
+        return Optional.ofNullable(getMeta()).stream().flatMap(Collection::stream);
     }
 }

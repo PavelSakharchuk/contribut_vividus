@@ -93,7 +93,7 @@ public class JiraInfoExporter {
     LOGGER.atInfo().addArgument(testCaseId).log("Exporting Test Case: {}");
 
     try {
-      TestCase testCase = createTestCaseParameters(testCaseId, vividusScenarioInfoList).get();
+      TestCase testCase = createTestCaseParameters(testCaseId, vividusScenarioInfoList);
       exportTestCase(testCase);
       vividusScenarioInfoList.forEach(vividusScenarioInfo -> vividusScenarioInfo.getTestCase().setUpdatedInfo(true));
     } catch (IOException | SyntaxException | NonCucumberTypesException | NonScenariosException
@@ -105,7 +105,7 @@ public class JiraInfoExporter {
     }
   }
 
-  private Optional<TestCase> createTestCaseParameters(
+  private TestCase createTestCaseParameters(
       String testCaseId, List<VividusScenarioInfo> vividusScenarioInfoList)
       throws SyntaxException {
     Map<Story, List<Scenario>> testCaseStoryMap = vividusScenarioInfoList.stream()
@@ -131,7 +131,7 @@ public class JiraInfoExporter {
     TestCaseParameters testCaseParameters = new TestCaseParameters(testCaseId);
     testCaseParameters.setStories(storyParametersList);
 
-    return Optional.of(testCaseFactory.createTestCase(testCaseParameters));
+    return testCaseFactory.createTestCase(testCaseParameters);
   }
 
   private void exportTestCase(TestCase testCase)

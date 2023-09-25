@@ -17,20 +17,26 @@
 package org.vividus.plugin.jira.exporter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.vividus.model.jbehave.Meta;
 import org.vividus.model.jbehave.Scenario;
 import org.vividus.model.jbehave.Story;
 import org.vividus.output.OutputReader;
 import org.vividus.plugin.jira.configuration.JiraExporterOptions;
 import org.vividus.plugin.jira.exception.JiraSkipExportMetaException;
 import org.vividus.plugin.jira.exception.NonTestCaseIdException;
-import org.vividus.plugin.jira.exporter.Constants.Meta;
+import org.vividus.plugin.jira.exporter.Constants;
 import org.vividus.plugin.jira.exporter.model.TestCaseInfo;
 import org.vividus.plugin.jira.exporter.model.VividusScenarioInfo;
 import org.vividus.plugin.jira.log.ExporterStatisticLogger;
@@ -69,14 +75,37 @@ public class JiraExporter {
   private Stream<VividusScenarioInfo> getVividusScenarioInfoStream(Story story) {
     story.setPath(trimPath("/story", story.getPath()));
     return story.getFoldedScenarios().stream()
+//        .map(scenario -> mergeMeta(story, scenario))
         .flatMap(scenario -> getVividusScenarioInfoStream(story, scenario));
   }
 
+  private Scenario mergeMeta(Story story, Scenario scenario) {
+    List<Meta> mergedMetaList = Optional.ofNullable(story.getMeta()).orElse(new ArrayList<>()).stream()
+        .map(storyMeta -> {
+          Set<String> storyMetaValues = story.getMetaValues(storyMeta.getName());
+          Set<String> scenarioMetaValues = scenario.getMetaValues(storyMeta.getName());
+          scenarioMetaValues.addAll(storyMetaValues);
+
+          Meta scenarioMeta = Optional.ofNullable(scenario.getMeta(storyMeta.getName())).orElse(new Meta());
+          scenarioMeta.setName(storyMeta.getName());
+          scenarioMeta.setValue(String.join(";", scenarioMetaValues));
+          return scenarioMeta;
+        })
+        .collect(Collectors.toList());
+
+    scenario.setMeta(mergedMetaList);
+    return scenario;
+  }
+
   private Stream<VividusScenarioInfo> getVividusScenarioInfoStream(Story story, Scenario scenario) {
-    return scenario.getMetaValues(Constants.Meta.TEST_CASE_ID).isEmpty() ?
+    Set<String> testCaseIdValues = Stream.concat(
+            story.getMetaValues(Constants.Meta.TEST_CASE_ID).stream(),
+            scenario.getMetaValues(Constants.Meta.TEST_CASE_ID).stream())
+        .collect(Collectors.toSet());
+
+    return testCaseIdValues.isEmpty() ?
         Stream.of(getVividusScenarioInfoWithoutTestCaseId(story, scenario)) :
-        scenario.getMetaValues(Meta.TEST_CASE_ID).stream()
-            .map(testCaseId -> new VividusScenarioInfo(testCaseId, story, scenario));
+        testCaseIdValues.stream().map(testCaseId -> new VividusScenarioInfo(testCaseId, story, scenario));
   }
 
   private VividusScenarioInfo getVividusScenarioInfoWithoutTestCaseId(Story story, Scenario scenario) {

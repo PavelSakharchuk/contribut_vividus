@@ -51,6 +51,11 @@ public class Scenario extends AbstractStepsContainer
         return meta;
     }
 
+    public Meta getMeta(String metaName)
+    {
+        return getMetaStream().filter(m -> metaName.equals(m.getName())).findFirst().orElse(null);
+    }
+
     public void setMeta(List<Meta> meta)
     {
         this.meta = meta;

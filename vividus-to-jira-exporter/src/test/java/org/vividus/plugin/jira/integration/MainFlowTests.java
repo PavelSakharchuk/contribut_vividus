@@ -213,7 +213,7 @@ import org.vividus.util.ResourceUtils;
 //    "jira.nucleus.http.auth.password=",
     "jira.nucleus.http.auth.username=pavel_sakharchuk@epam.com",
 //    "jira.nucleus.http.auth.password=SaharSahar1",
-    "jira.nucleus.http.auth.password=ATATT3xFfGF0fatUG_Lpw7pnbzQLGqD-p4gySQkoiNRivxFMRg7gEtdtrJZnHU4Zgx_OCN5IirCgPZTVWhlJTm89QqFgkGAkYGo-Q1iYbECpe4biL0IGsz2ZA4ggeaNbSFxoPonwnyl76WNHZQqsricCFeEzxrf6eaJ6d2t7hSuvmvrUiq23A8M=AD51A42B",
+    "jira.nucleus.http.auth.password=",
 
     "jira.nucleus.fields-mapping.initial-test-case=customfield_10096",
     "jira.nucleus.fields-mapping.test-case-type=customfield_10045",
@@ -261,6 +261,7 @@ class MainFlowTests
 //          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_few_givenStories_within_one_file");
 //          URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_specific_GivenStory");
 //        URI jsonResultsUri = getJsonResultsUri("batch_NUC-761_specific_GivenStory_second");
+//        URI jsonResultsUri = getJsonResultsUri("story_meta");
 
 //          URI jsonResultsUri = getJsonResultsUri("createandlink");
 //          URI jsonResultsUri = getJsonResultsUri("createandlink2");
@@ -274,13 +275,14 @@ class MainFlowTests
 //        URI jsonResultsUri = getJsonResultsUri("morethanoneid");
 //        when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(sourceDirectory);
 
-        URI jsonResultsUri = getJsonResultsUri("batch-1_31082023_1783");
+//        URI jsonResultsUri = getJsonResultsUri("batch-1_31082023_1783");
+        URI jsonResultsUri = getJsonResultsUri("batch-1_18092023_3676");
 
 
         // TODO: How I can manage this properties by properties file
         when(jiraExporterOptions.getJsonResultsDirectory()).thenReturn(Paths.get(jsonResultsUri));
         when(jiraExporterOptions.getProjectKey()).thenReturn("NUC");
-        when(jiraExporterOptions.getTestRunId()).thenReturn("NUC-1977");
+        when(jiraExporterOptions.getTestRunId()).thenReturn("NUC-3869");
         when(jiraExporterOptions.isTestCaseInfoUpdatesEnabled()).thenReturn(true);
         when(jiraExporterOptions.isTestCaseStatusUpdatesEnabled()).thenReturn(true);
         when(jiraExporterOptions.getTestIssueType()).thenReturn("Test Case");
