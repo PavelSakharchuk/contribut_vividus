@@ -101,9 +101,7 @@ public class TestCaseFactory {
         .add(String.format("*Story: %s*", storyParameters.getPath()));
     if (StringUtils.isNotBlank(givenStoryDescription)) {
       stringJoiner
-          .add("{quote}")
-          .add(givenStoryDescription)
-          .add("{quote}");
+          .add(givenStoryDescription);
     }
     stringJoiner
         .add(System.lineSeparator())
@@ -114,37 +112,37 @@ public class TestCaseFactory {
 
   private String generateGivenStoryDescription(StoryParameters givenStoryParameters) {
     String givenScenarioDescription = givenStoryParameters.getScenarios().stream()
-        .map(givenScenario -> generateGivenScenarioDescription((CucumberScenarioParameters) givenScenario))
+        .map(givenScenario -> generateGivenScenarioDescription(givenStoryParameters, (CucumberScenarioParameters) givenScenario))
         .collect(Collectors.joining(lineSeparator()));
 
     return new StringJoiner(System.lineSeparator())
-        .add(String.format("*Given Story: %s*", givenStoryParameters.getPath()))
         .add(givenScenarioDescription)
         .add(System.lineSeparator())
         .toString();
   }
 
-  private String generateGivenScenarioDescription(CucumberScenarioParameters givenScenarioParameters) {
+  private String generateGivenScenarioDescription(StoryParameters givenStoryParameters, CucumberScenarioParameters givenScenarioParameters) {
     return new StringJoiner(System.lineSeparator())
+        .add(String.format("*Given Story: %s*", givenStoryParameters.getPath()))
         .add("*Scenario:* " + givenScenarioParameters.getSummary())
+        .add("{noformat}")
         .add(givenScenarioParameters.getScenario())
+        .add("{noformat}")
         .toString();
   }
 
   private String generateScenarioDescription(CucumberScenarioParameters scenarioParameters) {
-    String givenScenarioDescription = scenarioParameters.getGivenStories().stream()
+    String givenStoryDescription = scenarioParameters.getGivenStories().stream()
         .map(this::generateGivenStoryDescription)
         .collect(Collectors.joining(lineSeparator()));
 
-    StringJoiner stringJoiner = new StringJoiner(lineSeparator())
-        .add("*Scenario:* " + scenarioParameters.getSummary());
-    if (StringUtils.isNotBlank(givenScenarioDescription)) {
+    StringJoiner stringJoiner = new StringJoiner(lineSeparator());
+    if (StringUtils.isNotBlank(givenStoryDescription)) {
       stringJoiner
-          .add("{quote}")
-          .add(givenScenarioDescription)
-          .add("{quote}");
+          .add(givenStoryDescription);
     }
     stringJoiner
+        .add("*Scenario:* " + scenarioParameters.getSummary())
         .add("{noformat}")
         .add(scenarioParameters.getScenario())
         .add("{noformat}")
