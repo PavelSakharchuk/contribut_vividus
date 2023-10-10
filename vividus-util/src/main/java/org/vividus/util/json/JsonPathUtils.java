@@ -38,6 +38,7 @@ import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
 import com.jayway.jsonpath.spi.mapper.MappingProvider;
 
 import org.vividus.util.FieldUtils;
+import org.vividus.util.FieldUtils2;
 
 public final class JsonPathUtils
 {
@@ -89,7 +90,7 @@ public final class JsonPathUtils
 
         try
         {
-            FieldUtils.setFinalStatic(PathFunctionFactory.class.getDeclaredField("FUNCTIONS"), modifiableMap);
+            FieldUtils2.setFinalStatic(PathFunctionFactory.class.getDeclaredField("FUNCTIONS"), modifiableMap);
         }
         catch (NoSuchFieldException e)
         {
