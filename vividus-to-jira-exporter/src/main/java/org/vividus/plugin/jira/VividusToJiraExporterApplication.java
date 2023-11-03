@@ -37,7 +37,6 @@ public class VividusToJiraExporterApplication
 {
     public static void main(String[] args) throws IOException
     {
-        System.setProperty("spring.config.name", "over");
         ApplicationContext context = SpringApplication.run(VividusToJiraExporterApplication.class, args);
         context.getBean(JiraExporter.class).exportResults();
     }
