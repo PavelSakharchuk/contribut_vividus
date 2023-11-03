@@ -25,7 +25,7 @@ import org.vividus.plugin.jira.exporter.Constants;
 import org.vividus.plugin.jira.exporter.Constants.PropertyPrefix;
 
 @ConfigurationProperties(Constants.PropertyPrefix.JIRA_EXPORTER)
-@PropertySource("classpath:over.properties")
+@PropertySource("classpath:over")
 public class JiraExporterOptions
 {
     private Path jsonResultsDirectory;
