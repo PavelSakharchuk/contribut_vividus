@@ -48,6 +48,7 @@ public class JiraExporter {
   private JiraExporterErrorCollection jiraExporterErrorCollection;
 
   public void exportResults() throws IOException {
+    System.out.println("PATH: " + jiraExporterOptions.getJsonResultsDirectory());
     List<VividusScenarioInfo> vividusScenarioInfoList =
         OutputReader.readStoriesFromJsons(jiraExporterOptions.getJsonResultsDirectory()).stream()
             .flatMap(this::getVividusScenarioInfoStream)
