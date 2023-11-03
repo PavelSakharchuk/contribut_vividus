@@ -20,10 +20,12 @@ import java.nio.file.Path;
 import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
 import org.vividus.plugin.jira.exporter.Constants;
 import org.vividus.plugin.jira.exporter.Constants.PropertyPrefix;
 
 @ConfigurationProperties(Constants.PropertyPrefix.JIRA_EXPORTER)
+@PropertySource("classpath:over.properties")
 public class JiraExporterOptions
 {
     private Path jsonResultsDirectory;
