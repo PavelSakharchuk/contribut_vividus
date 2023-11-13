@@ -52,9 +52,8 @@ public class WebAshotFactory extends AbstractAshotFactory<WebScreenshotParameter
     public AShot create(Optional<WebScreenshotParameters> screenshotParameters)
     {
         return screenshotParameters.map(ashotParameters -> ashotParameters.getShootingStrategy()
-                                                                   .map(this::createAShot)
-                                                                   .orElseGet(() -> createAShot(ashotParameters)))
-                      .orElseGet(() -> createAShot(getScreenshotShootingStrategy()));
+                .map(strategy -> createAShot(strategy, ashotParameters)).orElseGet(() -> createAShot(ashotParameters)))
+                .orElseGet(() -> createAShot(getScreenshotShootingStrategy()));
     }
 
     private AShot createAShot(WebScreenshotParameters screenshotParameters)
@@ -122,6 +121,34 @@ public class WebAshotFactory extends AbstractAshotFactory<WebScreenshotParameter
                     String.format("Unknown shooting strategy with the name: %s", strategyName));
         };
         shootingStrategy = decorateWithScrollbarHiding(shootingStrategy, Optional.empty());
+        return new AShot().shootingStrategy(shootingStrategy)
+                .coordsProvider(new ScrollBarHidingCoordsProviderDecorator(coordsProvider, scrollbarHandler));
+    }
+
+    private AShot createAShot(String strategyName, WebScreenshotParameters screenshotParameters)
+    {
+        ShootingStrategy baseShootingStrategy = getBaseShootingStrategy();
+        ShootingStrategy shootingStrategy;
+        @SuppressWarnings("checkstyle:Indentation")
+        CoordsProvider coordsProvider = switch (strategyName)
+        {
+            case "SIMPLE" ->
+            {
+                shootingStrategy = baseShootingStrategy;
+                yield CeilingJsCoordsProvider.getSimple(javascriptActions);
+            }
+            case "VIEWPORT_PASTING" ->
+            {
+                shootingStrategy = new DebuggingViewportPastingDecorator(baseShootingStrategy,
+                        DEFAULT_STICKY_HEADER_HEIGHT, DEFAULT_STICKY_FOOTER_HEIGHT).withScrollTimeout(SCROLL_TIMEOUT);
+                yield CeilingJsCoordsProvider.getScrollAdjusted(javascriptActions);
+            }
+            default -> throw new IllegalArgumentException(
+                    String.format("Unknown shooting strategy with the name: %s", strategyName));
+        };
+        shootingStrategy = decorateWithScrollbarHiding(shootingStrategy, Optional.empty());
+        shootingStrategy = decorateWithCropping(shootingStrategy, screenshotParameters);
+
         return new AShot().shootingStrategy(shootingStrategy)
                 .coordsProvider(new ScrollBarHidingCoordsProviderDecorator(coordsProvider, scrollbarHandler));
     }
