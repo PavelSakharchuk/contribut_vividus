@@ -112,6 +112,27 @@ When I <action> baseline with name `scrollable-element-fullpage-with-ignores` us
 and screenshot configuration:
 |scrollableElement|webHeaderToCut|webFooterToCut|scrollTimeout|
 |id(scrollable)   |10            |0             |PT1S         |
+When I <action> baseline with name `scrollable-element-fullpage-with-ignores` using storage `filesystem` and ignoring:
+|ELEMENT                                            |AREA                                               |
+|xpath(//a[position() mod 2 = 1 and position() > 7])|xpath(//a[position() mod 2 = 1 and position() < 7])|
+and screenshot configuration:
+|shootingStrategy|
+|SIMPLE          |
+
+
+Scenario: Validation shootingStrategy visual testing on a page with scrollable element with ignores
+When I <action> baseline with name `simple-shootingStrategy-with-ignores` using storage `filesystem` and ignoring:
+|ELEMENT                                            |AREA                                               |
+|xpath(//a[position() mod 2 = 1 and position() > 7])|xpath(//a[position() mod 2 = 1 and position() < 7])|
+and screenshot configuration:
+|shootingStrategy|
+|SIMPLE          |
+When I <action> baseline with name `viewportPasting-shootingStrategy-with-ignores` using storage `filesystem` and ignoring:
+|ELEMENT                                            |AREA                                               |
+|xpath(//a[position() mod 2 = 1 and position() > 7])|xpath(//a[position() mod 2 = 1 and position() < 7])|
+and screenshot configuration:
+|shootingStrategy|
+|VIEWPORT_PASTING|
 
 
 Scenario: Validation of step When I $actionType baseline with name `$name` for context element with acceptable diff percentage
